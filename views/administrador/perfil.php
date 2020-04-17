@@ -89,4 +89,6 @@
 </div>
 <!-- FIN  DEL CONTENIDO PRINCIPAL -->
 
+<!-- Comentario dle perfil -->
+
 <?php require_once "views/administrador/footer.php"?>
