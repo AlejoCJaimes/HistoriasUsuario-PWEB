@@ -1,0 +1,112 @@
+/*<!--si es id, se coloca #, si es class se usa. -->*/
+*{
+  margin:0;
+  left: 0; /*margin izquierda*/
+  top:0; /*margen arriba */
+  text-align: left;
+}
+#nav{
+  width: 100%; /*Ancho*/
+  height: 60px; /*Alto*/
+  background-color:  #FF5336;
+}
+#nav h2{
+  color: white; /*color de letra*/
+  font-family:  cursive;; /*tipo de letra*/
+  padding:  10px; /*Margen por interior*/
+  font-size: 25px; /*Tamaño de la letra*/
+}
+.titulo {
+  color: #157FBD;
+  height: 60px;
+  text-align: left; /*Alinear*/
+  font-family: "Comic Sans MS"; /*tipo de letra*/
+  font-size: 20px; /*tamaño de letra */
+  margin-top: 25px; /*margen desde arriba*/
+}
+.subtitulo {
+  width: 400px;
+  color: #000;
+  font-family: "arial";
+  font-size: 16px; /*tamaño de letra */
+  margin-top: 20px;
+}
+.texto {
+  font-family: "Comic Sans MS";
+  font-size: 16px;
+  color: #000;
+  margin-top: 2px;
+}
+/*Efecto para datos tipo "text"*/
+input[type=text]:focus {
+  border-color: dodgerBlue; /*color del borde de la caja*/
+  box-shadow: 0 0 8px 0 dodgerBlue; /*sombra del borde de la caja*/
+}
+.textbox  {
+  font-family: "arial";
+  font-size: 16px; /*tamaño de letra */
+  width: 400px; /*Ancho*/
+  border: 2px solid #aaa; /*Borde*/
+  border-radius: 4px; /*Radio del borde*/
+  margin: 8px 0; /*margen de la caja*/
+  outline: none; /*margen externa*/
+  padding: 8px; /*Margen por interior*/
+  transition: .3s; /*Efecto del cambio de color*/
+  box-sizing: border-box; /*Tamaño de la caja*/
+  /*border-color: dodgerBlue; /*color del borde de la caja*/
+  /*box-shadow: 0 0 8px 0 dodgerBlue; /*sombra del borde de la caja*/
+}
+/*Efecto para datos tipo "select" (combobox)*/
+select:focus {
+  border-color: dodgerBlue; /*color del borde de la caja*/
+  box-shadow: 0 0 8px 0 dodgerBlue; /*sombra del borde de la caja*/
+}
+.select{
+  font-family: "arial";
+  font-size: 16px; /*tamaño de letra */
+  width: 200px; /*Ancho*/
+  border: 2px solid #aaa; /*Borde*/
+  border-radius: 4px; /*Radio del borde*/
+  margin: 8px 0; /*margen de la caja*/
+  outline: none; /*margen externa*/
+  padding: 8px; /*Margen por interior*/
+  transition: .2s all ease; /*Efecto del cambio de color*/
+}
+
+
+input#boton {
+  padding: 5px 50px;
+  color: white;
+  margin-top: 10px;
+  font-size: 1em;
+  background-color: #5dade2;
+  border: 0px;
+  border-radius:5px;
+  box-shadow: 0px 4px 0px #4AA4DF;
+  transition: background-color .25s;
+  /*-moz-border-radius:5px; /*Mozzila*/
+  /*-webkit-border-radius: 5px; /*Chrome*/
+  /*-ms-border-radius: 5px; /*Internet Explorer, apartir del 10*/
+  /*-o-borde-radius: 5px; /*Opera*/
+  /*-webkit-border-shadow: 0px;*/
+}
+input#boton:hover {
+  background-color: #7ABBE7;
+}
+input[type=number]:focus {
+  border-color: dodgerBlue; /*color del borde de la caja*/
+  box-shadow: 0 0 8px 0 dodgerBlue; /*sombra del borde de la caja*/
+  width: auto; /*ancho*/
+  padding: 5px 20px;
+}
+.number {
+  font-family: "arial";
+  font-size: 16px; /*tamaño de letra *//*Ancho*/
+  border: 2px solid #aaa; /*Borde*/
+  border-radius: 4px; /*Radio del borde*/
+  margin: 8px 0; /*margen de la caja*/
+  outline: none; /*margen externa*/
+  padding: 8px; /*Margen por interior*/
+  transition: .3s; /*Efecto del cambio de color*/
+  box-sizing: border-box;
+}

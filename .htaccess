@@ -1,0 +1,13 @@
+#Activamos el redireccionamiento.
+RewriteEngine On
+
+#Nos permite buscar dirctorios, archivos y cualquier otro
+#dentro de nuestro proyecto, más que todo para poder usar 
+#archis css
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-l
+
+#Redirigimos siempre a nuestro index.
+RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
