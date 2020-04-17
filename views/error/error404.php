@@ -92,4 +92,4 @@ a img {
     </div>
 </footer>
 
-<!-- Este es un comentario para hacer un commit de prueba-->
+<!-- Este es un comentario de error-->
