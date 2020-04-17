@@ -1,7 +1,10 @@
+<!-- Página de Error 404, personalización.-->
+
 <!DOCTYPE html>
 <html lang=en>
 <meta charset=utf-8>
 <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+<link rel="icon" href="<?php echo constant('URL');?>resources/img/error404.ico">
 <title>Error 404</title>
 <style>
 * {
@@ -28,7 +31,7 @@ body {
 }
 
 *>body {
-    background: url(http://localhost/HistoriasUsuario-PWEB/resources/img/Cat404.png) 100% -3px no-repeat;
+    background: url(http://localhost/HistoriasUsuario-PWEB/resources/img/Cat404.png) 105% -3px no-repeat;
     padding-right: 205px
 }
 
@@ -56,20 +59,20 @@ a img {
 }
 
 #logo {
-    background: url(http://localhost/HistoriasUsuario-PWEB/resources/img/googlelogo_color_150x54dp.png) no-repeat;
+    background: url(http://localhost/HistoriasUsuario-PWEB/resources/img/sorry_2.png) no-repeat;
     margin-left: -5px
 }
 
 @media only screen and (min-resolution:192dpi) {
     #logo {
-        background: url(http://localhost/HistoriasUsuario-PWEB/resources/img/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;
-        -moz-border-image: url(http://localhost/HistoriasUsuario-PWEB/resources/img/googlelogo_color_150x54dp.png) 0
+        background: url(http://localhost/HistoriasUsuario-PWEB/resources/img/sorry_2.png) no-repeat 0% 0%/100% 100%;
+        -moz-border-image: url(http://localhost/HistoriasUsuario-PWEB/resources/img/sorry_2.png) 0
     }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio:2) {
     #logo {
-        background: url(http://localhost/HistoriasUsuario-PWEB/resources/img/googlelogo_color_150x54dp.png) no-repeat;
+        background: url(http://localhost/HistoriasUsuario-PWEB/resources/img/sorry_2.png) no-repeat;
         -webkit-background-size: 100% 100%
     }
 }
@@ -77,7 +80,7 @@ a img {
 #logo {
     display: inline-block;
     height: 54px;
-    width: 400px
+    width: 300px
 }
 </style>
 <div id="af-error-container"><a href="<?php echo constant('URL');?>"><span id=logo aria-label=Google></span></a>
@@ -92,4 +95,3 @@ a img {
     </div>
 </footer>
 
-<!-- Este es un comentario de error-->
