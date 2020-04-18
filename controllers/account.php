@@ -118,4 +118,6 @@ class Account extends Controller{
 
     }
 
+    //Comentario linea 121 de controlador account, by Alejo
+
 }
