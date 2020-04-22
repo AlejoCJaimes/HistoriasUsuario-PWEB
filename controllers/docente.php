@@ -43,6 +43,7 @@ class Docente extends Controller{
       $this->view->render('docente/perfil');
     }
 
+
     function EditarPerfil() {
 
       $confirmacion = "";
@@ -118,6 +119,10 @@ class Docente extends Controller{
 
     }
 
+/* CONTROLADOR VISTA CREARPROYECTO.PHP*/
+      function CrearProyecto(){
+        $this->view->render('docente/crearperfil');
+      }
 
     }
 
