@@ -225,7 +225,7 @@ $(document).ready(function(){
                     }
 
                         //Mostrar resultados por página
-                    for ($i=0; $i < ; $i++) { 
+                    for ($i=0; $i<1 ; $i++) { 
                         # code...
                     }    
                    ?>
