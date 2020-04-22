@@ -107,8 +107,8 @@
             <i class="fa fa-bars"></i>
           </button>
 
-      
-          <h3 style="color:#fff">...</h3>
+            <!--Cabecera Dinámica-->
+          <h3 style="color:#fff"><?php echo $this->cabecera;?></h3>
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">

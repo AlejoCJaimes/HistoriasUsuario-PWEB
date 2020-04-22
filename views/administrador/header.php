@@ -116,8 +116,8 @@
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-
-                    <h3 style="color:#fff">Inicio </h3>
+                    <!--Encabezado dinámico-->
+                    <h3 style="color:#fff"><?php echo $this->cabecera;?></h3>
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">

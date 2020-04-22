@@ -28,7 +28,7 @@ private $correo;
         $this->view->mensaje= $this->session->getCurrentUser();
         $this->view->correo = "";
         $this->view->id_correo = "";
-
+        $this->view->cabecera = "";
         $this->view->validacion = "";
         $this->view->_usuarios = [];
         //retorna los datos para el update del administrador;
@@ -50,7 +50,8 @@ private $correo;
     }
 
     function render() {
-
+        $cabecera = "Inicio";
+        $this->view->cabecera = $cabecera;
         $this->view->render('administrador/index');
 
 
@@ -58,6 +59,9 @@ private $correo;
 
 
     function usuarios() {
+      $cabecera = "";
+      $cabecera = "Usuarios";
+      $this->view->cabecera = $cabecera;
       $_usuarios = $this->model->loadUsuarios();
       $this->view->_usuarios = $_usuarios;
       $this->view->render('administrador/usuarios');
@@ -128,7 +132,9 @@ private $correo;
 
 
     function perfil () {
-
+      $cabecera = "";
+      $cabecera = "Perfil";
+      $this->view->cabecera = $cabecera;
       $id_correo = $this->session->getCurrentUser();
       $datos_perfil = $this->model->loadPerfil($id_correo);
       $this->view->datos_perfil = $datos_perfil;
@@ -140,8 +146,10 @@ private $correo;
     }
 
     function clave() {
-
-        $this->view->render('administrador/changeClave');
+      $cabecera = "";
+      $cabecera = "Ajustes";
+      $this->view->cabecera = $cabecera;
+      $this->view->render('administrador/changeClave');
 
     }
 

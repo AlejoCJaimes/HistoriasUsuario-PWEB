@@ -51,8 +51,8 @@
               <option value="<?php echo $row['Id']?>"> <?php echo $row['NombreDocumento']?></option>
               <?php
 
-                                    }
-                                ?>
+                  }
+                ?>
             </select>
             <!-- Hasta acá -->
           </div>
