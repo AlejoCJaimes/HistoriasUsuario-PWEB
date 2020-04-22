@@ -1,3 +1,4 @@
+
 <?php require 'views/administrador/header.php'?>
 
   <!-- Custom fonts for this template-->
@@ -10,7 +11,7 @@
 
   <!-- ESTILOS PARA LA TABLA NO MODIFICAR-->
   <link href="<?php echo constant('URL');?>resources/css/sb-admin-2.min.css" rel="stylesheet">
-
+ 
   <style type="text/css">
     body {
         color: #566787;
@@ -177,6 +178,9 @@ $(document).ready(function(){
         <!--<h6>//<//?php echo $this->respuesta;?></h6>-->
         <!-- End of Topbar -->
 
+<!--Method applicated for force initial pagination -->
+
+
         <!--CONTENIDO USUARIOS-->
         <div  class="container">
           <!--mensaje aqui-->
@@ -193,13 +197,6 @@ $(document).ready(function(){
             <a href="<?php echo constant('URL');?>usuario/register_docente" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Añadir Docente</span></a>
             <a href="<?php echo constant('URL');?>usuario/register_student" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Añadir Estudiante</span></a>
 					</div>
-
-
-
-
-
-
-
                 </div>
             </div>
             <table class="table table-striped table-hover">
@@ -208,10 +205,10 @@ $(document).ready(function(){
                         <th>Cedula</th>
                         <th>Nombre</th>
                         <th>Correo</th>
-						            <th>Fecha de registro</th>
-						            <th>Rol</th>
+						<th>Fecha de registro</th>
+					    <th>Rol</th>
                         <th>Estado</th>
-						            <th>Acción</th>
+						<th>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -267,29 +264,63 @@ $(document).ready(function(){
               <?php } ?>
             </table>
 			<div class="clearfix">
-                <div class="hint-text">Mostrando <b><?php
+                <div class="hint-text">Mostrando <b>
+                
+                <?php
                 require_once 'libs/database.php';
                 $this->db = new Database();
-
+                //count elements get from bdd
+                $elements = 0;
                 //statement return dates
                 $query = $this->db->connect()->query("SELECT count(*) AS usuarios from usuario ");
                 while($row = $query->fetch()) {
+                    $elements = $row['usuarios'];
+                 }
+                 
+                 $object_by_page = 2;                
+                 /*The function Ceil can me let round out up. In this
+                 case, this calculus is applicated for page, bicos the bdd return
+                 4 rows, which means that the divsion is decimal, don´t integer.
+                 Did you Understand all? Ask me, if have questions!
+                 */
+                 $pages = ceil($elements/$object_by_page);
+                 
+                ?> 
+                
+                <?php echo $elements ?></b> de <b>25</b> registros</div>
+                
+            <!--Funcionalidad de la Paginación-->
+        
+               
+                    <ul class="pagination">
+                    <!--Return-->
+                    <li class="page-item 
+                    
+                    <?php echo $_GET['page'] <= 1 ? 'disabled': ''
+                    
+                    ?>
+                    ">
+                    <a href="<?php echo constant('URL')?>administrador/usuarios?page=<?php echo $_GET['page']-1?>" class="page-link">Anterior</a></li>
+                     
+                    <?php for ($i=0; $i<$pages;$i++) { 
+                        # Method dinamic for show "item" por each page
+                    ?>
+                     <!--Application the TruTables-->
+                    <li class="page-item <?php echo $_GET['page'] == ($i+1)  ? 'active' : '' 
+                    
+                    ?>">
+                        <!--Method get for page-->
+                    <a href="<?php echo constant('URL')?>administrador/usuarios?page=<?php echo ($i +1)?>" class="page-link"><?php echo ($i +1)?>
+                    </a></li>
+                   <?php  } ?>
 
-
-                ?> <?php echo $row['usuarios']?></b> de <b>25</b> registros</div>
-                <?php
-
-                     }
-                 ?>
-
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#">Anterior</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link">Siguiente</a></li>
+                    <li class="page-item 
+                    
+                    <?php echo $_GET['page'] >=$pages? 'disabled': ''
+                    
+                    ?>
+                    ">
+                    <a href="<?php echo constant('URL')?>administrador/usuarios?page=<?php echo $_GET['page']+1?>" class="page-link">Siguiente</a></li>
                 </ul>
             </div>
         </div>
