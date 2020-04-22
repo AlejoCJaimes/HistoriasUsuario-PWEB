@@ -54,7 +54,7 @@
 
 
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo constant('URL');?>administrador/usuarios">
+                <a class="nav-link" href="<?php echo constant('URL');?>administrador/usuarios?page=1">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Usuarios</span></a>
             </li>
@@ -135,6 +135,5 @@
                     </ul>
 
                 </nav>
-
 
                 <!-- End of Topbar -->
