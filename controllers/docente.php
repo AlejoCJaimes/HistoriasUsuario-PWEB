@@ -119,11 +119,29 @@ class Docente extends Controller{
 
     }
 
-/* CONTROLADOR VISTA CREARPROYECTO.PHP*/
-      function CrearProyecto(){
-        $this->view->render('docente/crearperfil');
+/* CONTROLADOR VISTA PROYECTO.PHP*/
+      function Proyecto(){
+        $this->view->render('docente/proyecto');
       }
 
-    }
+      function crearProyecto(){
+        $this->view->render('docente/crearProyecto');
+      }
+
+      function detallesProyecto(){
+        $this->view->render('docente/detallesProyecto');
+      }
+
+/* CONTROLADOR VISTA METOLOGIA.PHP*/
+
+      function Metodologia(){
+        $this->view->render('docente/metodologia');
+      }
+
+      function crearMetodologia(){
+        $this->view->render('docente/crearMetodologia');
+      }
+
+}
 
 ?>

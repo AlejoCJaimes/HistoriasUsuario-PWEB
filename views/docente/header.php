@@ -46,6 +46,21 @@
           <span>Inicio</span></a>
       </li>
 
+      
+       <!-- Nav Item - Formulario Collapse Menu -->
+       <li class="nav-item">
+        <a class="nav-link" href="<?php echo constant('URL');?>docente/proyecto">
+          <i class="fas fa-project-diagram"></i>
+          <span>Proyecto</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?php echo constant('URL');?>docente/metodologia">
+          <i class="fas fa-th-large"></i>
+          <span>Metodología</span></a>
+      </li>
+
+
       <li class="nav-item">
         <a class="nav-link" href="<?php echo constant('URL');?>docente/perfil">
           <i class="fas fa-user"></i>
@@ -92,7 +107,8 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <h3 style="color:#fff"> Inicio </h3>
+      
+          <h3 style="color:#fff">...</h3>
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
