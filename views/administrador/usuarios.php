@@ -217,10 +217,17 @@ $(document).ready(function(){
                   <?php
 
                   include_once 'models/Users.php';
+                  //Se cargan los dartos
                   foreach ($this->_usuarios as $row ) {
                     $_usuarios = new Users();
                     $_usuarios = $row;
 
+                    }
+
+                        //Mostrar resultados por página
+                    for ($i=0; $i<1 ; $i++) { 
+                        # code...
+                    }    
                    ?>
 
                         <tr>
@@ -261,7 +268,8 @@ $(document).ready(function(){
                 </tbody>
 
 
-              <?php } ?>
+              
+       <!--Funcionalidad de la Paginación-->       
             </table>
 			<div class="clearfix">
                 <div class="hint-text">Mostrando <b>
@@ -277,7 +285,8 @@ $(document).ready(function(){
                     $elements = $row['usuarios'];
                  }
                  
-                 $object_by_page = 2;                
+                 $object_by_page = 5;           
+                 //13/5 = 3      
                  /*The function Ceil can me let round out up. In this
                  case, this calculus is applicated for page, bicos the bdd return
                  4 rows, which means that the divsion is decimal, don´t integer.
@@ -289,7 +298,7 @@ $(document).ready(function(){
                 
                 <?php echo $elements ?></b> de <b>25</b> registros</div>
                 
-            <!--Funcionalidad de la Paginación-->
+            
         
                
                     <ul class="pagination">
