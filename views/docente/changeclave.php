@@ -1,5 +1,6 @@
 <?php require 'views/docente/header.php'
 ?>
+
 <div class="container">
   <h2><i class="fas fa-cog"></i> Cambiar Clave </h2>
        <article>
@@ -25,5 +26,7 @@
        </article>
 </div>
 <!-- FIN  DEL CONTENIDO PRINCIPAL -->
+
+
 
 <?php require_once "views/docente/footer.php"?>

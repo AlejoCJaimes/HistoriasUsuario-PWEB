@@ -68,7 +68,7 @@
           <div class="form-group col-md-5">
             <label for="inputEmail4">Nombres</label>
             <input type="text" name="NombreEstudiante" value="<?php echo $datos_perfil->nombre;?>" class="form-control"
-              placeholder="Escribe tus nombre">
+              placeholder="Escribe tus nombres">
           </div>
           <div class="form-group col-md-5">
             <label for="inputEmail4">Apellidos</label>
