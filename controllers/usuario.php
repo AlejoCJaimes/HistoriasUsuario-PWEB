@@ -145,32 +145,31 @@ private $session;
                 $mensaje= '<p style="color: red"> El Usuario con correo <strong>'.$correo_usuario.'</strong> ya se encuentra registrado. '.'</p>';
             }
 
-          $this->view->mensaje = $mensaje;
-          $this->register_docente();
+            $this->view->mensaje = $mensaje;
+            $this->register_docente();
 
           //validacion para redireccionamiento.
-
-          if ($this->session->getStatus() === 1 || empty($this->session->get('correo_usuario')) ) {
+         // $this->session->init();
+          if ($this->session->getCurrentRolUser() == 1 ) {
             echo '<script>
-             setTimeout(function(){
-             window.location="http://localhost/HistoriasUsuario-PWEB/administrador/usuarios"
-           }, 3000);
-             </script>';
-
+          setTimeout(function(){
+          window.location="http://localhost/HistoriasUsuario-PWEB/administrador/usuarios"
+          }, 3000);
+          </script>';
+         
+       
           } else {
-
-            if ($this->session->getCurrentRolUser() != 1) {
-
-            } else {
-              echo '<script>
-               setTimeout(function(){
-               window.location="http://localhost/HistoriasUsuario-PWEB/"
-             }, 3000);
-               </script>';
-            }
-
-          }
+            echo '<script>
+            setTimeout(function(){
+            window.location="http://localhost/HistoriasUsuario-PWEB/"
+          }, 3000);
+            </script>';
+          } 
+          
+          
+           
         }
+        
 
 
 }
