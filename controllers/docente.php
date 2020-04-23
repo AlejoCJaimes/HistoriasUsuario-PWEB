@@ -134,10 +134,16 @@ class Docente extends Controller{
       }
 
       function crearProyecto(){
+        $cabecera = "";
+        $cabecera = "Proyecto";
+        $this->view->cabecera = $cabecera;
         $this->view->render('docente/crearProyecto');
       }
 
       function detallesProyecto(){
+        $cabecera = "";
+        $cabecera = "Proyecto";
+        $this->view->cabecera = $cabecera;
         $this->view->render('docente/detallesProyecto');
       }
 
@@ -158,6 +164,9 @@ class Docente extends Controller{
       }
 
       function detallesMetodologia(){
+        $cabecera = "";
+        $cabecera = "Metodología";
+        $this->view->cabecera = $cabecera;
         $this->view->render('docente/detallesMetodologia');
       }
 
@@ -185,29 +194,30 @@ class Docente extends Controller{
 
       // Método para crear metodología
       function addMetodologia(){
-        $mensaje = "";
+        $confirmacion = "";
 
         $nombreMetodologia = $_POST['nombreMetodologia'];
         $descripcionMetodologia = $_POST['descripcionMetodologia'];
         $fuente = $_POST['fuente'];
         
         if ($this->model->insertarMetodologia(['nombre'=>$nombreMetodologia, 'descripcion'=>$descripcionMetodologia])) {
-          $mensaje = '<div class="alert alert-info" role="alert" ><strong>¡Oye!</strong> se creó la metodología.
+          $confirmacion = '<div class="alert alert-info" role="alert" ><strong>¡Oye!</strong> se creó la metodología.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>
         </div> ';
+
       
         } else {
 
-          $mensaje = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> la metodología NO se creó.
+          $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> la metodología NO se creó.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>
         </div> ';
 
         }
-        $this->view->mensaje = $mensaje;
+        $this->view->confirmacion = $confirmacion;
         $this->crearMetodologia();
 
       }
