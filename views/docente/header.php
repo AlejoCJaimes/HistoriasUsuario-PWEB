@@ -60,6 +60,13 @@
           <span>Metodología</span></a>
       </li>
 
+      
+      <li class="nav-item">
+        <a class="nav-link" href="<?php echo constant('URL');?>docente/grupo">
+          <i class="fas fa-users"></i>
+          <span>Grupo</span></a>
+      </li>
+
 
       <li class="nav-item">
         <a class="nav-link" href="<?php echo constant('URL');?>docente/perfil">
@@ -108,7 +115,7 @@
           </button>
 
       
-          <h3 style="color:#fff">...</h3>
+          <h3 style="color:#fff"></h3>
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
