@@ -258,6 +258,7 @@
                   //Se cargan los dartos
                   $arregloUsuarios = array();
                   $posicion = 0;
+                  $cantidadPaginacion = 5; //Variable que maneja la cantidad de usuarios por página
                   foreach ($this->_usuarios as $row ) {
                     $_usuarios = new Users();
                     $_usuarios = $row;
@@ -270,9 +271,9 @@
                       $numeroPagina = "";
                   }
                     //Mostrar resultados por página
-                    for ($i=0; $i<5; $i++) { 
+                    for ($i=0; $i<$cantidadPaginacion; $i++) { 
                         if($numeroPagina >= 1){
-                            $posicionInicial = $i + 5*($numeroPagina);
+                            $posicionInicial = $i + $cantidadPaginacion*($numeroPagina);
                             if(!empty($arregloUsuarios[$posicionInicial]->correo)){
                                 ?>
                 <tr>
