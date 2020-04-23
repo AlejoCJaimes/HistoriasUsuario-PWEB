@@ -5,38 +5,51 @@
     <h2><i class=" fas fa-th-large"></i> Nueva Metodología </h2>
 
 
-    <form action="" method="POST" id="form">
+    <form action="" name="form" method="POST" id="form">
 
         <div class="form-group">
             <br>
             <label>Nombre</label>
-            <input type="text" id="nombre" name="Nombre" class="form-control "
-                placeholder="Escribe el nombre de la metodología" value=" ">
+            <input type="text" id="nombre" name="Nombre" class="form-control" placeholder="Escribe el nombre de la metodología">
         </div>
         <div class="form-group">
 
             <!--El campo de TextArea falta arreglar para que se despliegue a medida que se escribe-->
 
             <label>Descripción</label>
-            <textarea name="Descripcion" type="text" id="Descripcion" placeholder="Escribe la respectiva descripción" class="form-control" ></textarea>
-            
+            <textarea name="Descripcion" type="text" id="Descripcion" placeholder="Escribe la respectiva descripción" class="form-control"></textarea>
+
         </div>
 
 
         <!-- Agregación de Fuentes; EL BOTÓN DE AGREGAR FUENTE NO FUNCIONA!!!-->
-        <div class="form-group">
+        <div id="divFuentes" class="form-group">
             <label>Fuentes</label>
-            <input type="text" id="link" placeholder="Escribe la respectiva descripción" class="form-control" value=" ">
+            <input type="text" name="fuente[]" id="fuente" placeholder="Ingrese cita" class="form-control">
         </div>
-        <button id="adicional" name="adicional" type="button" class="btn btn-warning"> Agregar fuente </button>
-
+        <button id="btn" type="button" class="btn btn-warning"> Agregar fuente </button>
 
         <div class="form-group text-center">
             <input type="submit" id="envio" value="Crear" class="btn btn-primary ">
         </div>
 
     </form>
+    <!-- Script para agregar dinámicamente nuevos inputs -->
+    <script>
+        $("#btn").addEventListener("click",function(){
+            var input = document.createElement("input");
+            input.setAttribute("type","text");
+            input.setAttribute("name","fuente[]");
+            input.setAttribute("class","form-control");
+            input.setAttribute("placeholder","Ingrese cita");
+            var divFuentes = document.getElementById("divFuentes");
+            divFuentes.appendChild(input);
+        })
 
+        function $(selector){
+            return document.querySelector(selector);
+        }
+    </script>
 </div>
 <?php 
 
