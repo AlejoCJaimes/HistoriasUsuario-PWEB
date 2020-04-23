@@ -169,6 +169,10 @@ class Docente extends Controller{
         $this->view->render('docente/crearGrupo');
       }
 
+      function detallesGrupo(){
+        $this->view->render('docente/detallesGrupo');
+      }
+
 
 }
 
