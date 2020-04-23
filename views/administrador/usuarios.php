@@ -381,9 +381,33 @@ $(document).ready(function() {
                  
                 ?>
 
-                    <?php echo $elements ?></b> de <b>25</b> registros</div>
+                    <?php 
+                    if(isset($_GET['page'])){
+                        if ($cantidadPaginacion*($numeroPagina+1) > $elements) {
 
-
+                            ?>
+                            
+                            <?php echo $elements ?></b> de <b><?php echo $elements ?></b> registros</div>
+        
+                        <?php         
+                        }else {
+                   
+                       ?>
+                            <?php echo $cantidadPaginacion*($numeroPagina+1) ?></b> de <b><?php echo $elements ?></b> registros</div>
+        
+                       <?php 
+                       
+                    }
+                } else {
+                   
+                    ?>  
+                   <?php echo $elements ?></b> de <b><?php echo $elements ?></b> registros</div>  
+             <?php 
+                    }   
+             ?>
+                
+                         
+                     
 
 
             <ul class="pagination">
