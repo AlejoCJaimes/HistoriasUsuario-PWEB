@@ -140,7 +140,7 @@ sección del header en administrador linea 150-156 hace referencia a esto.-->
                         <i class="fa fa-bars"></i>
                     </button>
                     <!--Encabezado dinámico-->
-                    <h3 style="color:#fff"><?php echo $this->cabecera;?></h3>
+                    <h3 style="color:#fff"></h3>
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
