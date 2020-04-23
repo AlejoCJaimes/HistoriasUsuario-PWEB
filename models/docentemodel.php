@@ -106,5 +106,16 @@ class DocenteModel extends Model {
 
     }
 
+    function insertarMetodologia($datos){
+      try{
+        $query_1 = $this->db->connect()->prepare('INSERT INTO metodologia (Nombre, Descripcion) VALUES( :nombre, :descripcion)');
+        $query_1->execute(['nombre' => $datos['nombre'], 'descripcion' => $datos['descripcion']]);
+
+        return true;
+      }catch(PDOException $e){
+        return false;
+      }
+    }
+
 }
 ?>
