@@ -15,14 +15,35 @@
                <label>Fecha límite</label>
                <input type="date" id="FechaFin" name="FechaFin" class="form-control"value=" " >
         </div>
-        <div class="form-group">
-                <label>Metodología</label>
-                <input type="text" id="metodología" name="IdMetodologia" class="form-control" value="" >
+        
+<!--DropDrownList de metodología-->
+        <div class="form-group"> 
+        <label>Metodologia</label>
+        <select name = "metodologia" class="form-control">
+        <option disabled="disabled" selected="selected">Seleccionar una opcion</option>
+        <option value= "1" selected="selected">Cascada </option>
+        </select>
         </div>
-        <div class="form-group">
-                <label>Estado</label>
-                <input type="text" id="estado" name="IdEstado" class="form-control validar"  value=" ">
+
+          <!-- Lista de grupos quemados, para seleccionar a más de uno!-->
+          <div class="form-group"> 
+        <label>Selecciona a los grupos</label>
+        <select name = "NombreEstudiante" multiple="multiple" class="form-control">
+        <option value= "1" selected="selected">Grupo1 </option>
+        <option value= "1" selected="selected">Grupo2 </option>
+        <option value= "1" selected="selected">Grupo3 </option>
+        </select>
+
+
+<!--DropDrownList de estado-->
+        <div class="form-group"> 
+        <label>Estado</label>
+        <select name = "estado" class="form-control">
+        <option disabled="disabled" selected="selected">Seleccionar una opcion</option>
+        <option value= "1" selected="selected"> Publicado </option>
+        </select>
         </div>
+
         <div class="form-group text-center">
                 <input type="submit" id="envio" value="Crear" class="btn btn-primary ">
         </div>
