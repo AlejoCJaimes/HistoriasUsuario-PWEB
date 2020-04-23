@@ -144,22 +144,7 @@
                               <input class="input--style-4" type="email" id= "correo_usuario" name="correo_usuario" required>
                           </div>
                       </div>
-                      <div class="col-2">
-                          <div class="input-group">
-                          <label class="label">Rol</label>
-                      <div class="rs-select2 js-select-simple select--no-search">
-                          <select id="rol" name="rol">
-                              <option disabled="disabled" selected="selected">Seleccionar una opcion</option>
-                              <option  value="Estudiante">Estudiante</option>
-
-                          </select>
-
-                          <div class="select-dropdown"></div>
-
-                          </div>
-                      </div>
-
-                  </div>
+                     
                   </div>
 
 

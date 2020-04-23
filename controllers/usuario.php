@@ -53,7 +53,7 @@ private $session;
           $confirmacion_clave = $_POST['confirmacion_clave'];
           $clave_usuario = encriptar($clave_usuario);
 
-          $rol = $_POST['rol'];
+          $rol = "Estudiante";
 
           if ($this->model->insert(['correo_usuario'=>$correo_usuario, 'clave_usuario'=>$clave_usuario,'rol'=>$rol])) {
                     //insercion para el estudiante
@@ -86,7 +86,7 @@ private $session;
             echo '<script>
              setTimeout(function(){
              window.location="http://localhost/HistoriasUsuario-PWEB/administrador/usuarios"
-           }, 3000);
+           }, 1500);
              </script>';
           } else {
 
@@ -95,7 +95,7 @@ private $session;
               echo '<script>
                setTimeout(function(){
                window.location="http://localhost/HistoriasUsuario-PWEB/"
-             }, 3000);
+             }, 1500);
                </script>';
 
             } else {
@@ -122,7 +122,7 @@ private $session;
           $correo_usuario = $_POST['correo_usuario'];
           $clave_usuario = $_POST['clave_usuario'];
           $clave_usuario = encriptar($clave_usuario);
-          $rol = $_POST['rol'];
+          $rol = "Docente";
 
           if ($this->model->insert(['correo_usuario'=>$correo_usuario, 'clave_usuario'=>$clave_usuario,'rol'=>$rol])) {
 
@@ -150,21 +150,29 @@ private $session;
 
           //validacion para redireccionamiento.
          // $this->session->init();
-          if ($this->session->getCurrentRolUser() == 1 ) {
-            echo '<script>
-          setTimeout(function(){
-          window.location="http://localhost/HistoriasUsuario-PWEB/administrador/usuarios"
-          }, 3000);
-          </script>';
          
-       
-          } else {
+         if ($this->session->getStatus() === 1 || empty($this->session->get('correo_usuario')) ) {
+
+          echo '<script>
+           setTimeout(function(){
+           window.location="http://localhost/HistoriasUsuario-PWEB/administrador/usuarios"
+         }, 1500);
+           </script>';
+        } else {
+
+          if ($this->session->getCurrentRolUser() != 1) {
+
             echo '<script>
-            setTimeout(function(){
-            window.location="http://localhost/HistoriasUsuario-PWEB/"
-          }, 3000);
-            </script>';
-          } 
+             setTimeout(function(){
+             window.location="http://localhost/HistoriasUsuario-PWEB/"
+           }, 1500);
+             </script>';
+
+          } else {
+
+          }
+
+        } 
           
           
            
