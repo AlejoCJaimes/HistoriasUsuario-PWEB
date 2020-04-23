@@ -162,14 +162,23 @@ class Docente extends Controller{
 
 /* CONTROLADOR VISTA METOLOGIA.PHP*/
       function Grupo(){
+        $cabecera = "";
+      $cabecera = "Grupo";
+      $this->view->cabecera = $cabecera;
         $this->view->render('docente/grupo');
       }
 
       function crearGrupo(){
+        $cabecera = "";
+      $cabecera = "Grupo";
+      $this->view->cabecera = $cabecera;
         $this->view->render('docente/crearGrupo');
       }
 
       function detallesGrupo(){
+        $cabecera = "";
+      $cabecera = "Grupo";
+      $this->view->cabecera = $cabecera;
         $this->view->render('docente/detallesGrupo');
       }
 
