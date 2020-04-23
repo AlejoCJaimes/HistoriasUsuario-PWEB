@@ -5,6 +5,7 @@ class Docente extends Controller{
 
     function __construct(){
       parent::__construct();
+      $this->view->mensaje= "";
 
       $this->session = new Session();
 
@@ -182,7 +183,34 @@ class Docente extends Controller{
         $this->view->render('docente/detallesGrupo');
       }
 
+      // Método para crear metodología
+      function addMetodologia(){
+        $mensaje = "";
 
+        $nombreMetodologia = $_POST['nombreMetodologia'];
+        $descripcionMetodologia = $_POST['descripcionMetodologia'];
+        $fuente = $_POST['fuente'];
+        
+        if ($this->model->insertarMetodologia(['nombre'=>$nombreMetodologia, 'descripcion'=>$descripcionMetodologia])) {
+          $mensaje = '<div class="alert alert-info" role="alert" ><strong>¡Oye!</strong> se creó la metodología.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      
+        } else {
+
+          $mensaje = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> la metodología NO se creó.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+
+        }
+        $this->view->mensaje = $mensaje;
+        $this->crearMetodologia();
+
+      }
 }
 
 ?>
