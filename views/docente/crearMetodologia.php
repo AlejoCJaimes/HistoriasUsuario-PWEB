@@ -1,23 +1,23 @@
 <?php require 'views/docente/header.php'
 ?>
-
+<div class="input-group"><?php echo $this->mensaje;?> </div>
 <div class="container">
     <h2><i class=" fas fa-th-large"></i> Nueva Metodología </h2>
 
 
-    <form action="" name="form" method="POST" id="form">
+    <form action="<?php echo constant('URL');?>docente/addMetodologia" name="form" method="POST" id="form">
 
         <div class="form-group">
             <br>
             <label>Nombre</label>
-            <input type="text" id="nombre" name="Nombre" class="form-control" placeholder="Escribe el nombre de la metodología">
+            <input type="text" id="nombreMetodologia" name="nombreMetodologia" class="form-control" placeholder="Escribe el nombre de la metodología">
         </div>
         <div class="form-group">
 
             <!--El campo de TextArea falta arreglar para que se despliegue a medida que se escribe-->
 
             <label>Descripción</label>
-            <textarea name="Descripcion" type="text" id="Descripcion" placeholder="Escribe la respectiva descripción" class="form-control"></textarea>
+            <textarea name="descripcionMetodologia" type="text" id="Descripcion" placeholder="Escribe la respectiva descripción" class="form-control"></textarea>
 
         </div>
 
