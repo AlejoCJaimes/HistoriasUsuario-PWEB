@@ -90,7 +90,7 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <h3 style="color:#fff"> Inicio </h3>
+          <h3 style="color:#fff"></h3>
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">

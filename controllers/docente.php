@@ -25,18 +25,21 @@ class Docente extends Controller{
       $this->view->datos_perfil = [];
       $this->view->id_correo = "";
       $this->view->confirmacion = "";
-
+      $this->view->cabecera = "";
         //echo "<p>Nuevo controlador Main</p>";
     }
 
     function render() {
-
+        $cabecera = "Inicio";
+        $this->view->cabecera = $cabecera;
         $this->view->render('docente/index');
 
     }
 
     function perfil () {
-
+      $cabecera = "";
+      $cabecera = "Perfil";
+      $this->view->cabecera = $cabecera;
       $id_correo = $this->session->getCurrentUser();
       $datos_perfil = $this->model->loadPerfil($id_correo);
       $this->view->datos_perfil = $datos_perfil;
@@ -74,7 +77,9 @@ class Docente extends Controller{
 
     }
     function clave() {
-
+      $cabecera = "";
+      $cabecera = "Ajustes";
+      $this->view->cabecera = $cabecera;
         $this->view->render('docente/changeClave');
 
     }
@@ -121,6 +126,9 @@ class Docente extends Controller{
 
 /* CONTROLADOR VISTA PROYECTO.PHP*/
       function Proyecto(){
+        $cabecera = "";
+        $cabecera = "Proyecto";
+        $this->view->cabecera = $cabecera;
         $this->view->render('docente/proyecto');
       }
 
@@ -135,10 +143,16 @@ class Docente extends Controller{
 /* CONTROLADOR VISTA METOLOGIA.PHP*/
 
       function Metodologia(){
+        $cabecera = "";
+        $cabecera = "Metodología";
+        $this->view->cabecera = $cabecera;
         $this->view->render('docente/metodologia');
       }
 
       function crearMetodologia(){
+        $cabecera = "";
+        $cabecera = "Metodología";
+        $this->view->cabecera = $cabecera;
         $this->view->render('docente/crearMetodologia');
       }
 
