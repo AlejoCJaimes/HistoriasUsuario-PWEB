@@ -64,7 +64,7 @@
       <li class="nav-item">
         <a class="nav-link" href="<?php echo constant('URL');?>docente/grupo">
           <i class="fas fa-users"></i>
-          <span>Grupo</span></a>
+          <span>Grupo </span></a>
       </li>
 
 
