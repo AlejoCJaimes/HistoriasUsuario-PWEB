@@ -142,6 +142,20 @@ class Docente extends Controller{
         $this->view->render('docente/crearMetodologia');
       }
 
+      function detallesMetodologia(){
+        $this->view->render('docente/detallesMetodologia');
+      }
+
+/* CONTROLADOR VISTA METOLOGIA.PHP*/
+      function Grupo(){
+        $this->view->render('docente/grupo');
+      }
+
+      function crearGrupo(){
+        $this->view->render('docente/crearGrupo');
+      }
+
+
 }
 
 ?>
