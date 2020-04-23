@@ -27,18 +27,21 @@ class Estudiante extends Controller{
       $this->view->confirmacion = "";
       $this->view->datos_perfil = [];
       $this->view->id_correo = "";
-
+      $this->view->cabecera = "";
         //echo "<p>Nuevo controlador Main</p>";
     }
 
     function render() {
-
-        $this->view->render('estudiante/index');
+      $cabecera = "Inicio";
+      $this->view->cabecera = $cabecera;
+      $this->view->render('estudiante/index');
 
     }
 
     function perfil () {
-
+      $cabecera = "";
+      $cabecera = "Perfil";
+      $this->view->cabecera = $cabecera;
       $id_correo = $this->session->getCurrentUser();
       $datos_perfil = $this->model->loadPerfil($id_correo);
       $this->view->datos_perfil = $datos_perfil;
@@ -77,8 +80,10 @@ class Estudiante extends Controller{
     }
 
     function clave() {
-
-        $this->view->render('estudiante/changeClave');
+      $cabecera = "";
+      $cabecera = "Ajustes";
+      $this->view->cabecera = $cabecera;
+     $this->view->render('estudiante/changeClave');
 
     }
 
