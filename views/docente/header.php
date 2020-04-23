@@ -19,7 +19,30 @@
 
 
 </head>
+<!--Estilos para el logout modal
+Recordar que el boton de cerrar sesion se encuentra para todos en la 
+sección del header en docente linea 141-144 hace referencia a esto.-->
+<style type="text/css">
+.dropdown-item-b {
+  display: block;
+  width: 100%;
+  padding: 0.25rem 1.5rem;
+  clear: both;
+  font-weight: 400;
+  color: #3a3b45;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+}
 
+.dropdown-item-b:hover, .dropdown-item-b:focus {
+  color: #2e2f37;
+  text-decoration: none;
+  background-color: #288D9C;
+}
+}
+</style>
 <body id="page-top">
 
   <!-- Page Wrapper -->
@@ -112,12 +135,12 @@
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
-           <div class="topbar-divider d-none d-sm-block"></div>
+          
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-              <i class="fas fa-power-off"></i>
+            <a class="dropdown-item-b" href="#" data-toggle="modal" data-target="#logoutModal">
+              <i class="fas fa-power-off" style = "color: white"></i>
               </a>
 
 
