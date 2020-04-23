@@ -180,25 +180,29 @@ $(document).ready(function(){
 <!--Method applicated for force initial pagination -->
 
 
-        <!--CONTENIDO PROYECTOS-->
+        <!--CONTENIDO METODOLOGIAS-->
         <div class="container">
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-5">
+                    <!--Título del campo-->
                     <h2>Control de  <b>Metodologías</b></h2>
 					</div>
             		<div class="col-sm-7">
+                    <!--Esto lleva al formulario de crear una metodología-->
 			        <a href="<?php echo constant('URL');?>docente/crearMetodologia" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Añadir Metodología</span></a>
 					</div>
                 </div>
             </div>
+            <!--Este es el recuadro de la metodología (al igual que la de proyecto)-->
             <div class="col-xl-3 col-md-6">
               <div class="card bg-warning text-white mb-4">
-                <div class="card-body" name='' href="#">Proyecto prueba</div>
+                <div class="card-body" name='' href="#">Metodología prueba</div>
                 
+                <!--Esto lleva a editar y ver la metodología-->
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                  <a class="small text-black stretched-link" href="<?php echo constant('URL');?>docente/detallesProyecto">Ver detalles</a>
+                  <a class="small text-black stretched-link" href="<?php echo constant('URL');?>docente/detallesMetodologia">Ver detalles</a>
                   <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
               </div>
