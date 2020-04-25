@@ -192,7 +192,7 @@ class Docente extends Controller{
         $this->view->render('docente/detallesGrupo');
       }
 
-      // Método para crear metodología
+      // Método para crear metodología y fuentes
       function addMetodologia(){
         $confirmacion = "";
 
@@ -200,7 +200,7 @@ class Docente extends Controller{
         $descripcionMetodologia = $_POST['descripcionMetodologia'];
         $fuente = $_POST['fuente'];
         
-        if ($this->model->insertarMetodologia(['nombre'=>$nombreMetodologia, 'descripcion'=>$descripcionMetodologia])) {
+        if ($this->model->insertarMetodologia(['nombre'=>$nombreMetodologia, 'descripcion'=>$descripcionMetodologia, 'fuente' => $fuente])) {
           $confirmacion = '<div class="alert alert-info" role="alert" ><strong>¡Oye!</strong> se creó la metodología.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
