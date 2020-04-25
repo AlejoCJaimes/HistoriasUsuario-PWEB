@@ -52,3 +52,7 @@
 <?php 
 
 require_once 'views/docente/footer.php'?>
+<script src='<?php echo constant('URL');?>resources/js/autosize.min.js'></script>
+	<script>
+		autosize(document.querySelectorAll('#Descripcion'));
+	</script>
