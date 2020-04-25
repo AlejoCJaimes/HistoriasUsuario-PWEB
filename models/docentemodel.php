@@ -108,8 +108,27 @@ class DocenteModel extends Model {
 
     function insertarMetodologia($datos){
       try{
+        $nombreMetodologia = $datos['nombre'];
+        $fuenteArray = $datos['fuente'];
+        $IdMetodologia = 0; //Variable que guarda el Id de la metodología en su consulta
+
+        //Consulta para insertar una nueva metodología
         $query_1 = $this->db->connect()->prepare('INSERT INTO metodologia (Nombre, Descripcion) VALUES( :nombre, :descripcion)');
         $query_1->execute(['nombre' => $datos['nombre'], 'descripcion' => $datos['descripcion']]);
+
+        //Consulta para obtener el Id de la metodología
+        $query_2 = $this->db->connect()->query("SELECT Id FROM metodologia WHERE nombre = '$nombreMetodologia' Limit 1");
+        while($row = $query_2->fetch()){
+          $IdMetodologia = $row['Id'];            
+        }
+
+        //Consulta para insertar las fuentes escojidas por el usuario
+        for($i=0; $i< count($fuenteArray); $i++){
+          if($fuenteArray[$i] != ""){
+            $query_3 = $this->db->connect()->prepare('INSERT INTO fuentes (link, IdMetodologia) VALUES( :link, :idMetodologia)');
+            $query_3->execute(['link' => $fuenteArray[$i], 'idMetodologia' => $IdMetodologia]);
+          }
+        }
 
         return true;
       }catch(PDOException $e){
