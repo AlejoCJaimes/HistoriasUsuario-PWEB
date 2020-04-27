@@ -27,10 +27,20 @@
 </head>
 
 
+<style type="text/css">
+.bg-gra-03 {
+    background: -webkit-gradient(linear, left bottom, right top, from(#1FA991), to(#166364));
+  background: -webkit-linear-gradient(bottom left, #1FA991 0%, #166364 100%);
+  background: -moz-linear-gradient(bottom left, #1FA991 0%, #166364 100%);
+  background: -o-linear-gradient(bottom left, #1FA991 0%, #166364 100%);
+  background: linear-gradient(to top right, #1FA991 0%, #166364 100%);
+}
+</style>
+
 <body>
 
-<!--formulario admin-->
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+
+    <div class="page-wrapper bg-gra-03 p-t-130 p-b-100 font-poppins">
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
                 <div class="card-body">

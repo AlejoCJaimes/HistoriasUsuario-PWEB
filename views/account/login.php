@@ -17,7 +17,11 @@
     <style type="text/css">
     body {
         color: #fff;
-        background: #009888;
+        background: -webkit-gradient(linear, left bottom, right top, from(#1FA991), to(#166364));
+        background: -webkit-linear-gradient(bottom left, #1FA991 0%, #166364 100%);
+        background: -moz-linear-gradient(bottom left, #1FA991 0%, #166364 100%);
+        background: -o-linear-gradient(bottom left, #1FA991 0%, #166364 100%);
+        background: linear-gradient(to top right, #1FA991 0%, #166364 100%);
         margin-top: 185px;
     }
 
@@ -106,6 +110,7 @@
     .login-form form a:hover {
         text-decoration: underline;
     }
+    
     </style>
 </head>
 
@@ -129,7 +134,7 @@
             <p><a class="olvidaste_contra" href="#">¿Olvidaste tu contraseña?</a></p>
         </form>
         <p class="text-center small">¿No estás registrado? <a
-                href="<?php echo constant('URL');?>usuario">Regístrate!</a></p> <!-- /container -->
+                href="<?php echo constant('URL');?>home">Regístrate!</a></p> <!-- /container -->
         <div id="footer">
             <footer class="pt-4 my-md-5 pt-md-5 border-top">
                 <div class="row">
