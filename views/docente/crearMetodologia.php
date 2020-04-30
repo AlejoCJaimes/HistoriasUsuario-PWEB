@@ -1,5 +1,6 @@
 <?php require 'views/docente/header.php'
 ?>
+<link href="/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
 
 <div class="input-group"><?php echo $this->confirmacion;?> </div>
 <div class="container">
@@ -19,13 +20,16 @@
             <textarea name="descripcionMetodologia" type="text" id="Descripcion" required placeholder="Escribe la respectiva descripción" class="form-control"></textarea>
 
         </div>
-
         <div id="divFuentes" class="form-group">
             <label>Fuentes</label>
-            <input type="text" name="fuente[]" required id="fuente" placeholder="Ingrese cita" class="form-control">
+            <table id="tablaDinamica">
+               <td><input type="text" name="fuente[]" style="width: 500px;" required id="fuente" placeholder="Ingrese cita" class="form-control"> </td>
+                <td><button id="btn" type="button" class="btn btn-success"><i class=" fas fa-plus"></i></button> </td>
+                <td><ion-icon name="trash-outline"></ion-icon></td>
+            </table>
+           
         </div>
-        <button id="btn" type="button" class="btn btn-warning"> Agregar fuente </button>
-
+        
         <div class="form-group text-center">
             <input type="submit" id="envio" value="Crear" class="btn btn-primary ">
         </div>
@@ -33,25 +37,32 @@
     </form>
 
     <!-- Script para agregar dinámicamente nuevos inputs -->
-    <script>
-        $("#btn").addEventListener("click",function(){
-            var input = document.createElement("input");
-            input.setAttribute("type","text");
-            input.setAttribute("name","fuente[]");
-            input.setAttribute("class","form-control");
-            input.setAttribute("placeholder","Ingrese cita");
-            var divFuentes = document.getElementById("divFuentes");
-            divFuentes.appendChild(input);
-        })
+   
 
-        function $(selector){
-            return document.querySelector(selector);
-        }
-    </script>
 </div>
-<?php 
+<?php require_once 'views/docente/footer.php'?>
+<script>
 
-require_once 'views/docente/footer.php'?>
+$(document).ready(function(){
+    var i = 1;
+
+    $('#btn').click(function () {
+        i++;
+        $('#tablaDinamica').append('<tr id="row'+i+'">' +
+        '<td><input type="text" name="fuente[]" placeholder="Ingrese cita" class="form-control" /></td>' +
+       
+         '<td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove"><i class=" fas fa-trash"></i></button></td>' +
+          '</tr>');
+    });
+    
+    $(document).on('click', '.btn_remove', function () {
+        var id = $(this).attr('id');
+       $('#row'+ id).remove();
+    });
+
+   
+})
+</script>
 <script src='<?php echo constant('URL');?>resources/js/autosize.min.js'></script>
 	<script>
 		autosize(document.querySelectorAll('#Descripcion'));
