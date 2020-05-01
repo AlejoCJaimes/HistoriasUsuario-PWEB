@@ -22,7 +22,7 @@ class Session{
     }
 
     public function getCurrentRolUser(){
-        return $_SESSION['IdRol'];
+        return isset($_SESSION['IdRol']);
     }
 
     public function setCurrentStatus($key,$_status){
