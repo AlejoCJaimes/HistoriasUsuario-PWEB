@@ -70,7 +70,7 @@ class AdministradorModel extends Model {
 
     }
 
-    public function loadUsuarios() {
+    public function loadUsuarios($correo) {
       require_once 'models/Users.php';
 
       //
@@ -80,7 +80,7 @@ class AdministradorModel extends Model {
 
         $aux_correo = "";
         //statement return dates
-        $query = $this->db->connect()->query("SELECT u.correo_usuario as 'correo' , DATE_FORMAT(u.FechaCreacion_Usuario,' %d-%M-%Y %h:%i %p') as 'fecha', rr.nombre as 'nombre' , r._status as 'estado' FROM usuario u JOIN rolusuario r ON u.Id = r.IdUsuario JOIN rol rr ON rr.id = r.IdRol ORDER BY u.FechaCreacion_Usuario DESC ");
+        $query = $this->db->connect()->query("SELECT u.correo_usuario as 'correo' , DATE_FORMAT(u.FechaCreacion_Usuario,' %d-%M-%Y %h:%i %p') as 'fecha', rr.nombre as 'nombre' , r._status as 'estado' FROM usuario u JOIN rolusuario r ON u.Id = r.IdUsuario JOIN rol rr ON rr.id = r.IdRol WHERE u.correo_usuario != '$correo' ORDER BY u.FechaCreacion_Usuario DESC ");
 
         while($row = $query->fetch()) {
            $item = new Users();

@@ -61,8 +61,10 @@ private $correo;
     function usuarios() {
       $cabecera = "";
       $cabecera = "Usuarios";
+      $correo = $this->session->getCurrentUser();
+      $this->view->correo = $correo;
       $this->view->cabecera = $cabecera;
-      $_usuarios = $this->model->loadUsuarios();
+      $_usuarios = $this->model->loadUsuarios($correo);
       $this->view->_usuarios = $_usuarios;
       $this->view->render('administrador/usuarios');
 
@@ -497,6 +499,7 @@ private $correo;
 
 
     }
+
 
 
 }

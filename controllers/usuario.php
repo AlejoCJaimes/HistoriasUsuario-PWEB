@@ -85,7 +85,7 @@ private $session;
                   echo '<script>
                   setTimeout(function(){
                   window.location="http://localhost/HistoriasUsuario-PWEB/administrador/usuarios"
-                }, 7000);
+                }, 2000);
                   </script>';
                
              } else{
@@ -93,7 +93,7 @@ private $session;
                   echo '<script>
                   setTimeout(function(){
                   window.location="http://localhost/HistoriasUsuario-PWEB/"
-                }, 7000);
+                }, 2000);
                   </script>';
                  
               }
@@ -150,7 +150,7 @@ private $session;
                 echo '<script>
                 setTimeout(function(){
                 window.location="http://localhost/HistoriasUsuario-PWEB/administrador/usuarios"
-              }, 7000);
+              }, 2000);
                 </script>';
              
            } else{
@@ -158,7 +158,7 @@ private $session;
                 echo '<script>
                 setTimeout(function(){
                 window.location="http://localhost/HistoriasUsuario-PWEB/"
-              }, 7000);
+              }, 2000);
                 </script>';
                
             }

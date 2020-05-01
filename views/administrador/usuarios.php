@@ -295,7 +295,6 @@ $(document).ready(function() {
                             name="estado">&bull;</span><?php echo  $arregloUsuarios[$posicionInicial]->estado?></td>
 
 
-
                     <td>
                         <a href="<?php echo constant('URL') . 'administrador/detalleGeneral/' . $arregloUsuarios[$posicionInicial]->correo; ?>"
                             class="settings" title="Editar" data-toggle="tooltip"><i
@@ -304,6 +303,8 @@ $(document).ready(function() {
                         <a href="<?php echo constant('URL') . 'administrador/eliminarUsuario/' . $arregloUsuarios[$posicionInicial]->correo; ?>"
                             class="delete" title="Eliminar" data-toggle="tooltip">
                             <i class="material-icons"> &#xE5C9;</i></a>
+
+                        
 
                         <!--Modal eliminar Usuario-->
                         <!-- Modal -->
@@ -336,11 +337,14 @@ $(document).ready(function() {
                         <a href="<?php echo constant('URL') . 'administrador/detalleGeneral/' . $arregloUsuarios[$i]->correo; ?>"
                             class="settings" title="Editar" data-toggle="tooltip"><i
                                 class="material-icons">&#xE8B8;</i></a>
-                        <a href="<?php echo constant('URL') . 'administrador/eliminarUsuario/' . $arregloUsuarios[$i]->correo; ?>"
-                            class="delete" title="Eliminar" data-toggle="tooltip" ><i
+                               
+                    <a href="<?php echo constant('URL') . 'administrador/eliminarUsuario/' . $arregloUsuarios[$i]->correo; ?>"
+                            class="delete" title="Eliminar" data-toggle="tooltip"><i
                                 class="material-icons">&#xE5C9;</i></a>
                     </td>
+                        
                 </tr>
+                   
                 <?php
                             }
                             ?>
@@ -358,16 +362,22 @@ $(document).ready(function() {
         </table>
         <div class="clearfix">
             <div class="hint-text">Mostrando <b>
-
+                
                     <?php
                 require_once 'libs/database.php';
                 $this->db = new Database();
                 //count elements get from bdd
                 $elements = 0;
+                $element_dif_admin = 0;
+                $copy = $this->correo;
                 //statement return dates
                 $query = $this->db->connect()->query("SELECT count(*) AS usuarios from usuario ");
+                $query_2 = $this->db->connect()->query("SELECT count(*) AS usuarios from usuario WHERE correo_usuario != '$copy' ");
                 while($row = $query->fetch()) {
                     $elements = $row['usuarios'];
+                 }
+                 while($row = $query_2->fetch()) {
+                    $element_dif_admin = $row['usuarios'];
                  }
                  
                  $object_by_page = 5;           
@@ -387,7 +397,7 @@ $(document).ready(function() {
 
                             ?>
                             
-                            <?php echo $elements ?></b> de <b><?php echo $elements ?></b> registros</div>
+                            <?php echo $element_dif_admin ?></b> de <b><?php echo $elements ?></b> registros</div>
         
                         <?php         
                         }else {
@@ -401,7 +411,7 @@ $(document).ready(function() {
                 } else {
                    
                     ?>  
-                   <?php echo $elements ?></b> de <b><?php echo $elements ?></b> registros</div>  
+                   <?php echo $element_dif_admin ?></b> de <b><?php echo $elements ?></b> registros</div>  
              <?php 
                     }   
              ?>
@@ -458,9 +468,36 @@ $(document).ready(function() {
 
 </div>
 <!-- End of Page Wrapper -->
-
+ <!-- Modal -->
+  
+  
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
 <?php require 'views/administrador/footer.php'?>
+
+<script>
+
+$(document).ready(function(){
+    var i = 1;
+
+    $('#btn').click(function () {
+        i++;
+        $('#tablaDinamica').append('<tr id="row'+i+'">' +
+        '<td><input type="text" name="fuente[]" placeholder="Ingrese cita" class="form-control" /></td>' +
+       
+         '<td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove"><i class=" fas fa-trash"></i></button></td>' +
+          '</tr>');
+    });
+    
+    $(document).on('click', '.btn_remove', function () {
+        var id = $(this).attr('id');
+       $('#row'+ id).remove();
+    });
+
+   
+})
+</script>
+
+
