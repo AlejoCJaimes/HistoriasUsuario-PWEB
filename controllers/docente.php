@@ -27,6 +27,7 @@ class Docente extends Controller{
       $this->view->id_correo = "";
       $this->view->confirmacion = "";
       $this->view->cabecera = "";
+      $this->view->metodologias = [];
         //echo "<p>Nuevo controlador Main</p>";
     }
 
@@ -150,9 +151,15 @@ class Docente extends Controller{
 /* CONTROLADOR VISTA METOLOGIA.PHP*/
 
       function Metodologia(){
+        
         $cabecera = "";
         $cabecera = "Metodología";
         $this->view->cabecera = $cabecera;
+        //cargar metodologias
+        $metodologias = $this->model->loadMetodologias();
+        $this->view->metodologias = $metodologias;
+        //var_dump($metodologias);
+        
         $this->view->render('docente/metodologia');
       }
 
@@ -163,12 +170,18 @@ class Docente extends Controller{
         $this->view->render('docente/crearMetodologia');
       }
 
-      function detallesMetodologia(){
+      function detallesMetodologia($param = null){
         $cabecera = "";
         $cabecera = "Metodología";
         $this->view->cabecera = $cabecera;
+        $id =  $param[0];
+        $metodologias = [];
+        $metodologias = $this->model->getById($id);
+        $this->view->metodologias = $metodologias;
         $this->view->render('docente/detallesMetodologia');
       }
+
+      
 
 /* CONTROLADOR VISTA METOLOGIA.PHP*/
       function Grupo(){
@@ -191,6 +204,8 @@ class Docente extends Controller{
       $this->view->cabecera = $cabecera;
         $this->view->render('docente/detallesGrupo');
       }
+
+
 
       // Método para crear metodología y fuentes
       function addMetodologia(){
