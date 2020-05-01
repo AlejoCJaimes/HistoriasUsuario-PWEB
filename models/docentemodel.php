@@ -105,7 +105,43 @@ class DocenteModel extends Model {
 
 
     }
+    //mostrar metodologias
+    function loadMetodologias() {
+      require_once 'models/Metodologia.php';
 
+        $items = [];
+        $aleatorio = 0;
+      try {
+        $query = $this->db->connect()->query("SELECT * FROM metodologia");
+        while($row = $query->fetch()) {
+          $aleatorio++;
+          $item = new Metodologia();
+          $item->id = $row['Id'];
+          $item->nombre = $row['Nombre'];
+          //$aleatorio = rand(1,70);
+          if ($aleatorio > 0 && $aleatorio <=4) {
+            $item->bg_color = "primary";
+          } elseif ($aleatorio > 4 && $aleatorio <=8) {
+            $item->bg_color = "warning";
+          } elseif ($aleatorio >8 && $aleatorio <=12) {
+            $item->bg_color = "success";
+          }elseif ($aleatorio > 12 && $aleatorio <=16) {
+            $item->bg_color = "danger";
+          }elseif ($aleatorio > 16 && $aleatorio <=20) {
+            $item->bg_color = "dark";
+          }elseif ($aleatorio > 20 && $aleatorio <=24) {
+            $item->bg_color = "info";
+          }elseif ($aleatorio > 24) {
+            $item->bg_color = "secondary";
+          }
+          array_push($items,$item);
+        }
+        //var_dump($nombre_metodologia);
+        return $items;
+      } catch(PDOException $e){
+        return false;
+      }
+    }
     function insertarMetodologia($datos){
       try{
         $nombreMetodologia = $datos['nombre'];
@@ -135,6 +171,34 @@ class DocenteModel extends Model {
         return false;
       }
     }
+    public function getById($id){
+      require_once 'models/Metodologia.php';
+      $array = [];
+      $query = $this->db->connect()->query("SELECT * FROM metodologia WHERE Id = '$id';");
+      try{
+          //$query->execute(['correo_usuario' => $id]);
+
+          while($row = $query->fetch()){
+              $item = new Metodologia();
+              $item->id = $row['Id'];
+              $item->nombre = $row['Nombre'];
+              $item->descripcion = $row['Descripcion'];
+          
+              $query_2 = $this->db->connect()->query("SELECT * FROM fuentes WHERE IdMetodologia = '$id';");
+              while ($row_2 = $query_2->fetch()) {
+                $item->id_fuentes = $row_2['Id']; 
+                $item->link = $row_2['link'];
+              }
+
+              array_push($array,$item);
+          }
+          var_dump($array);
+         
+          return $array;
+      }catch(PDOException $e){
+          return null;
+      }
+  }
 
 }
 ?>
