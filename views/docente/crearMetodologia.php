@@ -1,12 +1,14 @@
 <?php require 'views/docente/header.php'
 ?>
+<div class="input-group"><?php echo $this->confirmacion;?> </div>
 <link href="/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
 
-<div class="input-group"><?php echo $this->confirmacion;?> </div>
+
 <div class="container">
+
     <h2><i class=" fas fa-th-large"></i> Nueva Metodología </h2>
 
-
+    
     <form action="<?php echo constant('URL');?>docente/addMetodologia" name="form" method="POST" id="form">
 
         <div class="form-group">

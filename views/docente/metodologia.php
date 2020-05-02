@@ -10,6 +10,7 @@
 
 <!-- ESTILOS PARA LA TABLA NO MODIFICAR-->
 <link href="<?php echo constant('URL');?>resources/css/sb-admin-2.min.css" rel="stylesheet">
+<link rel="icon" href="<?php echo constant('URL');?>resources/toast/toastr.min.css">
 
 <style type="text/css">
 body {
@@ -107,13 +108,13 @@ table.table td:last-child i {
 
 table.table td a {
     font-weight: bold;
-    color: #566787;
+    color: white;
     display: inline-block;
     text-decoration: none;
 }
 
 table.table td a:hover {
-    color: #2196F3;
+    color: #F7F1CE;
 }
 
 table.table td a.settings {
@@ -203,6 +204,7 @@ table.table .avatar {
     margin-top: 10px;
     font-size: 13px;
 }
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -216,6 +218,7 @@ $(document).ready(function() {
 <!--Method applicated for force initial pagination -->
 
 <!--CONTENIDO METODOLOGIAS-->
+<?php echo $this->confirmacion_modal ?>
 <div class="container">
     <div class="table-wrapper">
         <div class="table-title">
@@ -227,7 +230,9 @@ $(document).ready(function() {
                 <div class="col-sm-7">
                     <!--Esto lleva al formulario de crear una metodología-->
                     <a href="<?php echo constant('URL');?>docente/crearMetodologia" class="btn btn-primary"><i
-                            class="material-icons">&#xE147;</i> <span>Añadir</span></a>
+                    class="material-icons">&#xE147;</i> <span>Añadir</span></a>
+                    <a href="<?php echo constant('URL');?>docente/crearMetodologia" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop"><i
+                    class="material-icons">&#xe872;</i> <span>Eliminar</span></a>
                 </div>
             </div>
         </div>
@@ -251,8 +256,10 @@ $(document).ready(function() {
                         <!--Esto lleva a editar y ver la metodología-->
                         <div class="card-footer d-flex align-items-center justify-content-between">
                             <a class="small text-black stretched-link" href="<?php echo constant('URL'). 'docente/detalleGeneral/' . $metodologias->id ;?>">Editar</a>
-                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            <div class="small text-black"><i class="fas fa-angle-right"></i></div>
+                            
                         </div>
+                        
                     </div>
                 </div> 
                 <?php } ?>   
@@ -266,13 +273,70 @@ $(document).ready(function() {
 <!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
+<!--<a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
-</a>
+</a>-->
+
+<!-- Modal -->
+<?php require_once 'views/docente/footer.php'?>
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Eliminar Métodologia</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <!-- <p style ="color: red">Tenga en cuenta quer si elimina la metodologia
+        se eliminará todo su contenido como fuentes y no podrá recuperarse. </p>-->
+        <div class="alert alert-info" role="alert">
+        
+            <h6 class="alert-heading"><strong>Tenga en cuenta...</strong></h6>
+           
+            <hr>
+            <p>Si se elimina la metodologia
+            se eliminarán tambien sus fuentes y no podrá recuperarse.</p>
+          
+            </div>
+      </div>
+      <div class="modal-body">
+      <table id="tablaDinamica">
+        <thead>
+                <tr>
+                <th scope="col" class="text-center">Métodologias </th>
+                </tr>
+        </thead>    
+      <?php 
+            $arreglo = [];
+            require_once 'models/Metodologia.php';
+            foreach($this->metodologias as $row){
+                $metodologias = new Metodologia();
+                $metodologias = $row;
+                array_push($arreglo,$metodologias);
+        ?>
+            <tbody>
+            <tr>
+               <td><input type="text" readonly style="width: 330px;" required id="fuente" placeholder="Ingrese cita" class="form-control" value="<?php echo $metodologias->nombre?>"></td>
+                <td><a href=" <?php echo constant('URL').'docente/eliminarMetodologia/'. $metodologias->id?>" type="button" class="btn btn-danger"><i class=" fas fa-trash"></i> </a></td>
+                <td><ion-icon name="trash-outline"></ion-icon></td> 
+            </tr>
+                </tdbody>
+        <?php }?>
+        
+      <table>  
+      </div>
+            
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
-
-<?php require 'views/docente/footer.php'?>
 
 <script>
 $(document).ready(function() {

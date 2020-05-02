@@ -26,6 +26,7 @@ class Docente extends Controller{
       $this->view->datos_perfil = [];
       $this->view->id_correo = "";
       $this->view->confirmacion = "";
+      $this->view->confirmacion_modal = "";
       $this->view->cabecera = "";
       $this->view->metodologias = [];
       $this->view->fuentes = [];
@@ -187,7 +188,9 @@ class Docente extends Controller{
         $this->view->fuentes = $fuentes;
         $this->view->render('docente/detallesMetodologia');
       }
-       // Método para crear metodología y fuentes
+        ///////////////////////////
+       // MÉTODOS PARA METODOLOGIA
+       //////////////////////////
        function addMetodologia(){
         $confirmacion = "";
 
@@ -243,11 +246,11 @@ class Docente extends Controller{
             echo '<br>'.$nuevas_fuentes[$i].'<br>';
           }*/
           if($this->model->update_Fuentes(['fuentes'=>$nuevas_fuentes, 'id' => $id])) {
-            $confirmacion = '<div class="alert alert-info" role="alert" ><strong>¡Éxito!</strong> Se agregaron <strong>'.$cantida_nuevas_fuentes.'<strong> nuevas fuentes!
+            $confirmacion = '<div class="alert alert-info" role="alert" ><strong>¡Éxito!</strong> Se agregó <strong>'.$cantida_nuevas_fuentes.'</strong> nuevas fuentes!
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
-            </div> ';
+            </div> ';           
     
           
             } else {
@@ -286,6 +289,69 @@ class Docente extends Controller{
 
       }
 
+      function eliminarFuente($param = null) {
+        $id = $param[0];
+        $id_fuente = $param[1];
+        $num_fuentes  = 0;
+        $confirmacion = "";
+        $link = "";
+        require_once 'libs/database.php';
+        $this->db = new Database();
+        
+        $busqueda_id = $this->db->connect()->query("SELECT count(*) as num_fuentes from fuentes WHERE IdMetodologia = '$id' ");
+          while($row_busqueda = $busqueda_id->fetch()) {
+          $num_fuentes = $row_busqueda['num_fuentes'];
+        }
+        if ($num_fuentes > 1 ) {
+          if ($this->model->eliminarFuentes(['id_fuente' => $id_fuente])) {
+            
+            $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong> Se ha eliminado la fuente correctamente
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> ';
+          } else {
+            $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> la fuente no se pudo editar.
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+              </div> ';
+          }
+        } else {
+          $confirmacion = '<div class="alert alert-warning" role="alert" > <strong> ¡Lo sentimos! </strong> No se pueden eliminar todas las fuentes.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        }
+        
+        
+        $this->view->confirmacion = $confirmacion;
+        $this->detallesMetodologia($id);
+      }
+
+      function eliminarMetodologia($param = null) {
+        $confirmacion_modal = "";
+        $idMetodologia = $param[0];
+        if ($this->model->deleteMetodologia(['id' => $idMetodologia])) {
+          $confirmacion_modal = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong> Se ha eliminado la metodologia correctamente
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        } else {
+          $confirmacion_modal = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> la metodologia correctamente.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        }
+        $this->view->confirmacion_modal = $confirmacion_modal;
+        $this->Metodologia();
+      }
+      //////////////////////////
+      ///FIN MÉTODOS METODOLOGIA
+      //////////////////////////
       
 
 /* CONTROLADOR VISTA METOLOGIA.PHP*/

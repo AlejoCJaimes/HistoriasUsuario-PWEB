@@ -10,7 +10,7 @@
 
 <!-- ESTILOS PARA LA TABLA NO MODIFICAR-->
 <link href="<?php echo constant('URL');?>resources/css/sb-admin-2.min.css" rel="stylesheet">
-
+<link href="<?php echo constant('URL');?>resources/build/toastr.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
   body {
       color: #566787;
@@ -221,6 +221,7 @@ $(document).ready(function(){
   </a>
 
 
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="<?php echo constant('URL');?>resources/js/toastr.js"></script>
 
 <?php require_once 'views/docente/footer.php'?>

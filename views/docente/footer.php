@@ -57,6 +57,7 @@
   <!-- Page level custom scripts -->
   <script src="<?php echo constant('URL');?>resources/js/demo/chart-area-demo.js"></script>
   <script src="<?php echo constant('URL');?>resources/js/demo/chart-pie-demo.js"></script>
+  <script src="<?php echo constant('URL');?>resources/js/toastr.min.js"></script>
 
 </body>
 

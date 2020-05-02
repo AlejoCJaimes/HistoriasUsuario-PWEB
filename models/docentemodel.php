@@ -267,5 +267,31 @@ class DocenteModel extends Model {
 
   }
 
+  public function eliminarFuentes($datos) {
+    $idfuente = $datos['id_fuente'];
+    //buscar idLink
+    try {
+      
+      $delete= $this->db->connect()->prepare("DELETE FROM `fuentes` WHERE Id =:idfuente");
+      $delete->execute(['idfuente' => $idfuente]);
+      return true;
+    } catch (PDOException $e) {
+      return false;
+    }
+    
+    
+  }
+
+  public function deleteMetodologia($datos) {
+      $idMetodologia = $datos['id'];
+      try {
+        $delete= $this->db->connect()->prepare("DELETE FROM `metodologia` WHERE Id =:idMetodologia");
+        $delete->execute(['idMetodologia' => $idMetodologia]);
+        return true;
+      } catch (PDOException $e) {
+        return false;
+      }
+  }
+
 }
 ?>

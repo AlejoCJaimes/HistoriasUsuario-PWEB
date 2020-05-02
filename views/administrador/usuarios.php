@@ -325,7 +325,7 @@ $(document).ready(function() {
                     <td><?php echo  $arregloUsuarios[$i]->_cedulas?></td>
                     <td><a href="<?php echo constant('URL') . 'administrador/detalleGeneral/' . $arregloUsuarios[$i]->correo; ?>"
                             class="avatar" alt="Avatar"><?php echo  $arregloUsuarios[$i]->_nombres?> </a></td>
-                    <td><a><?php echo  $arregloUsuarios[$i]->correo?> </a></td>
+                    <td><a class="avatar" alt="Avatar"><?php echo  $arregloUsuarios[$i]->correo?> </a></td>
                     <td><?php echo  $arregloUsuarios[$i]->fecha_registro?></td>
                     <td><?php echo  $arregloUsuarios[$i]->rol?></td>
 

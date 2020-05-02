@@ -51,6 +51,8 @@
             <table id="tablaDinamica">
                <td><input type="text" name="fuente[]" style="width: 500px;" required id="fuente" placeholder="Ingrese cita" class="form-control" value="<?php echo $array[$i]->link?>"></td>
                 <td><button id="btn" type="button" class="btn btn-success"><i class=" fas fa-plus"></i></button> </td>
+                <td><a href=" <?php echo constant('URL') . 'docente/eliminarFuente/' . $metodologias->id.'/'.$array[$i]->id_fuentes; ?>" type="button" class="btn btn-danger"><i class=" fas fa-trash"></i> </a></td>
+                <!--"class="delete" title="Eliminar" data-toggle="tooltip"></a> </td>-->
                 <td><ion-icon name="trash-outline"></ion-icon></td>
             </table>
             <?php }?>
