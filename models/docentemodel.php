@@ -171,33 +171,100 @@ class DocenteModel extends Model {
         return false;
       }
     }
-    public function getById($id){
+    public function getByIdMetodologia($id){
       require_once 'models/Metodologia.php';
       $array = [];
-      $query = $this->db->connect()->query("SELECT * FROM metodologia WHERE Id = '$id';");
+      
+      
       try{
           //$query->execute(['correo_usuario' => $id]);
-
+          $query = $this->db->connect()->query("SELECT * FROM metodologia WHERE Id = '$id';");
           while($row = $query->fetch()){
-              $item = new Metodologia();
+            $item = new Metodologia();
               $item->id = $row['Id'];
               $item->nombre = $row['Nombre'];
               $item->descripcion = $row['Descripcion'];
-          
-              $query_2 = $this->db->connect()->query("SELECT * FROM fuentes WHERE IdMetodologia = '$id';");
-              while ($row_2 = $query_2->fetch()) {
-                $item->id_fuentes = $row_2['Id']; 
-                $item->link = $row_2['link'];
-              }
-
               array_push($array,$item);
-          }
-          var_dump($array);
+          }  
+        // var_dump($array);
          
           return $array;
       }catch(PDOException $e){
           return null;
       }
+  }
+  public function getByIdFuentes($id){
+    require_once 'models/Metodologia.php';
+    $array = [];
+    try{
+      //$query->execute(['correo_usuario' => $id]);
+     /* $query = $this->db->connect()->query("SELECT * FROM metodologia WHERE Id = '$id';");
+      while($row = $query->fetch()){
+          $id =$row['Id'];
+      }  */
+      $query_2 = $this->db->connect()->query("SELECT * FROM fuentes WHERE IdMetodologia = '$id';");
+      while ($row_2 = $query_2->fetch()) {
+        $items= new Metodologia();
+          $items->id_fuentes = $row_2['Id']; 
+          $items->link = $row_2['link'];
+          array_push($array,$items);
+        } 
+      // var_dump($array);
+       return $array;
+    }catch(PDOException $e){
+        return null;
+    }
+}
+
+  public function updateMetodologia($datos) {
+    $IdMetodologia = 0;
+    try{
+      $Id = $datos['id'];
+      $nombreMetodologia = $datos['nombreMetodologia'];
+      $descripcion = $datos['descripcionMetodologia'];
+      $fuenteArray = $datos['fuente'];
+      $cantidadFuentes = count($fuenteArray);
+      $longitud = $datos['longitud'];
+      $IdMetodologias =[];
+      $query_1 = $this->db->connect()->prepare("UPDATE `metodologia` SET `Nombre` =:nombre, `Descripcion` =:descripcion WHERE `metodologia`.`Id` = '$Id'");
+      $query_1->execute(['nombre' =>$nombreMetodologia,'descripcion' => $descripcion]);
+      if ($longitud == $cantidadFuentes ) {
+       
+       $delete= $this->db->connect()->prepare("DELETE FROM `fuentes` WHERE IdMetodologia =:id");
+       $delete->execute(['id' => $Id]);
+        //Consulta para insertar las fuentes escojidas por el usuario
+        for($i=0; $i<$cantidadFuentes; $i++){
+          if($fuenteArray[$i] != ""){
+            $query_3 = $this->db->connect()->prepare('INSERT INTO fuentes (link, IdMetodologia) VALUES( :link, :idMetodologia)');
+            $query_3->execute(['link' => $fuenteArray[$i], 'idMetodologia' => $Id]);
+          }
+        }
+      }
+    
+    return true;
+    }catch(PDOException $e){
+      return false;
+    }
+  }
+
+  public function update_Fuentes($datos) {
+      $Id = $datos['id'];
+      $fuentes = $datos['fuentes'];
+      $cantidadFuentes = count($fuentes);
+      try {
+        for ($i=1; $i<=$cantidadFuentes; $i++) { 
+          if ($fuentes[$i] != "") {
+            $insert_nuevas_fuentes = $this->db->connect()->prepare('INSERT INTO fuentes (link,IdMetodologia) VALUES ( :link, :idMetodologia)');
+            $insert_nuevas_fuentes->execute(['link' => $fuentes[$i], 'idMetodologia' => $Id ]);
+          }
+          
+        }
+        
+        return true;
+      } catch (PDOException $e) {
+        return false;
+      }
+
   }
 
 }

@@ -1,6 +1,6 @@
 <?php require 'views/docente/header.php'
 ?>
-
+<?php echo $this->confirmacion?>
 <div class="container">
 <?php 
             //$arreglo = [];
@@ -12,15 +12,16 @@
             }
             
 ?>
+
 <h2><i class=" fas fa-info-circle"></i> Detalles de la metodología </h2>
 
  
-    <form action="" method="POST" id="form">
-
+    <form action="<?php echo constant('URL');?>docente/actualizarMetodologia" method="POST" id="form">
+      
         <div class="form-group">
             <br>
                 <label>Nombre</label>
-                <input type="text" id="nombre" name="Nombre" class="form-control " placeholder="Escribe el nombre de la metodología" value="<?php echo $metodologias->nombre?>" >
+                <input type="text" id="nombre" name="nombreMetodologia" class="form-control " placeholder="Escribe el nombre de la metodología" value="<?php echo $metodologias->nombre?>" >
         </div>
 
         <!--El campo de TextArea falta arreglar para que se despliegue a medida que se escribe-->
@@ -35,15 +36,20 @@
         <div id="divFuentes" class="form-group">
             <label>Fuentes</label>
             <?php 
-            //$arreglo = [];
+            $array = [];
             require_once 'models/Metodologia.php';
-            foreach($this->metodologias as $row){
-                $array = new Metodologia();
-                $array = $row;
-                //array_push($arreglo,$metodologias);
+            foreach($this->fuentes as $row){
+                $fuentes = new Metodologia();
+                $fuentes = $row;
+                array_push($array,$fuentes);
+            }
+            $longitud = count($array);
+            
+           for ($i=0; $i<$longitud ; $i++) { 
+               
 ?>
             <table id="tablaDinamica">
-               <td><input type="text" name="fuente[]" style="width: 500px;" required id="fuente" placeholder="Ingrese cita" class="form-control" value="<?php echo $metodologias->link?>"></td>
+               <td><input type="text" name="fuente[]" style="width: 500px;" required id="fuente" placeholder="Ingrese cita" class="form-control" value="<?php echo $array[$i]->link?>"></td>
                 <td><button id="btn" type="button" class="btn btn-success"><i class=" fas fa-plus"></i></button> </td>
                 <td><ion-icon name="trash-outline"></ion-icon></td>
             </table>
@@ -54,7 +60,8 @@
        <div class="form-group text-center">
                 <input type="submit" id="envio" value="Editar" class="btn btn-primary ">
         </div>
-        
+        <input type="text" name="id" style=" width: 0px; height: 0px ; color: white" value="<?php echo $metodologias->id?> " readonly> 
+        <input type="text" name="longitud" style=" width: 0px; height: 0px ; color: white" value="<?php echo $longitud?> " readonly>
     </form>
     
 </div>

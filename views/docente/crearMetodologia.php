@@ -23,7 +23,7 @@
         <div id="divFuentes" class="form-group">
             <label>Fuentes</label>
             <table id="tablaDinamica">
-               <td><input type="text" name="fuente[]" style="width: 500px;" required id="fuente" placeholder="Ingrese cita" class="form-control"> </td>
+               <td><input type="text" name="fuente[]" style="width: 500px;" required id="fuente" placeholder="Ingrese cita" class="form-control" required> </td>
                 <td><button id="btn" type="button" class="btn btn-success"><i class=" fas fa-plus"></i></button> </td>
                 <td><ion-icon name="trash-outline"></ion-icon></td>
             </table>

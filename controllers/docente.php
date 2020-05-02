@@ -28,6 +28,7 @@ class Docente extends Controller{
       $this->view->confirmacion = "";
       $this->view->cabecera = "";
       $this->view->metodologias = [];
+      $this->view->fuentes = [];
         //echo "<p>Nuevo controlador Main</p>";
     }
 
@@ -169,16 +170,120 @@ class Docente extends Controller{
         $this->view->cabecera = $cabecera;
         $this->view->render('docente/crearMetodologia');
       }
-
-      function detallesMetodologia($param = null){
+      function detalleGeneral($param = null){
+      $id = $param [0];
+      $this->detallesMetodologia($id);
+    
+      }
+      function detallesMetodologia($id){
         $cabecera = "";
         $cabecera = "Metodología";
         $this->view->cabecera = $cabecera;
-        $id =  $param[0];
         $metodologias = [];
-        $metodologias = $this->model->getById($id);
+        $metodologias = $this->model->getByIdMetodologia($id);
+        $fuentes = [];
+        $fuentes = $this->model->getByIdFuentes($id);
         $this->view->metodologias = $metodologias;
+        $this->view->fuentes = $fuentes;
         $this->view->render('docente/detallesMetodologia');
+      }
+       // Método para crear metodología y fuentes
+       function addMetodologia(){
+        $confirmacion = "";
+
+        $nombreMetodologia = $_POST['nombreMetodologia'];
+        $descripcionMetodologia = $_POST['descripcionMetodologia'];
+        $fuente = $_POST['fuente'];
+        
+        if ($this->model->insertarMetodologia(['nombre'=>$nombreMetodologia, 'descripcion'=>$descripcionMetodologia, 'fuente' => $fuente])) {
+          $confirmacion = '<div class="alert alert-info" role="alert" ><strong>¡Oye!</strong> se creó la metodología.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+
+      
+        } else {
+
+          $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> la metodología NO se creó.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+
+        }
+        $this->view->confirmacion = $confirmacion;
+        $this->crearMetodologia();
+
+      }
+      function actualizarMetodologia() {
+
+        $confirmacion = "";
+        $nombreMetodologia = $_POST['nombreMetodologia'];
+        $descripcionMetodologia = $_POST['descripcionMetodologia'];
+        $fuente = $_POST['fuente'];
+        $cant_fuentes = count($fuente);
+        $id = $_POST['id']; 
+        $longitud = $_POST['longitud'];
+        $IdMetodologias = [];
+        
+        //Definir si se hace una insercion o una busqueda en las fuentes
+        require_once 'libs/database.php';
+        $this->db = new Database();
+        $busqueda_id = $this->db->connect()->query("SELECT link from fuentes WHERE IdMetodologia = '$id' order by Id desc ");
+        while($row_busqueda = $busqueda_id->fetch()) {
+        array_push($IdMetodologias,$row_busqueda['link']);
+        }
+        
+        if($cant_fuentes > $longitud) {
+          $nuevas_fuentes= array_diff($fuente, $IdMetodologias);
+          $cantida_nuevas_fuentes = count($nuevas_fuentes);
+          /*for ($i=1; $i <=$cantida_nuevas_fuentes; $i++) { 
+            
+            echo '<br>'.$nuevas_fuentes[$i].'<br>';
+          }*/
+          if($this->model->update_Fuentes(['fuentes'=>$nuevas_fuentes, 'id' => $id])) {
+            $confirmacion = '<div class="alert alert-info" role="alert" ><strong>¡Éxito!</strong> Se agregaron <strong>'.$cantida_nuevas_fuentes.'<strong> nuevas fuentes!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> ';
+    
+          
+            } else {
+    
+            $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> No se puedieron crear las fuentes.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> ';
+    
+            }
+          
+        } else {
+          if ($this->model->updateMetodologia(['longitud'=>$longitud,'id' => $id,'nombreMetodologia'=>$nombreMetodologia, 'descripcionMetodologia'=>$descripcionMetodologia, 'fuente' => $fuente])) {
+            $confirmacion = '<div class="alert alert-info" role="alert" ><strong>¡Éxito!</strong> Metodologia editada correctamente.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> ';
+    
+          
+            } else {
+    
+            $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> la metodología no se pudo editar.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> ';
+    
+            }
+        }
+        
+        
+        $this->view->confirmacion = $confirmacion;
+        $this->detallesMetodologia($id);
+
       }
 
       
@@ -207,35 +312,7 @@ class Docente extends Controller{
 
 
 
-      // Método para crear metodología y fuentes
-      function addMetodologia(){
-        $confirmacion = "";
-
-        $nombreMetodologia = $_POST['nombreMetodologia'];
-        $descripcionMetodologia = $_POST['descripcionMetodologia'];
-        $fuente = $_POST['fuente'];
-        
-        if ($this->model->insertarMetodologia(['nombre'=>$nombreMetodologia, 'descripcion'=>$descripcionMetodologia, 'fuente' => $fuente])) {
-          $confirmacion = '<div class="alert alert-info" role="alert" ><strong>¡Oye!</strong> se creó la metodología.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-        </div> ';
-
-      
-        } else {
-
-          $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> la metodología NO se creó.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-        </div> ';
-
-        }
-        $this->view->confirmacion = $confirmacion;
-        $this->crearMetodologia();
-
-      }
+     
 }
 
 ?>
