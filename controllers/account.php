@@ -78,19 +78,19 @@ class Account extends Controller{
               $_status = $row_3['_status'];
 
           }
-          if ($_status == "Pendiente") {
+          if (isset($_status) == "Pendiente") {
 
               $validacion = "<div class='alert alert-info alert-dismissable'>
               <button type='button' class='close' data-dismiss='alert'>&times;</button>
               <strong>¡Validacion!</strong> El usuario ".$correo_usuario."  se encuentra en proceso de validacion, aún no ha sido activado.
               </div>";
 
-        } elseif ($_status == "Suspendido") {
+        } elseif (isset($_status) == "Suspendido") {
               $validacion = "<div class='alert alert-warning alert-dismissable'>
               <button type='button' class='close' data-dismiss='alert'>&times;</button>
               <strong>¡Suspensión!</strong> El usuario ".$correo_usuario."  se encuentra suspendido, por favor contactarse con el administrador.
               </div>";
-        } elseif ($_status != "Pendiente") {
+        } elseif (isset($_status) != "Pendiente") {
 
                 $validacion = "<div class='alert alert-danger alert-dismissable'>
                 <button type='button' class='close' data-dismiss='alert'>&times;</button>

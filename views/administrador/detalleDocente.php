@@ -106,11 +106,6 @@
               <option value="<?php echo $docente->id_rol; ?>">  <?php echo $docente->rol; ?> </option>
             </select>
           </div>
-          <div class="form-group col-md-5">
-            <label>Correo</label>
-            <input type="text" name="correo_usuario" class="form-control" readonly
-              value="<?php echo $docente->correo; ?>">
-          </div>
         </div>
 
         <div class="form-row">
@@ -133,6 +128,7 @@
             <button type="submit" class="btn btn-primary ">Editar</button>
           </div>
         </div>
+        <input type="text" name="correo_usuario" style=" width: 0px; height: 0px ; color: white" value="<?php echo $docente->correo; ?>">
     </form>
     <fieldset>
 
