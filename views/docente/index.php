@@ -1,14 +1,13 @@
 <?php require 'views/docente/header.php'
 ?>
-
-
 <!-- INICIO DEL CONTENIDO PRINCIPAL -->
+<body  onLoad="toastr.success('¡Bienvenido! '+'<?php echo $this->mensaje;?>')">
 <div class="container">
   <h2> BIENVENIDO <?php echo $this->mensaje;?>  </h2>
   <h2>Sea usted bienvenido a su panel.</h2>
   <h2>Hasta el momento usted puede editar su perfil y cerrar sesión</h2>
 </div>
-
+</body>
 
 <!-- FIN  DEL CONTENIDO PRINCIPAL -->
 

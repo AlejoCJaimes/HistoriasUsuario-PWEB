@@ -55,9 +55,11 @@
   <script src="<?php echo constant('URL');?>resources/layout_partial/chart.js/Chart.min.js"></script>
 
   <!-- Page level custom scripts -->
+  
   <script src="<?php echo constant('URL');?>resources/js/demo/chart-area-demo.js"></script>
   <script src="<?php echo constant('URL');?>resources/js/demo/chart-pie-demo.js"></script>
-  <script src="<?php echo constant('URL');?>resources/js/toastr.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="<?php echo constant('URL');?>resources/js/toastr.js"></script>
 
 </body>
 

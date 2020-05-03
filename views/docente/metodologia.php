@@ -219,6 +219,7 @@ $(document).ready(function() {
 
 <!--CONTENIDO METODOLOGIAS-->
 <?php echo $this->confirmacion_modal ?>
+<body onLoad="toastr.info('¡Bienvenido a mi página!')">
 <div class="container">
     <div class="table-wrapper">
         <div class="table-title">
@@ -268,7 +269,6 @@ $(document).ready(function() {
 
     </div>
     <!-- End of Content Wrapper -->
-
 </div>
 <!-- End of Page Wrapper -->
 
@@ -319,7 +319,7 @@ $(document).ready(function() {
             <tbody>
             <tr>
                <td><input type="text" readonly style="width: 330px;" required id="fuente" placeholder="Ingrese cita" class="form-control" value="<?php echo $metodologias->nombre?>"></td>
-                <td><a href=" <?php echo constant('URL').'docente/eliminarMetodologia/'. $metodologias->id?>" type="button" class="btn btn-danger"><i class=" fas fa-trash"></i> </a></td>
+                <td><a id ="btn" href=" <?php echo constant('URL').'docente/eliminarMetodologia/'. $metodologias->id?>" type="button" class="btn btn-danger"><i class=" fas fa-trash"></i> </a></td>
                 <td><ion-icon name="trash-outline"></ion-icon></td> 
             </tr>
                 </tdbody>
@@ -335,28 +335,10 @@ $(document).ready(function() {
     </div>
   </div>
 </div>
-
-
-
+            </body>
 <script>
-$(document).ready(function() {
-    var i = 1;
-
-    $('#btn').click(function() {
-        i++;
-        $('#tablaDinamica').append('<tr id="row' + i + '">' +
-            '<td><input type="text" name="fuente[]" placeholder="Ingrese cita" class="form-control" /></td>' +
-
-            '<td><button type="button" name="remove" id="' + i +
-            '" class="btn btn-danger btn_remove"><i class=" fas fa-trash"></i></button></td>' +
-            '</tr>');
-    });
-
-    $(document).on('click', '.btn_remove', function() {
-        var id = $(this).attr('id');
-        $('#row' + id).remove();
-    });
-
-
-})
+        document.getElementById('btn')
+        .addEventListener('click',function() {
+            toastr.success('s');
+        })
 </script>

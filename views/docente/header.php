@@ -17,7 +17,7 @@
   <!-- Custom styles for this template-->
   <link href="<?php echo constant('URL');?>resources/css/sb-admin-2.min.css" rel="stylesheet">
   <link rel="icon" href="<?php echo constant('URL');?>resources/img/logo.png">
-
+  <link href="<?php echo constant('URL');?>resources/css/toastr.css" rel="stylesheet" type="text/css">
 </head>
 <style type="text/css">
 .dropdown-item-b {

@@ -339,6 +339,7 @@ class Docente extends Controller{
           <span aria-hidden="true">&times;</span>
           </button>
           </div> ';
+          //$confirmacion_modal = "Eliminado con exito";
         } else {
           $confirmacion_modal = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> la metodologia correctamente.
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">

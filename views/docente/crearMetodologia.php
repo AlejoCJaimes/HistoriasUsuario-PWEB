@@ -1,9 +1,10 @@
 <?php require 'views/docente/header.php'
 ?>
-<div class="input-group"><?php echo $this->confirmacion;?> </div>
+<div><?php echo $this->confirmacion;?> </div>
 <link href="/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
 
 
+<body>
 <div class="container">
 
     <h2><i class=" fas fa-th-large"></i> Nueva Metodología </h2>
@@ -42,7 +43,9 @@
    
 
 </div>
+</body>
 <?php require_once 'views/docente/footer.php'?>
+
 <script>
 
 $(document).ready(function(){
