@@ -2,6 +2,7 @@
 <?php
 require_once 'controllers/home.php';
 require_once 'helpers/Encriptar.php';
+require_once 'helpers/Util.php';
 require_once 'libs/session.php';
 
 class Usuario extends Controller{
@@ -47,6 +48,7 @@ private $session;
           $apellido = $_POST['ApellidoEstudiante'];
           $programa = $_POST['CodigoPrograma'];
           $numero_semestre = $_POST['NumeroSemestre'];
+          $numero_documento = formatoNumeroDocumento($numero_documento);
 
           //recepcion de variables para el usuario
           $correo_usuario = $_POST['correo_usuario'];
@@ -114,6 +116,7 @@ private $session;
           $nombre = $_POST['NombreDocente'];
           $apellido = $_POST['ApellidoDocente'];
           $titulo = $_POST['TituloDocente'];
+          $numero_documento = formatoNumeroDocumento($numero_documento);
           //recepcion de variables para el usuario
           $correo_usuario = $_POST['correo_usuario'];
           $clave_usuario = $_POST['clave_usuario'];

@@ -3,6 +3,7 @@
 require_once 'libs/session.php';
 require_once 'libs/database.php';
 require_once 'helpers/Encriptar.php';
+require_once 'helpers/Util.php';
 
 class Administrador extends Controller{
 
@@ -162,6 +163,7 @@ private $correo;
       $nombre = $_POST['NombreEstudiante'];
       $apellido = $_POST['ApellidoEstudiante'];
       $cedula = $_POST['CedulaEstudiante'];
+      $cedula = formatoNumeroDocumento($cedula);
       $programa = $_POST['CodigoPrograma'];
       $semestre = $_POST['NumeroSemestre'];
       $tipo_documento = $_POST['IdTipoDocumento'];
@@ -196,6 +198,7 @@ private $correo;
       $nombre = $_POST['NombreDocente'];
       $apellido = $_POST['ApellidoDocente'];
       $cedula = $_POST['CedulaDocente'];
+      $cedula = formatoNumeroDocumento($cedula);
       $tipo_documento = $_POST['IdTipoDocumento'];
       $titulo = $_POST['TituloDocente'];
       $correo = $_POST['correo_usuario'];
@@ -361,6 +364,7 @@ private $correo;
       $numero_documento = $_POST['CedulaAdmin'];
       $nombre = $_POST['NombreAdmin'];
       $apellido = $_POST['ApellidoAdmin'];
+      $numero_documento = formatoNumeroDocumento($numero_documento);
       //recepcion de variables para el usuario
       $correo_usuario = $_POST['correo_usuario'];
       $clave_usuario = $_POST['clave_usuario'];
@@ -442,6 +446,7 @@ private $correo;
       $nombre = $_POST['NombreAdmin'];
       $apellido = $_POST['ApellidoAdmin'];
       $cedula = $_POST['CedulaAdmin'];
+      $cedula = formatoNumeroDocumento($cedula);
       $tipo_documento = $_POST['IdTipoDocumento'];
 
       $correo = $_POST['correo_usuario'];
@@ -474,6 +479,7 @@ private $correo;
       $nombre = $_POST['NombreAdmin'];
       $apellido = $_POST['ApellidoAdmin'];
       $cedula = $_POST['CedulaAdmin'];
+      $cedula = formatoNumeroDocumento($cedula);
       $tipo_documento = $_POST['IdTipoDocumento'];
 
       $correo = $_POST['correo_usuario'];

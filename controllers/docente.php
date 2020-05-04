@@ -29,6 +29,7 @@ class Docente extends Controller{
       $this->view->confirmacion_modal = "";
       $this->view->cabecera = "";
       $this->view->metodologias = [];
+      $this->view->grupos = [];
       $this->view->fuentes = [];
         //echo "<p>Nuevo controlador Main</p>";
     }
@@ -150,7 +151,9 @@ class Docente extends Controller{
         $this->view->render('docente/detallesProyecto');
       }
 
-/* CONTROLADOR VISTA METOLOGIA.PHP*/
+        ///////////////////////////
+       // MÉTODOS PARA METODOLOGIA
+       //////////////////////////
 
       function Metodologia(){
         
@@ -188,9 +191,7 @@ class Docente extends Controller{
         $this->view->fuentes = $fuentes;
         $this->view->render('docente/detallesMetodologia');
       }
-        ///////////////////////////
-       // MÉTODOS PARA METODOLOGIA
-       //////////////////////////
+       
        function addMetodologia(){
         $confirmacion = "";
 
@@ -350,30 +351,33 @@ class Docente extends Controller{
         $this->view->confirmacion_modal = $confirmacion_modal;
         $this->Metodologia();
       }
-      //////////////////////////
-      ///FIN MÉTODOS METODOLOGIA
-      //////////////////////////
+      ///////////////////////////
+       // MÉTODOS PARA GRUPOS
+       //////////////////////////
       
 
 /* CONTROLADOR VISTA METOLOGIA.PHP*/
       function Grupo(){
         $cabecera = "";
-      $cabecera = "Grupo";
-      $this->view->cabecera = $cabecera;
+        $cabecera = "Grupo";
+        $this->view->cabecera = $cabecera;
         $this->view->render('docente/grupo');
       }
 
       function crearGrupo(){
         $cabecera = "";
-      $cabecera = "Grupo";
-      $this->view->cabecera = $cabecera;
+        $cabecera = "Grupo";
+        $grupos = [];
+        $grupos = $this->model->loadEstudiantes();
+        $this->view->grupos = $grupos;
+        $this->view->cabecera = $cabecera;
         $this->view->render('docente/crearGrupo');
       }
 
       function detallesGrupo(){
         $cabecera = "";
-      $cabecera = "Grupo";
-      $this->view->cabecera = $cabecera;
+        $cabecera = "Grupo";
+        $this->view->cabecera = $cabecera;
         $this->view->render('docente/detallesGrupo');
       }
 
