@@ -219,7 +219,7 @@ $(document).ready(function() {
 
 <!--CONTENIDO METODOLOGIAS-->
 <?php echo $this->confirmacion_modal ?>
-<body onLoad="toastr.info('¡Bienvenido a mi página!')">
+<body>
 <div class="container">
     <div class="table-wrapper">
         <div class="table-title">

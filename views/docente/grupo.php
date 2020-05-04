@@ -186,7 +186,7 @@ $(document).ready(function(){
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-5">
-                    <h2>Control de  <b>Grupos</b></h2>
+                    <h2><b>Grupos</b></h2>
 					</div>
             		<div class="col-sm-7">
 
