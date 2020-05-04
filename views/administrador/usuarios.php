@@ -477,27 +477,3 @@ $(document).ready(function() {
 </a>
 <?php require 'views/administrador/footer.php'?>
 
-<script>
-
-$(document).ready(function(){
-    var i = 1;
-
-    $('#btn').click(function () {
-        i++;
-        $('#tablaDinamica').append('<tr id="row'+i+'">' +
-        '<td><input type="text" name="fuente[]" placeholder="Ingrese cita" class="form-control" /></td>' +
-       
-         '<td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove"><i class=" fas fa-trash"></i></button></td>' +
-          '</tr>');
-    });
-    
-    $(document).on('click', '.btn_remove', function () {
-        var id = $(this).attr('id');
-       $('#row'+ id).remove();
-    });
-
-   
-})
-</script>
-
-
