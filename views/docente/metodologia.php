@@ -232,7 +232,20 @@ $(document).ready(function() {
                     <!--Esto lleva al formulario de crear una metodología-->
                     <a href="<?php echo constant('URL');?>docente/crearMetodologia" class="btn btn-primary"><i
                     class="material-icons">&#xE147;</i> <span>Añadir</span></a>
-                    <a href="<?php echo constant('URL');?>docente/crearMetodologia" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop"><i
+                    <?php 
+                    $i = 0;
+                    $getStateDis = "";
+                    foreach($this->metodologias as $row){
+                    $i++;
+                 }
+                 
+                 if ($i > 0 ) {
+                        $getStateDis = "";
+                 } else {
+                        $getStateDis = "disabled";
+                 }
+        ?>
+                    <a href="<?php echo constant('URL');?>docente/crearMetodologia" class="btn btn-primary <?php echo $getStateDis ?>" data-toggle="modal" data-target="#staticBackdrop"><i
                     class="material-icons">&#xe872;</i> <span>Eliminar</span></a>
                 </div>
             </div>
