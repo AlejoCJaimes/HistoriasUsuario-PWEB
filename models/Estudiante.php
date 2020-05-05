@@ -9,7 +9,7 @@ public $NombreEstudiante;
 public $ApellidoEstudiante;
 public $CodigoPrograma;
 public $NombrePrograma;
-public $numero_semestre;
+public $NumeroSemestre;
 
 //Estado del rol , si se encuentra activo o suspendido en la base de datos.
 

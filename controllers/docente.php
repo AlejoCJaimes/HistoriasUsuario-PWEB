@@ -367,8 +367,10 @@ class Docente extends Controller{
       function crearGrupo(){
         $cabecera = "";
         $cabecera = "Grupo";
+        $confirmacion = "";
         $grupos = [];
         $grupos = $this->model->loadEstudiantes();
+        //var_dump($grupos);
         $this->view->grupos = $grupos;
         $this->view->cabecera = $cabecera;
         $this->view->render('docente/crearGrupo');

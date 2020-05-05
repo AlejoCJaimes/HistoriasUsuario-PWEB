@@ -105,6 +105,9 @@ class DocenteModel extends Model {
 
 
     }
+      ///////////////////////////
+       // INICIO SENTENCIAS SQL PARA METODOLOGÍAS
+       //////////////////////////
     //mostrar metodologias
     function loadMetodologias() {
       require_once 'models/Metodologia.php';
@@ -292,6 +295,55 @@ class DocenteModel extends Model {
         return false;
       }
   }
+        ///////////////////////////
+       // FIN SENTENCIAS SQL PARA METODOLOGIAS
+       //////////////////////////
+      
+
+        ///////////////////////////
+       // INICIO SENTENCIAS SQL PARA GRUPOS
+       //////////////////////////
+       public function loadEstudiantes() {
+        require_once 'models/Estudiante.php';
+
+        $query = $this->db->connect()->query("SELECT e.Id AS 'Id', e.CedulaEstudiante AS 'CedulaEstudiante', e.NombreEstudiante as 'NombreEstudiante', e.ApellidoEstudiante as 'ApellidoEstudiante', e.NumeroSemestre as 'NumeroSemestre', e.CodigoPrograma as 'CodigoPrograma', r._status as 'estado' 
+        FROM estudiante AS e
+        JOIN usuario AS u ON e.IdUsuario = u.Id
+        JOIN rolusuario AS r ON r.IdUsuario = u.Id
+        WHERE r._status !='Pendiente'");
+        
+        $items = [];
+        try {
+          while ($row =$query->fetch()) {
+            $item = new Estudiante();
+            $item->id = $row['Id'];
+            $item->CedulaEstudiante = $row['CedulaEstudiante'];
+            $item->NombreEstudiante = $row['NombreEstudiante'];
+            $item->ApellidoEstudiante = $row['ApellidoEstudiante'];
+            $item->CodigoPrograma = $row['CodigoPrograma'];
+            $codigoprograma = $row['CodigoPrograma'];
+            $item->NumeroSemestre = $row['NumeroSemestre'];
+            $item->estado = $row['estado'];
+
+           $query_2 = $this->db->connect()->query("SELECT Nombre FROM programa where codigo = '$codigoprograma'"); 
+           
+            while ($row_2 =$query_2->fetch()) {
+              $item->NombrePrograma = $row_2['Nombre'];
+            
+            }
+            array_push($items,$item);
+            }
+          
+            return $items;
+      
+        } catch (PDOException $e) {
+          return $e;
+        }
+        
+      }
+      ///////////////////////////
+       // FIN SENTENCIAS SQL PARA GRUPOS
+       //////////////////////////
 
 }
 ?>
