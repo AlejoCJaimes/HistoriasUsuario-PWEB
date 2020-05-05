@@ -191,7 +191,7 @@ $(document).ready(function(){
             		<div class="col-sm-7">
 
                     <!--Esto lleva a crear un nuevo grupo-->
-			        <a href="<?php echo constant('URL');?>docente/crearGrupo" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Añadir Grupo</span></a>
+			        <a href="<?php echo constant('URL');?>docente/crearGrupo" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Añadir</span></a>
 					</div>
                 </div>
             </div>

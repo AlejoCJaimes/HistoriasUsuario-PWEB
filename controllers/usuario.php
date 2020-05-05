@@ -49,7 +49,6 @@ private $session;
           $programa = $_POST['CodigoPrograma'];
           $numero_semestre = $_POST['NumeroSemestre'];
           $numero_documento = formatoNumeroDocumento($numero_documento);
-
           //recepcion de variables para el usuario
           $correo_usuario = $_POST['correo_usuario'];
           $clave_usuario = $_POST['clave_usuario'];

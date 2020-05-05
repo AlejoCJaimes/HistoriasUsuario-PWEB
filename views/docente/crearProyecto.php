@@ -1,5 +1,6 @@
 <?php require 'views/docente/header.php'
 ?>
+<body>
 <div class="container">
 <h2><i class=" fas fa-project-diagram"></i> Nuevo Proyecto </h2>
 
@@ -33,6 +34,7 @@
         <option value= "1" selected="selected">Grupo2 </option>
         <option value= "1" selected="selected">Grupo3 </option>
         </select>
+        </div>
 
 
 <!--DropDrownList de estado-->
@@ -49,6 +51,6 @@
         </div>
     </form>
 </div>
-
-
 <?php require_once 'views/docente/footer.php'?>
+</body>
+
