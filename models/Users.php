@@ -25,6 +25,7 @@ public $codigo_programa;
 public $font;
 public $_cedulas;
 public $_nombres;
+public $_apellidos;
 }
 
 

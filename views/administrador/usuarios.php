@@ -210,7 +210,7 @@ $(document).ready(function() {
 });
 </script>
 </head>
-<!--<h6>//<//?php echo $this->respuesta;?></h6>-->
+<?php echo $this->respuesta;?>
 <!-- End of Topbar -->
 
 <!--Method applicated for force initial pagination -->
@@ -296,14 +296,47 @@ $(document).ready(function() {
 
 
                     <td>
+                    <?php $var_pos_inicial_1 = '#_'.$arregloUsuarios[$posicionInicial]->_cedulas;
+                          $var_pos_inicial_2 = '_'.$arregloUsuarios[$posicionInicial]->_cedulas;
+                    ?>
                         <a href="<?php echo constant('URL') . 'administrador/detalleGeneral/' . $arregloUsuarios[$posicionInicial]->correo; ?>"
                             class="settings" title="Editar" data-toggle="tooltip"><i
                                 class="material-icons">&#xE8B8;</i></a>
 
-                        <a href="<?php echo constant('URL') . 'administrador/eliminarUsuario/' . $arregloUsuarios[$posicionInicial]->correo; ?>"
-                            class="delete" title="Eliminar" data-toggle="tooltip">
-                            <i class="material-icons"> &#xE5C9;</i></a>
+                                <a href="#" class="delete" title="Eliminar" data-toggle="modal" data-target="<?php echo $var_pos_inicial_1?>"><i
+                    class="material-icons">&#xE5C9;</i></a>
 
+                                                        <!-- Modal -->
+                        <div class="modal fade" id="<?php echo $var_pos_inicial_2?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel"><strong>Eliminación de usuario</strong></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                            <div class="alert alert-primary" role="alert">
+        
+                            <h6 class="alert-heading"><strong>Tenga en cuenta...</strong></h6>
+                        
+                            <hr>
+                            <p>Si se elimina el usuario <strong> <?php echo $arregloUsuarios[$posicionInicial]->correo?> </strong>
+                            identificado con Cédula <strong> <?php echo $arregloUsuarios[$posicionInicial]->_cedulas?> </strong> 
+                            se eliminarán tambien sus fuentes y no podrá recuperarse. ¿Está seguro que desea eliminar?</p>
+                            
+                            </div>
+                            
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <a href="<?php echo constant('URL') . 'administrador/eliminarUsuario/' . $arregloUsuarios[$posicionInicial]->correo; ?>" style="color: white;" class="btn btn-danger" role="button">Aceptar</a>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                                
                         
 
                         <!--Modal eliminar Usuario-->
@@ -334,13 +367,47 @@ $(document).ready(function() {
                             name="estado">&bull;</span><?php echo  $arregloUsuarios[$i]->estado?></td>
 
                     <td>
+                    <?php $var = '#_'.$arregloUsuarios[$i]->_cedulas;
+                          $var_2 = '_'.$arregloUsuarios[$i]->_cedulas;
+                    ?>
                         <a href="<?php echo constant('URL') . 'administrador/detalleGeneral/' . $arregloUsuarios[$i]->correo; ?>"
                             class="settings" title="Editar" data-toggle="tooltip"><i
                                 class="material-icons">&#xE8B8;</i></a>
                                
-                    <a href="<?php echo constant('URL') . 'administrador/eliminarUsuario/' . $arregloUsuarios[$i]->correo; ?>"
-                            class="delete" title="Eliminar" data-toggle="tooltip"><i
-                                class="material-icons">&#xE5C9;</i></a>
+                    <a href="#" class="delete" title="Eliminar" data-toggle="modal" data-target="<?php echo $var?>"><i
+                    class="material-icons">&#xE5C9;</i></a>
+
+                                                        <!-- Modal -->
+                        <div class="modal fade" id="<?php echo $var_2?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel"><strong>Eliminación de usuario</strong></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                            <div class="alert alert-primary" role="alert">
+        
+                            <h6 class="alert-heading"><strong>Tenga en cuenta...</strong></h6>
+                        
+                            <hr>
+                            <p>Si se elimina el usuario <strong> <?php echo $arregloUsuarios[$i]->correo?> </strong>
+                            identificado con Cédula <strong> <?php echo $arregloUsuarios[$i]->_cedulas?> </strong> 
+                            se eliminarán tambien sus fuentes y no podrá recuperarse. ¿Está seguro que desea eliminar?</p>
+                            
+                            </div>
+                            
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <a href="<?php echo constant('URL') . 'administrador/eliminarUsuario/' . $arregloUsuarios[$i]->correo; ?>" style="color: white;" class="btn btn-danger" role="button">Aceptar</a>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                                                        
                     </td>
                         
                 </tr>
