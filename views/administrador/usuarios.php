@@ -291,8 +291,8 @@ $(document).ready(function() {
                     <td><?php echo  $arregloUsuarios[$posicionInicial]->rol?></td>
 
 
-                    <td><span class="status text-<?php echo $arregloUsuarios[$posicionInicial]->font?>"
-                            name="estado">&bull;</span><?php echo  $arregloUsuarios[$posicionInicial]->estado?></td>
+                    <td><a href="<?php echo constant('URL') . 'administrador/actualizarBull/' . $arregloUsuarios[$posicionInicial]->correo.'/'. $arregloUsuarios[$posicionInicial]->estado;?>  ?>"><span class="status text-<?php echo $arregloUsuarios[$posicionInicial]->font?>"
+                            name="estado">&bull;</span></a><?php echo  $arregloUsuarios[$posicionInicial]->estado?></td>
 
 
                     <td>
@@ -363,8 +363,8 @@ $(document).ready(function() {
                     <td><?php echo  $arregloUsuarios[$i]->rol?></td>
 
 
-                    <td><span class="status text-<?php echo $arregloUsuarios[$i]->font?>"
-                            name="estado">&bull;</span><?php echo  $arregloUsuarios[$i]->estado?></td>
+                    <td><a href="<?php echo constant('URL') . 'administrador/actualizarBull/' . $arregloUsuarios[$i]->correo.'/'. $arregloUsuarios[$i]->estado;?>  ?>"><span class="status text-<?php echo $arregloUsuarios[$i]->font?>"
+                            name="estado">&bull;</span></a><?php echo  $arregloUsuarios[$i]->estado?></td>
 
                     <td>
                     <?php $var = '#_'.$arregloUsuarios[$i]->_cedulas;

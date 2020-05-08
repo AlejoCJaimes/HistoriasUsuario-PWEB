@@ -120,47 +120,48 @@
 
     <!--Formulario de Datos Usuario-->
     <br>
-    <form action="<?php echo constant('URL');?>administrador/actualizarEstado" method="post"
-      name="formularioDatosUsuario" id="formulario" autocomplete="off">
-      <fieldset>
-        <!--Datos Usuario-->
-        <h5><i class="fas fa-cog"></i> Datos de Usuario </h5>
-        <br>
-        <?php echo $this->respuesta;?>
-        <div class="form-row">
-          <div class="form-group col-md-5">
-            <label>Rol</label>
-            <select name="rol" class="form-control">
+    <!--<form action="<//?php //echo constant('URL');?>administrador/actualizarEstado" method="post"
+            name="formularioDatosUsuario" id="formulario" autocomplete="off">
+            <fieldset>
+                Datos Usuario-->
 
-              <!--loadData dropDownList-->
-              <option value="<?php echo $estudiante->id_rol; ?>">
-                                <?php echo $estudiante->rol; ?> </option>
-            </select>
-          </div>
-        </div>
+                <!--<h5><i class="fas fa-cog"></i> Datos de Usuario </h5>
+                <br>
+                <//?php echo $this->respuesta;?>
+                <div class="form-row">
+                
+                    <div class="form-group col-md-5">
+                        <label>Rol</label>
+                        <select name="rol" class="form-control">
 
-        <div class="form-row">
-          <div class="form-group col-md-5">
-            <label>Estado</label>
-            <select name="estado" class="form-control">
+                            loadData dropDownList
+                            <option value="<//?php echo $administrador->id_rol; ?>">
+                                <//?php echo $administrador->rol; ?> </option>
+                        </select>
+                    </div>
+                </div>
 
-              <!--loadData dropDownList-->
-              <option name="estado" selected value="<?php echo $estudiante->estado; ?>">
-                <?php echo $estudiante->estado; ?></option>
-              <option value="Activo"> Activo</option>
-              <option value="Suspendido">Suspendido</option>
-            </select>
-          </div>
-        </div>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label>Estado</label>
+                        <select name="estado" class="form-control">
+
+                            <!loadData dropDownList
+                            <option disabled="disabled" selected="selected" value="<//?php echo $administrador->estado; ?>">  <//?php echo $administrador->estado; ?> </option>
+                            <option value="Activo"> Activo</option>                        
+                            <option value="Suspendido">Suspendido</option>
+                        </select>
+                    </div>
+                </div>
 
 
-        <div class="form-row align-items-center">
-          <div class="col-auto my-2">
-            <button type="submit" class="btn btn-primary ">Editar</button>
-          </div>
-        </div>
-        <input type="text" name="correo_usuario"  style=" width: 0px; height: 0px ; color: white" value="<?php echo $estudiante->correo; ?>">
-    </form>
+                <div class="form-row align-items-center">
+                    <div class="col-auto my-2">
+                        <button type="submit" class="btn btn-primary" id="Editar datos Usuario">Editar</button>
+                    </div>
+                </div>
+                <input type="text" name="correo_usuario"  style=" width: 0px; height: 0px ; color: white" value="<//?php echo $administrador->correo; ?>">
+        <</form>-->
     <fieldset>
 
 

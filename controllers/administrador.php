@@ -224,7 +224,27 @@ private $correo;
 
 
     }
+    function actualizarBull($param = null) {
+      $correo = $param[0];
+      $estado = $param[1];
+      $respuesta = "";
+      if($this->model->updateBull(['correo' => $correo, 'estado' => $estado])) {
+        /*$respuesta =  '<div class="alert alert-info" role="alert" > Estado actualizado correctamente!
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+         </div> ';*/
+      } else {
+        $respuesta =  '<div class="alert alert-danger" role="alert" > No se pudo actualizar el estado del usuario'.$correo.'!
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+         </div> ';
+      }
+      $this->view->respuesta = $respuesta;
+      $this->usuarios();
 
+    }
     function actualizarEstado() {
       require_once 'models/Users.php';
       $respuesta = "";

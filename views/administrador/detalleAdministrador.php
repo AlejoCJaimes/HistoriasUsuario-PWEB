@@ -107,23 +107,23 @@
         <!--Formulario de Datos Usuario-->
 
         <br>
-        <form action="<?php echo constant('URL');?>administrador/actualizarEstado" method="post"
+        <!--<form action="<//?php //echo constant('URL');?>administrador/actualizarEstado" method="post"
             name="formularioDatosUsuario" id="formulario" autocomplete="off">
             <fieldset>
-                <!--Datos Usuario-->
+                Datos Usuario-->
 
-                <h5><i class="fas fa-cog"></i> Datos de Usuario </h5>
+                <!--<h5><i class="fas fa-cog"></i> Datos de Usuario </h5>
                 <br>
-                <?php echo $this->respuesta;?>
+                <//?php echo $this->respuesta;?>
                 <div class="form-row">
                 
                     <div class="form-group col-md-5">
                         <label>Rol</label>
                         <select name="rol" class="form-control">
 
-                            <!--loadData dropDownList-->
-                            <option value="<?php echo $administrador->id_rol; ?>">
-                                <?php echo $administrador->rol; ?> </option>
+                            loadData dropDownList
+                            <option value="<//?php echo $administrador->id_rol; ?>">
+                                <//?php echo $administrador->rol; ?> </option>
                         </select>
                     </div>
                 </div>
@@ -133,8 +133,8 @@
                         <label>Estado</label>
                         <select name="estado" class="form-control">
 
-                            <!--loadData dropDownList-->
-                            <option disabled="disabled" selected="selected" value="<?php echo $administrador->estado; ?>">  <?php echo $administrador->estado; ?> </option>
+                            <!loadData dropDownList
+                            <option disabled="disabled" selected="selected" value="<//?php echo $administrador->estado; ?>">  <//?php echo $administrador->estado; ?> </option>
                             <option value="Activo"> Activo</option>                        
                             <option value="Suspendido">Suspendido</option>
                         </select>
@@ -147,8 +147,8 @@
                         <button type="submit" class="btn btn-primary" id="Editar datos Usuario">Editar</button>
                     </div>
                 </div>
-                <input type="text" name="correo_usuario"  style=" width: 0px; height: 0px ; color: white" value="<?php echo $administrador->correo; ?>">
-        </form>
+                <input type="text" name="correo_usuario"  style=" width: 0px; height: 0px ; color: white" value="<//?php echo $administrador->correo; ?>">
+        <</form>-->
         <fieldset>
 
 

@@ -244,6 +244,62 @@ class AdministradorModel extends Model {
 
 
     }
+    public function updateBull($datos) {
+      $estado = $datos['estado'];
+      $correo = $datos['correo'];
+      $_status = 0;
+      switch ($estado) {
+        case "Activo":
+          
+          $query_g_activo = $this->db->connect()->query("SELECT Id FROM `usuario` WHERE correo_usuario = '$correo';");
+  
+          while($row_1 = $query_g_activo->fetch()){
+              $idUsuario = $row_1['Id'];
+          }
+  
+          $query_activo = $this->db->connect()->prepare("UPDATE rolusuario SET _status = :estado where IdUsuario = '$idUsuario';");
+          try{
+              $query_activo->execute(['estado' => 'Suspendido']);
+              return true;
+          }catch(PDOException $e){
+              return false;
+          }
+          break;
+        case "Pendiente":
+          $query_g_pendiente = $this->db->connect()->query("SELECT Id FROM `usuario` WHERE correo_usuario = '$correo';");
+  
+          while($row_1 = $query_g_pendiente->fetch()){
+              $idUsuario = $row_1['Id'];
+          }
+  
+          $query_pendiente = $this->db->connect()->prepare("UPDATE rolusuario SET _status = :estado where IdUsuario = '$idUsuario';");
+          try{
+              $query_pendiente->execute(['estado' => 'Activo']);
+              return true;
+          }catch(PDOException $e){
+              return false;
+          }
+          break;
+        case "Suspendido":
+          $query_g_suspendido = $this->db->connect()->query("SELECT Id FROM `usuario` WHERE correo_usuario = '$correo';");
+  
+          while($row_1 = $query_g_suspendido->fetch()){
+              $idUsuario = $row_1['Id'];
+          }
+  
+          $query_suspendido = $this->db->connect()->prepare("UPDATE rolusuario SET _status = :estado where IdUsuario = '$idUsuario';");
+          try{
+              $query_suspendido->execute(['estado' => 'Activo']);
+              return true;
+          }catch(PDOException $e){
+              return false;
+          }
+          break;
+        default:
+      }
+      return false;
+
+    }
     public function updateEstudiante($datos) {
       try{
         $correo = $datos['correo_usuario'];
