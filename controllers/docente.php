@@ -38,7 +38,6 @@ class Docente extends Controller{
         $cabecera = "Inicio";
         $this->view->cabecera = $cabecera;
         $this->view->render('docente/index');
-
     }
 
     function perfil () {
@@ -355,6 +354,28 @@ class Docente extends Controller{
        // MÉTODOS PARA GRUPOS
        //////////////////////////
       
+      function agregarProyecto(){
+        $nombreProyecto = $_POST['nombreProyecto'];
+        $fechaFin = $_POST['fechaFin'];
+        $idMetodologia = $_POST['idMetodologia'];
+        $idEstado = $_POST['idEstado'];
+
+        if($this->model->insertarProyecto(['nombreProyecto' => $nombreProyecto, 'fechaFin' => $fechaFin, 'idMetodologia' => $idMetodologia, 'idEstado' => $idEstado, 'correo' => $this->session->getCurrentUser()])){
+          $confirmacion = '<div class="alert alert-info" role="alert" ><strong>¡Oye!</strong> se creó el proyecto.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        }else{
+          $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> el Proyecto NO se creó.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        }
+        $this->view->confirmacion = $confirmacion;
+        $this->crearProyecto();
+      }
 
 /* CONTROLADOR VISTA METOLOGIA.PHP*/
       function Grupo(){
