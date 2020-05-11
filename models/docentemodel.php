@@ -344,6 +344,36 @@ class DocenteModel extends Model {
       ///////////////////////////
        // FIN SENTENCIAS SQL PARA GRUPOS
        //////////////////////////
+      
+       //Agregar un nuevo proyecto a la base de datos
+      public function insertarProyecto($datos){
+        try{
+          $correo = $datos['correo'];
+          $idUsuario = 0;
+          $idDocente = 0;
+          
+          //Consultas para obtener el Id del docente
+          $query_1 = $this->db->connect()->query("SELECT Id FROM usuario WHERE correo_usuario = '$correo' Limit 1");
+          while($row = $query_1->fetch()){
+            $idUsuario = $row['Id'];            
+          }
+          $query_2 = $this->db->connect()->query("SELECT Id FROM docente WHERE IdUsuario = '$idUsuario' Limit 1");
+          while($row = $query_2->fetch()){
+            $idDocente = $row['Id'];            
+          }
+          //Consulta para insertar una nueva metodología
+          $query_3 = $this->db->connect()->prepare("INSERT INTO `proyecto`(`NombreProyecto`,`FechaFin`, `IdDocente`, `IdMetodologia`, `IdEstado`) VALUES (:nombreProyecto,:fechaFin,:idDocente,:idMetodologia,:idEstado)");
+          $query_3->execute(['nombreProyecto' => $datos['nombreProyecto'], 'fechaFin' => $datos['fechaFin'], 'idDocente' => $idDocente, 'idMetodologia' => $datos['idMetodologia'], 'idEstado' => $datos['idEstado']]);
+          echo $datos['nombreProyecto'].'p';
+          echo $datos['fechaFin'].'f';
+          echo $idDocente.'d';
+          echo $datos['idMetodologia'].'m';
+          echo $datos['idEstado'].'e';
+          return true;
+        }catch(PDOException $e){
+          return false;
+        }
+      }
 
 }
 ?>
