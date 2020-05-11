@@ -16,14 +16,14 @@
                 <div class="form-group">
                         <br>
                         <label>Nombre</label>
-                        <input type="text" id="nombre" name="nombreProyecto" class="form-control " placeholder="Escribe el nombre del proyecto" value="">
+                        <input type="text" id="nombre" name="nombreProyecto" REQUIRED class="form-control " placeholder="Escribe el nombre del proyecto" value="">
                 </div>
                 
                 <label class="t-2">Fecha fin de grupo</label>
                                         <div class="form-group">
                                             
                                                 <div class="input-group" style=" width: 200px;">
-                                                    <input type="text" class="form-control" style=" width: 50px;"
+                                                    <input type="text" REQUIRED class="form-control" style=" width: 50px;"
                                                         id="fecha" name ="fechaFin" min="2020-05-10" max="2020-06-30">
                                                     <div class="input-group-append">
                                                         <span
@@ -34,8 +34,8 @@
                 <!--DropDrownList de metodología-->
                 <div class="form-group"> 
                         <label>Metodologia</label>
-                        <select name = "idMetodologia" id="metodologia" class="form-control">
-                                <option disabled="disabled" selected="selected">Seleccionar una opcion</option>
+                        <select name = "idMetodologia" REQUIRED id="metodologia" class="form-control">
+                                <option disabled="disabled" selected="selected" value="">Seleccionar una opcion</option>
                                 <?php
                                         require_once 'libs/database.php';
                                         $this->db = new Database();
@@ -54,8 +54,8 @@
                         <!-- Lista de grupos quemados, para seleccionar a más de uno!-->
                 <div class="form-group"> 
                         <label>Selecciona a los grupos</label>
-                        <select name = "idGrupo" id="grupo" multiple="multiple" class="form-control">
-                                <option disabled="disabled" selected="selected">Seleccionar una opcion</option>
+                        <select name = "idGrupo" id="grupo" REQUIRED class="form-control">
+                                <option disabled="disabled" selected="selected" value="">Seleccionar una opcion</option>
                                 <?php
                                         require_once 'libs/database.php';
                                         $this->db = new Database();
@@ -63,7 +63,7 @@
                                         $query = $this->db->connect()->query("SELECT id, nombre FROM grupo;");
                                         while($row = $query->fetch()) {
                                 ?>
-                                <option value= "<?php echo $row['id']?>"><?php echo $row['nombre']?></option>
+                                <option value="<?php echo $row['id']?>"><?php echo $row['nombre']?></option>
                                 <?php
 
                                         }
@@ -71,10 +71,11 @@
                         </select>
                 </div>
 
-                <div class="form-group"> 
+                <div class="form-group">                         
                         <label>Selecciona el estado</label>
-                        <select name = "idEstado" id="estado" class="form-control">
-                                <option disabled="disabled" selected="selected">Seleccionar una opcion</option>
+                        <div class="input-group" style=" width: 300px;">
+                        <select name = "idEstado" REQUIRED id="estado" class="form-control">
+                                <option disabled="disabled" value="" selected="selected">Seleccionar una opcion</option>
                                 <?php
                                         require_once 'libs/database.php';
                                         $this->db = new Database();
@@ -88,6 +89,7 @@
                                         }
                                 ?>
                         </select>
+                        </div>
                 </div>
 
                 <div class="form-group text-center">

@@ -6,7 +6,7 @@ class Docente extends Controller{
     function __construct(){
       parent::__construct();
       $this->view->mensaje= "";
-
+      $this->view->nombreGrupo = "";
       $this->session = new Session();
 
       $this->session->init();
@@ -350,17 +350,15 @@ class Docente extends Controller{
         $this->view->confirmacion_modal = $confirmacion_modal;
         $this->Metodologia();
       }
-      ///////////////////////////
-       // MÉTODOS PARA GRUPOS
-       //////////////////////////
-      
+
       function agregarProyecto(){
         $nombreProyecto = $_POST['nombreProyecto'];
         $fechaFin = $_POST['fechaFin'];
         $idMetodologia = $_POST['idMetodologia'];
         $idEstado = $_POST['idEstado'];
+        $idGrupo = $_POST['idGrupo'];
 
-        if($this->model->insertarProyecto(['nombreProyecto' => $nombreProyecto, 'fechaFin' => $fechaFin, 'idMetodologia' => $idMetodologia, 'idEstado' => $idEstado, 'correo' => $this->session->getCurrentUser()])){
+        if($this->model->insertarProyecto(['nombreProyecto' => $nombreProyecto, 'grupo' => $idGrupo, 'fechaFin' => $fechaFin, 'idMetodologia' => $idMetodologia, 'idEstado' => $idEstado, 'correo' => $this->session->getCurrentUser()])){
           $confirmacion = '<div class="alert alert-info" role="alert" ><strong>¡Oye!</strong> se creó el proyecto.
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -375,6 +373,39 @@ class Docente extends Controller{
         }
         $this->view->confirmacion = $confirmacion;
         $this->crearProyecto();
+      }
+
+      ///////////////////////////
+       // MÉTODOS PARA GRUPOS
+       //////////////////////////
+
+      function agregarGrupo(){
+        $nombre = $_POST['Nombre'];
+        if(isset($_POST['estudiantes_seleccionados'])){
+          $estudiantes = $_POST['estudiantes_seleccionados'];
+          if($this->model->insertarGrupo(['nombre' => $nombre, 'estudiantes' => $estudiantes])){
+            $confirmacion = '<div class="alert alert-info" role="alert" ><strong>¡Oye!</strong> se creó el grupo.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> ';
+          }else{
+            $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> el grupo NO se creó.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> ';
+          } 
+        }else{
+          $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> debes seleccionar un estudiante.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        }
+        $this->view->nombreGrupo = $nombre;
+        $this->view->confirmacion = $confirmacion;
+        $this->crearGrupo(); 
       }
 
 /* CONTROLADOR VISTA METOLOGIA.PHP*/

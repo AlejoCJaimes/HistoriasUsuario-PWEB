@@ -364,16 +364,51 @@ class DocenteModel extends Model {
           //Consulta para insertar una nueva metodología
           $query_3 = $this->db->connect()->prepare("INSERT INTO `proyecto`(`NombreProyecto`,`FechaFin`, `IdDocente`, `IdMetodologia`, `IdEstado`) VALUES (:nombreProyecto,:fechaFin,:idDocente,:idMetodologia,:idEstado)");
           $query_3->execute(['nombreProyecto' => $datos['nombreProyecto'], 'fechaFin' => $datos['fechaFin'], 'idDocente' => $idDocente, 'idMetodologia' => $datos['idMetodologia'], 'idEstado' => $datos['idEstado']]);
-          echo $datos['nombreProyecto'].'p';
-          echo $datos['fechaFin'].'f';
-          echo $idDocente.'d';
-          echo $datos['idMetodologia'].'m';
-          echo $datos['idEstado'].'e';
+          
+          $nombreProyecto = $datos['nombreProyecto'];
+
+          $query_4 = $this->db->connect()->query("SELECT Id FROM proyecto WHERE NombreProyecto = '$nombreProyecto' Limit 1");
+          while($row = $query_4->fetch()){
+            $idProyecto = $row['Id'];            
+          }
+
+          $query_3 = $this->db->connect()->prepare("INSERT INTO `grupoproyecto`(`IdGrupo`, `IdProyecto`) VALUES (:idGrupo,:idProyecto)");
+          $query_3->execute(['idGrupo' => $datos['grupo'], 'idProyecto' => $idProyecto]);
+
           return true;
         }catch(PDOException $e){
           return false;
         }
       }
 
+      //Agregar un nuevo grupo a la base de datos
+      public function insertarGrupo($datos){
+        try {
+          $nombre = $datos['nombre'];
+          $idGrupo = 0;
+          $query_1 = $this->db->connect()->prepare("INSERT INTO `grupo`(`nombre`) VALUES (:nombre)");
+          $query_1->execute(['nombre' => $datos['nombre']]);
+          
+          $query_2 = $this->db->connect()->query("SELECT Id FROM grupo WHERE nombre = '$nombre' Limit 1");
+          while($row = $query_2->fetch()){
+            $idGrupo = $row['Id'];            
+          }
+
+          for($i=0; $i < count($datos['estudiantes']); $i++){
+            $estudiante = $datos['estudiantes'][$i];
+            $query_4 = $this->db->connect()->query("SELECT Id FROM estudiante WHERE CedulaEstudiante = '$estudiante' Limit 1");
+            while($row = $query_4->fetch()){
+              $idEstudiante = $row['Id'];            
+            }
+
+            $query_3 = $this->db->connect()->prepare("INSERT INTO `grupoestudiante` (`IdGrupo`, `IdEstudiante`) VALUES (:idGrupo, :idEstudiante);");                        
+            $query_3->execute(['idGrupo' => $idGrupo, 'idEstudiante' => $idEstudiante]);
+          }
+
+          return true;
+        } catch (PDOException $ex) {
+          return false;
+        }
+      }
 }
 ?>
