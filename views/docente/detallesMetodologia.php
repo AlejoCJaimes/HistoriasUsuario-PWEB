@@ -62,8 +62,8 @@
        <div class="form-group text-center">
                 <input type="submit" id="envio" value="Editar" class="btn btn-primary ">
         </div>
-        <input type="text" name="id" style=" width: 0px; height: 0px ; color: white" value="<?php echo $metodologias->id?> " readonly> 
-        <input type="text" name="longitud" style=" width: 0px; height: 0px ; color: white" value="<?php echo $longitud?> " readonly>
+        <input type="hidden" name="id" style=" width: 0px; height: 0px ; color: white" value="<?php echo $metodologias->id?> " readonly> 
+        <input type="hidden" name="longitud" style=" width: 0px; height: 0px ; color: white" value="<?php echo $longitud?> " readonly>
     </form>
     
 </div>
