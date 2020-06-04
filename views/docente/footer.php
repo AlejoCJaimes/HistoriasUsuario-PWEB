@@ -50,7 +50,7 @@
 
   <!-- Custom scripts for all pages-->
   <script src="<?php echo constant('URL');?>resources/js/sb-admin-2.min.js"></script>
-
+  
   <!-- Page level plugins -->
   <script src="<?php echo constant('URL');?>resources/layout_partial/chart.js/Chart.min.js"></script>
 

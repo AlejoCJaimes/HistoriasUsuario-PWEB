@@ -19,7 +19,7 @@ class Account extends Controller{
 
     function login() {
         $validacion = "";
-
+        $_status = "";
         $estado = "";
         //Recepcion de variables
         $rol = 0;
@@ -76,30 +76,34 @@ class Account extends Controller{
 
           while($row_3 = $query_3->fetch()){
               $_status = $row_3['_status'];
-
+print_r($_status);
           }
-          if (isset($_status) == "Pendiente") {
+        }
+        if ($_status == "Activo") {
+          
+          $validacion = "<div class='alert alert-danger alert-dismissable'>
+          <button type='button' class='close' data-dismiss='alert'>&times;</button>
+          <strong>¡Error!</strong> Usuario o contraseña incorrecta .
+          </div>";
 
-              $validacion = "<div class='alert alert-info alert-dismissable'>
-              <button type='button' class='close' data-dismiss='alert'>&times;</button>
-              <strong>¡Validacion!</strong> El usuario ".$correo_usuario."  se encuentra en proceso de validacion, aún no ha sido activado.
-              </div>";
+      } elseif ($_status == "Pendiente") {
+            
+            $validacion = "<div class='alert alert-info alert-dismissable'>
+            <button type='button' class='close' data-dismiss='alert'>&times;</button>
+            <strong>¡Validacion!</strong> El usuario ".$correo_usuario."  se encuentra en proceso de validacion, aún no ha sido activado.
+            </div>";
+      } elseif ($_status == "Suspendido") {
 
-        } elseif (isset($_status) == "Suspendido") {
               $validacion = "<div class='alert alert-warning alert-dismissable'>
-              <button type='button' class='close' data-dismiss='alert'>&times;</button>
-              <strong>¡Suspensión!</strong> El usuario ".$correo_usuario."  se encuentra suspendido, por favor contactarse con el administrador.
-              </div>";
-        } elseif (isset($_status) != "Pendiente") {
-
-                $validacion = "<div class='alert alert-danger alert-dismissable'>
-                <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                <strong>¡Error!</strong> Usuario o contraseña incorrecta .
-                </div>";
-        }
-
-        }
-
+            <button type='button' class='close' data-dismiss='alert'>&times;</button>
+            <strong>¡Suspensión!</strong> El usuario ".$correo_usuario."  se encuentra suspendido, por favor contactarse con el administrador.
+            </div>";
+      } else {
+        $validacion = "<div class='alert alert-secondary alert-dismissable'>
+            <button type='button' class='close' data-dismiss='alert'>&times;</button>
+            <strong>¡Usuario no encontrado!</strong> El usuario ".$correo_usuario." no se encuentra en el sistema, por favor registrarse primero.
+            </div>";
+      }
 
         $this->view->validacion = $validacion;
         $this->render();

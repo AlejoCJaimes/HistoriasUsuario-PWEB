@@ -434,10 +434,7 @@ class Docente extends Controller{
         $this->view->cabecera = $cabecera;
         $this->view->render('docente/detallesGrupo');
       }
-
-
-
-     
+   
 }
 
 ?>
