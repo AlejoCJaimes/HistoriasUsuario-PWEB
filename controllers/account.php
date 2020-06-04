@@ -76,7 +76,6 @@ class Account extends Controller{
 
           while($row_3 = $query_3->fetch()){
               $_status = $row_3['_status'];
-print_r($_status);
           }
         }
         if ($_status == "Activo") {
