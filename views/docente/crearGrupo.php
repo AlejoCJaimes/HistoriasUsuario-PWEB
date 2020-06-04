@@ -130,7 +130,7 @@
 		$.ajax({
 			type:"POST",
 			url: $('#ruta').val(),
-			data:"continente=" + $('#cbx_programa').val(),
+			data:"programa=" + $('#cbx_programa').val(),
 			success:function(r){
 				$('#numero_semestre').html(r);
 			}
