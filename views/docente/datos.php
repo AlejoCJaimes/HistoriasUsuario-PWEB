@@ -2,7 +2,7 @@
 
 $conexion=mysqli_connect("localhost","pruebas",'',"proyecto");
 $codigo_programa=$_POST['programa'];
-echo $codigo_programa;
+//echo $codigo_programa;
 	$sql="SELECT DISTINCT NumeroSemestre
 		FROM estudiante 
 		WHERE CodigoPrograma='$codigo_programa'
