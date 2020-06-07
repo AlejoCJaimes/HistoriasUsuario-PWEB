@@ -254,7 +254,7 @@ $(document).ready(function() {
          <!--container 246-261-->
         <!--row 247- 260-->
 
-    <div class="container">
+        <div class="container">
             <div class="row">
             <?php 
             $arreglo = [];

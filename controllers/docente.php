@@ -381,6 +381,9 @@ class Docente extends Controller{
 
       function agregarGrupo(){
         $nombre = $_POST['Nombre'];
+        $estudiantes = $_POST['estudiantes_seleccionados'];
+
+        
         if(isset($_POST['estudiantes_seleccionados'])){
           $estudiantes = $_POST['estudiantes_seleccionados'];
           if($this->model->insertarGrupo(['nombre' => $nombre, 'estudiantes' => $estudiantes])){
@@ -411,6 +414,9 @@ class Docente extends Controller{
 /* CONTROLADOR VISTA METOLOGIA.PHP*/
       function Grupo(){
         $cabecera = "";
+        $ggrupos = [];
+        $grupos = $this->model->loadGrupo();
+        $this->view->grupos = $grupos;
         $cabecera = "Grupo";
         $this->view->cabecera = $cabecera;
         $this->view->render('docente/grupo');
@@ -429,11 +435,14 @@ class Docente extends Controller{
       }
 
       function detallesGrupo(){
+
         $cabecera = "";
         $cabecera = "Grupo";
         $this->view->cabecera = $cabecera;
         $this->view->render('docente/detallesGrupo');
       }
+
+     
    
 }
 

@@ -6,7 +6,8 @@
 
  
     <form action="" method="POST" id="form">
-
+   
+   
         <div class="form-group">
             <br>
                 <label>Nombre</label>

@@ -197,19 +197,32 @@ $(document).ready(function(){
             </div>
 
             <!--Recuadro para visualizar los grupos-->
-            <div class="col-xl-3 col-md-6">
-              <div class="card bg-warning text-white mb-4">
-                <div class="card-body" name='' href="#">Grupo 1</div>
-                
-                <!--Permite ir a visualizar y a editar los grupos-->
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                  <a class="small text-black stretched-link" href="<?php echo constant('URL');?>docente/detallesGrupo">Ver detalles</a>
-                  <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-              </div>
-            </div>
-  
-            </div>
+            <div class="container">
+            <div class="row">
+            <?php 
+            $arreglo = [];
+            require_once 'models/Grupo.php';
+            foreach($this->grupos as $row){
+                $grupos = new Grupo();
+                $grupos = $row;
+                array_push($arreglo,$grupos);
+                ?>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body " name='' href="#"><?php echo $grupos->nombre?></div>
+                        <!--Esto lleva a editar y ver la metodología-->
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-black stretched-link" href="<?php echo constant('URL'). 'docente/detalleGeneralGrupo/' . $grupos->id ;?>">Editar</a>
+                            <div class="small text-black"><i class="fas fa-angle-right"></i></div>
+                            
+                        </div>
+                        
+                    </div>
+                </div> 
+                <?php } ?>   
+            </div>  
+        </div>   
+           
     <!-- End of Content Wrapper -->
 
   </div>

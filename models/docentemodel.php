@@ -410,5 +410,28 @@ class DocenteModel extends Model {
           return false;
         }
       }
+
+      public function loadGrupo() {
+        require_once 'models/Grupo.php';
+
+        $query = $this->db->connect()->query("SELECT Id, nombre,  DATE_FORMAT(FechaCreacion,' %d-%M-%Y %h:%i %p') as 'fecha' FROM grupo ");
+        
+        $items = [];
+        try {
+          while ($row =$query->fetch()) {
+            $item = new Grupo();
+            $item->id = $row['Id'];
+            $item->nombre = $row['nombre'];
+            $item->fecha_creacion = $row['fecha'];
+            array_push($items,$item);
+          }
+          
+            return $items;
+      
+        } catch (PDOException $e) {
+          return $e;
+        }
+        
+      }
 }
 ?>
