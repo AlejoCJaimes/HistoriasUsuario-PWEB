@@ -21,7 +21,15 @@
             
             <!--Select Desplegables con la base de datos Anidados-->
             <br>
+
             <hr>
+            <div class="form-group">
+            <input id="ruta" name="ruta" type="hidden" value="<?php echo constant('URL').'views/docente/datos.php'?>">
+                <label>Nombre</label>
+                    <input type="text" id="nombre" REQUIRED style=" width: 400px; height: 30px;" name="Nombre" class="form-control" value="<?php echo $this->nombreGrupo;?>" placefolder="Escribe el nombre">
+
+            </div>
+            <br>
             <div class="form-group"> 
                 <label>Programa</label>
                     <select  id="cbx_programa" name ="cbx_programa" class="form-control col-3">
@@ -40,6 +48,7 @@
                         ?>
                     </select>
             </div>
+           
             <br>
             <div class="form-group"> 
                 <label>Numero Semestre</label>
@@ -48,13 +57,8 @@
             
             <!--Input tipo hidden-->
             
-            <div class="form-group">
-            <input id="ruta" name="ruta" type="hidden" value="<?php echo constant('URL').'views/docente/datos.php'?>">
-                <label>Nombre</label>
-                    <input type="text" id="nombre" REQUIRED style=" width: 400px; height: 30px;" name="Nombre" class="form-control" value="<?php echo $this->nombreGrupo;?>" placefolder="Escribe el nombre">
-
-            </div>
-            <div class="form-group">
+           
+            <!--<div class="form-group">
                 <label>Busqueda </label>
                 <table id="tablaBusqueda">
                     <tr>
@@ -63,12 +67,12 @@
                     </tr>
                 </table>
 
-            </div>
+            </div>-->
+           
 
 
 
-
-            <div class="table-responsive-md">
+            <!--<div class="table-responsive-md">
                 <table class="table table-hover">
                 <thead>
                     <tr>
@@ -80,8 +84,8 @@
                     <th scope="col">Seleccionar</th>
                     </tr>
                 </thead>
-            <!--Code PHP-->
-            <?php 
+            Code PHP--
+            <//?php 
                 require_once 'models/Estudiante.php';
                 foreach ($this->grupos as $row) {
                     $grupos = new Estudiante();
@@ -91,26 +95,30 @@
             ?>
                 <tbody>
                     <tr>
-                        <td> <?php echo $grupos->CedulaEstudiante ?> </td>
-                        <td> <?php echo $grupos->NombreEstudiante?> </td>
-                        <td> <?php echo $grupos->ApellidoEstudiante ?> </td>
-                        <td> <?php echo $grupos->NombrePrograma?> </td>
-                        <td> <?php echo $grupos->NumeroSemestre?> </td>
-                        <td> <div class="custom-control custom-checkbox mr-sm-2">
+                        <td> <//?php echo $grupos->CedulaEstudiante ?> </td>
+                        <td> <//?php echo $grupos->NombreEstudiante?> </td>
+                        <td> <//?php echo $grupos->ApellidoEstudiante ?> </td>
+                        <td> <//?php echo $grupos->NombrePrograma?> </td>
+                        <td> <//?php echo $grupos->NumeroSemestre?> </td>
+                        <td> 
+                        <div class="custom-control custom-checkbox mr-sm-2">
                         
-                        <td><input type="checkbox" name="estudiantes_seleccionados[]" value="<?php echo $grupos->CedulaEstudiante?>"></td>
-                            </div>
+                        <td>
+                        <input type="checkbox" name="estudiantes_seleccionados[]" value="<//?php echo $grupos->CedulaEstudiante?>">
+                        </td>
+                        </div>
                         </td>
                         
                     </tr>
                 </tbody>
                 
-                <?php }?>
+                <//?php }?>
                 </table>
+                -->
                 <div class="form-group">
                     <input type="submit" id="envio" value="Crear" class="btn btn-primary">
                 </div>
-            </div>
+                
         </form>
     </div>
      
@@ -122,7 +130,8 @@
 
 		$('#cbx_programa').change(function(){
 			recargarLista();
-		});
+        });
+        
 	})
 </script>
 <script type="text/javascript">
@@ -130,9 +139,10 @@
 		$.ajax({
 			type:"POST",
 			url: $('#ruta').val(),
-			data:"programa=" + $('#cbx_programa').val(),
+            data:"programa=" + $('#cbx_programa').val(),
 			success:function(r){
-				$('#numero_semestre').html(r);
+                $('#numero_semestre').html(r);
+                $('#tabla_programa').html(r);
 			}
 		});
 	}

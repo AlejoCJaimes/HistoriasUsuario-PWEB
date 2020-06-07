@@ -433,5 +433,128 @@ class DocenteModel extends Model {
         }
         
       }
+
+      public function loadEstudiantesGrupo($id_grupo) {
+        require_once 'models/Estudiante.php';
+
+        $query = $this->db->connect()->query("SELECT e.Id AS 'Id', e.CedulaEstudiante AS 'CedulaEstudiante', e.NombreEstudiante as 'NombreEstudiante', e.ApellidoEstudiante as 'ApellidoEstudiante', e.NumeroSemestre as 'NumeroSemestre', e.CodigoPrograma as 'CodigoPrograma', r._status as 'estado' 
+        FROM estudiante AS e
+        JOIN usuario AS u ON e.IdUsuario = u.Id
+        JOIN rolusuario AS r ON r.IdUsuario = u.Id
+        JOIN grupoestudiante as gp ON gp.IdEstudiante = e.Id
+        WHERE gp.IdGrupo = '$id_grupo'");
+        
+        $items = [];
+        try {
+          while ($row =$query->fetch()) {
+            $item = new Estudiante();
+            $item->id = $row['Id'];
+            $item->CedulaEstudiante = $row['CedulaEstudiante'];
+            $item->NombreEstudiante = $row['NombreEstudiante'];
+            $item->ApellidoEstudiante = $row['ApellidoEstudiante'];
+            $item->CodigoPrograma = $row['CodigoPrograma'];
+            $codigoprograma = $row['CodigoPrograma'];
+            $item->NumeroSemestre = $row['NumeroSemestre'];
+            $item->estado = $row['estado'];
+
+           $query_2 = $this->db->connect()->query("SELECT Nombre FROM programa where codigo = '$codigoprograma'"); 
+           
+            while ($row_2 =$query_2->fetch()) {
+              $item->NombrePrograma = $row_2['Nombre'];
+            
+            }
+            array_push($items,$item);
+            }
+          
+            return $items;
+      
+        } catch (PDOException $e) {
+          return $e;
+        }
+        
+      }
+
+      public function getGrupo($id_grupo) {
+        require_once 'models/Grupo.php';
+
+        $query = $this->db->connect()->query("SELECT Id, nombre,  DATE_FORMAT(FechaCreacion,' %d-%M-%Y %h:%i %p') as 'fecha' FROM grupo WHERE Id = '$id_grupo' ");
+        
+        $items = [];
+        try {
+          while ($row =$query->fetch()) {
+            $item = new Grupo();
+            $item->id = $row['Id'];
+            $item->nombre = $row['nombre'];
+            $item->fecha_creacion = $row['fecha'];
+            array_push($items,$item);
+          }
+          
+            return $items;
+      
+        } catch (PDOException $e) {
+          return $e;
+        }
+      }
+
+      public function loadProyectos() {
+
+        require_once 'models/Proyecto.php';
+
+        $query = $this->db->connect()->query("SELECT * FROM proyecto ");
+        $items = [];
+
+        try {
+          while ($row =$query->fetch()) {
+            $item = new Proyecto();
+            $item->Id = $row['Id'];
+            $item->NombreProyecto = $row['NombreProyecto'];
+            $item->FechaCreacion = $row['FechaCreacion'];
+            $item->FechaFin = $row['FechaFin'];
+            $item->FechaActualizacion = $row['FechaActualizacion'];
+            $item->IdDocente = $row['IdDocente'];
+            $item->IdMetodologia = $row['IdMetodologia'];
+            $item->IdEstado = $row['IdEstado'];
+            array_push($items,$item);
+          }
+          
+            return $items;
+      
+        } catch (PDOException $e) {
+          return $e;
+        }
+      }
+
+      public function getProyecto($id_proyecto) {
+        require_once 'models/Proyecto.php';
+
+        $query = $this->db->connect()->query("SELECT Id, NombreProyecto, DATE_FORMAT(FechaCreacion,' %d/%m/%Y') as FechaCreacion, 
+        DATE_FORMAT(FechaFin,' %Y-%m-%d') as FechaFin, DATE_FORMAT(FechaActualizacion,' %d/%m/%Y') as FechaActualizacion,
+        IdDocente, IdMetodologia, IdEstado
+        FROM proyecto WHERE Id = '$id_proyecto'");
+        $items = [];
+
+        try {
+          while ($row =$query->fetch()) {
+            $item = new Proyecto();
+            $item->Id = $row['Id'];
+            $item->NombreProyecto = $row['NombreProyecto'];
+            $item->FechaCreacion = $row['FechaCreacion'];
+            $item->FechaFin = $row['FechaFin'];
+            $item->FechaActualizacion = $row['FechaActualizacion'];
+            $item->IdDocente = $row['IdDocente'];
+            $item->IdMetodologia = $row['IdMetodologia'];
+            $item->IdEstado = $row['IdEstado'];
+            array_push($items,$item);
+          }
+          
+            return $items;
+      
+        } catch (PDOException $e) {
+          return $e;
+        }
+      }
+      /*
+      
+      */
 }
 ?>

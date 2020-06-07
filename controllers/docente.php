@@ -31,6 +31,8 @@ class Docente extends Controller{
       $this->view->metodologias = [];
       $this->view->grupos = [];
       $this->view->fuentes = [];
+      $this->view->datos_grupo = [];
+      $this->view->proyecto = [];
         //echo "<p>Nuevo controlador Main</p>";
     }
 
@@ -133,6 +135,8 @@ class Docente extends Controller{
         $cabecera = "";
         $cabecera = "Proyecto";
         $this->view->cabecera = $cabecera;
+        $proyecto = $this->model->loadProyectos();
+        $this->view->proyecto = $proyecto;
         $this->view->render('docente/proyecto');
       }
 
@@ -143,9 +147,13 @@ class Docente extends Controller{
         $this->view->render('docente/crearProyecto');
       }
 
-      function detallesProyecto(){
+      function detalleProyecto($param = null){
+        $id_proyecto = $param[0];
         $cabecera = "";
         $cabecera = "Proyecto";
+        $proyecto = [];
+        $proyecto = $this->model->getProyecto($id_proyecto);
+        $this->view->proyecto = $proyecto;
         $this->view->cabecera = $cabecera;
         $this->view->render('docente/detallesProyecto');
       }
@@ -382,7 +390,7 @@ class Docente extends Controller{
       function agregarGrupo(){
         $nombre = $_POST['Nombre'];
         $estudiantes = $_POST['estudiantes_seleccionados'];
-
+        //print_r($estudiantes);
         
         if(isset($_POST['estudiantes_seleccionados'])){
           $estudiantes = $_POST['estudiantes_seleccionados'];
@@ -411,7 +419,7 @@ class Docente extends Controller{
         $this->crearGrupo(); 
       }
 
-/* CONTROLADOR VISTA METOLOGIA.PHP*/
+/* CONTROLADOR VISTA grupo.PHP*/
       function Grupo(){
         $cabecera = "";
         $ggrupos = [];
@@ -434,10 +442,16 @@ class Docente extends Controller{
         $this->view->render('docente/crearGrupo');
       }
 
-      function detallesGrupo(){
-
+      function detalleGrupo($param = null){
+        $id_grupo = $param[0];
+        $datos_grupo = [];
+        $datos_grupo = $this->model->getGrupo($id_grupo);
+        $this->view->datos_grupo = $datos_grupo; 
         $cabecera = "";
         $cabecera = "Grupo";
+        $grupos = [];
+        $grupos = $this->model->loadEstudiantesGrupo($id_grupo);
+        $this->view->grupos = $grupos;
         $this->view->cabecera = $cabecera;
         $this->view->render('docente/detallesGrupo');
       }

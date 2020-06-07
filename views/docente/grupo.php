@@ -212,7 +212,7 @@ $(document).ready(function(){
                         <div class="card-body " name='' href="#"><?php echo $grupos->nombre?></div>
                         <!--Esto lleva a editar y ver la metodología-->
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-black stretched-link" href="<?php echo constant('URL'). 'docente/detalleGeneralGrupo/' . $grupos->id ;?>">Editar</a>
+                            <a class="small text-black stretched-link" href="<?php echo constant('URL'). 'docente/detalleGrupo/' . $grupos->id ;?>">Editar</a>
                             <div class="small text-black"><i class="fas fa-angle-right"></i></div>
                             
                         </div>
@@ -224,17 +224,19 @@ $(document).ready(function(){
         </div>   
            
     <!-- End of Content Wrapper -->
-
+  
   </div>
+  <?php require_once 'views/docente/footer.php'?>
   <!-- End of Page Wrapper -->
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
+ 
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="<?php echo constant('URL');?>resources/js/toastr.js"></script>
+ <!-- Scroll to Top Button-->
+ <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
 
-<?php require_once 'views/docente/footer.php'?>
+

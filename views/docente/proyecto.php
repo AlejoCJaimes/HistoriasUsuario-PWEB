@@ -181,7 +181,7 @@ $(document).ready(function(){
 
 
         <!--CONTENIDO PROYECTOS-->
-        <div class="container">
+    <div class="container">
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
@@ -193,16 +193,30 @@ $(document).ready(function(){
 					</div>
                 </div>
             </div>
-            <div class="col-xl-3 col-md-6">
-              <div class="card bg-warning text-white mb-4">
-                <div class="card-body" name='' href="#">Proyecto prueba</div>
-                
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                  <a class="small text-black stretched-link" href="<?php echo constant('URL');?>docente/detallesProyecto">Ver detalles</a>
-                  <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-              </div>
-            </div>
+            <div class="container">
+            <div class="row">
+            <?php 
+            $arreglo = [];
+            require_once 'models/Proyecto.php';
+            foreach($this->proyecto as $row){
+                $proyecto = new Proyecto();
+                $proyecto = $row;
+                ?>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body " name='' href="#"><?php echo $proyecto->NombreProyecto?></div>
+                        <!--Esto lleva a editar y ver la metodología-->
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-black stretched-link" href="<?php echo constant('URL'). 'docente/detalleProyecto/'.$proyecto->Id ;?>">Editar</a>
+                            <div class="small text-black"><i class="fas fa-angle-right"></i></div>
+                            
+                        </div>
+                        
+                    </div>
+                </div> 
+                <?php } ?>   
+            </div>  
+        </div> 
   
 
     </div>
