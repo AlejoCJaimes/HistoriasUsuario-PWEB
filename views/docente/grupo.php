@@ -224,9 +224,9 @@ $(document).ready(function(){
         </div>   
            
     <!-- End of Content Wrapper -->
-  
+    </div>
   </div>
-  <?php require_once 'views/docente/footer.php'?>
+  
   <!-- End of Page Wrapper -->
 
  
@@ -238,5 +238,6 @@ $(document).ready(function(){
  <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
+  <?php require_once 'views/docente/footer.php'?>
 
 
