@@ -51,7 +51,7 @@ class Estudiante extends Controller{
       $this->db = new Database();
 
       $id_user = $this->session->getCurrentUser();
-      $consulta = "SELECT mo.id, mo.Nombre 
+      $consulta = "SELECT mo.Id, mo.Nombre 
           FROM estudiante e 
           JOIN usuario us ON us.id = e.idusuario
           JOIN grupoestudiante ge ON ge.IdEstudiante = e.Id
@@ -220,7 +220,7 @@ class Estudiante extends Controller{
        $id_estudiante = $row['Id'];
       }
 
-      $consulta = "SELECT hu.id, hu.Nombre 
+      $consulta = "SELECT hu.Id, hu.Nombre 
           FROM estudiante e 
           JOIN usuario us ON us.id = e.idusuario
           JOIN grupoestudiante ge ON ge.IdEstudiante = e.Id
@@ -442,6 +442,57 @@ class Estudiante extends Controller{
       $this->view->render('estudiante/historiasusuario/fase/crearFase');
     }
      ////////COMIENZO FASE//////////
+
+
+     // Métodos de insersión para Historia de usuario, actividad y recursos
+
+      function addHistoriaUsuario() {
+        $NumHistoriaUsuario = $_POST['NumHistoriaUsuario'];
+        $Prioridad = $_POST['Prioridad'];
+        $Nombre = $_POST['Nombre'];
+        $Descripcion = $_POST['Descripcion'];
+        $IdModulo = $_POST['IdModulo'];
+        $IdEstado = $_POST['IdEstado'];
+
+        if($this->model->insertarHistoriaUsuario(['NumHistoriaUsuario' => $NumHistoriaUsuario,'Prioridad' => $Prioridad,'Nombre' => $Nombre,
+        'Descripcion' => $Descripcion,'IdModulo' => $IdModulo,'IdEstado' => $IdEstado])){
+          $confirmacion = '<div class="alert alert-info text-center" role="alert" >Historia de Usuario creada correctamente.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        }else{
+          $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> la Historia de Usuario NO se creó.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        }
+        $this->view->confirmacion = $confirmacion;
+        $this->crearhistoria();
+      }
+
+      function addActividad() {
+        $Nombre = $_POST['Nombre'];
+        $Descripcion = $_POST['Descripcion'];
+        $IdHistoriaUsuario = $_POST['IdHistoriaUsuario'];
+
+        if($this->model->insertarActividad(['Nombre' => $Nombre, 'Descripcion' => $Descripcion,'IdHistoriaUsuario' => $IdHistoriaUsuario])){
+          $confirmacion = '<div class="alert alert-info text-center" role="alert" >Actividad creada correctamente.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        }else{
+          $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> la actividad NO se creó.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        }
+        $this->view->confirmacion = $confirmacion;
+        $this->crearActividad();
+      }
 
     }
 
