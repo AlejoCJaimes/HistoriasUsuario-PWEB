@@ -6,22 +6,22 @@
 
     <div class="form-group">
       <label>Tipo</label>
-      <input type="text" class="form-control" REQUIRED>
+      <input type="text" name="Tipo" class="form-control" REQUIRED>
     </div>
 
     <div class="form-group">
       <label>Descripción</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" REQUIRED></textarea>
+      <textarea class="form-control" name="Descripcion" id="exampleFormControlTextarea1" rows="4" REQUIRED></textarea>
     </div>
 
     <div class="form-group">
       <label>Valor</label>
-      <input type="number" step="0.000001" placeholder="No pasar de 6 decimales" class="form-control" REQUIRED>
+      <input type="number" step="0.000001" name="Valor" placeholder="No pasar de 6 decimales" class="form-control" REQUIRED>
     </div>
 
     <div class="form-group">
       <label>Actividad</label> <br>
-      <select name="" id="" class="custom-select col-3" REQUIRED>
+      <select name="idActividad" class="custom-select col-3" REQUIRED>
         <option selected disabled value="">Selecciona la actividad</option>
         <?php
           foreach ($this->actividad as $row) {

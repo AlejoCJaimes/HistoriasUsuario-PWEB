@@ -13,10 +13,10 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Número: <input type="number" min="1" class="form-control col-4" REQUIRED></td>
-                    <td>Prioridad: <input type="text" class="form-control" REQUIRED></td>
+                    <td>Número: <input type="number" name="NumHistoriaUsuario" min="1" class="form-control col-4" REQUIRED></td>
+                    <td>Prioridad: <input type="text" name="Prioridad" class="form-control" REQUIRED></td>
                     <td>
-                        Estado: <select name="" id="" class="custom-select" REQUIRED>
+                        Estado: <select name="IdEstado" class="custom-select" REQUIRED>
                             <option selected disabled value="">Selecciona el estado</option>
                             <?php
 
@@ -37,17 +37,17 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3">Nombre: <input type="text" class="form-control col-6" REQUIRED></td>
+                    <td colspan="3">Nombre: <input type="text" name="Nombre" class="form-control col-6" REQUIRED></td>
                 </tr>
                 <tr>
-                    <td colspan="3">Descripción:<textarea class="form-control" id="exampleFormControlTextarea1" rows="4"
+                    <td colspan="3">Descripción:<textarea class="form-control" name="Descripcion" id="exampleFormControlTextarea1" rows="4"
                             REQUIRED></textarea></td>
                 </tr>
                 <tr>
                     <td>
                         <div class="form-group">
                             <label>Módulo</label> <br>
-                            <select name="" id="" class="custom-select" REQUIRED>
+                            <select name="IdModulo" class="custom-select" REQUIRED>
                                 <option selected disabled value="">Selecciona el módulo</option>
                                 <?php
                                     foreach ($this->modulo as $row) {
