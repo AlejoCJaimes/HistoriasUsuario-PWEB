@@ -27,22 +27,58 @@
                             rows="4"></textarea></td>
                 </tr>
                 <tr>
-                    <td>Módulo: <select name="" id="" class="custom-select">
-                            <option selected disabled>Selecciona un módulo</option>
-                            <option value=""></option>
-                        </select>
+                    <td>
+                        <div class="form-group">
+                            <label>Módulo</label> <br>
+                            <select name="" id="" class="custom-select">
+                                <option selected disabled>Selecciona el módulo</option>
+                                <?php
+
+                                require_once 'libs/database.php';
+                                $this->db = new Database();
+
+                                //statement return dates
+                                $query = $this->db->connect()->query("SELECT Id,Nombre FROM modulo;");
+
+                                while($row = $query->fetch()) {
+                                ?>
+                                <option value="<?php echo $row['Id']?>"> <?php echo $row['Nombre']?></option>
+                                <?php
+
+                                    }
+                                ?>
+                            </select>
+                        </div>
                     </td>
                 </tr>
                 </tr>
-                    <td style="width: 400px;">Estado: <select name="" id="" class="custom-select">
-                            <option selected disabled>Selecciona un estado</option>
-                            <option value=""></option>
+                <td style="width: 400px;">
+                    <div class="form-group">
+                        <label>Estado</label> <br>
+                        <select name="" id="" class="custom-select">
+                            <option selected disabled>Selecciona el estado</option>
+                            <?php
+
+                                require_once 'libs/database.php';
+                                $this->db = new Database();
+
+                                //statement return dates
+                                $query = $this->db->connect()->query("SELECT Id,Nombre FROM estado;");
+
+                                while($row = $query->fetch()) {
+                                ?>
+                            <option value="<?php echo $row['Id']?>"> <?php echo $row['Nombre']?></option>
+                            <?php
+
+                                    }
+                                ?>
                         </select>
-                    </td>
+                    </div>
+                </td>
                 </tr>
             </tbody>
         </table>
-        <input type="submit" class="btn btn-primary">
+        <input type="submit" class="btn btn-primary" value="Guardar">
     </div>
 
 </form>
