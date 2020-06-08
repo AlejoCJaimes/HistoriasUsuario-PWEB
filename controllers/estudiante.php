@@ -28,6 +28,8 @@ class Estudiante extends Controller{
       $this->view->datos_perfil = [];
       $this->view->id_correo = "";
       $this->view->cabecera = "";
+      $this->view->actividad = [];
+      $this->view->modulo = [];
       $this->view->metodologias = [];
       $this->view->fuentes = [];
       $this->view->historiasUsuario = [];
@@ -44,6 +46,29 @@ class Estudiante extends Controller{
     function crearhistoria() {
       $cabecera = "Crear Historia de Usuario";
       $this->view->cabecera = $cabecera;
+
+      require_once 'libs/database.php';
+      $this->db = new Database();
+
+      $id_user = $this->session->getCurrentUser();
+      $consulta = "SELECT mo.id, mo.Nombre 
+          FROM estudiante e 
+          JOIN usuario us ON us.id = e.idusuario
+          JOIN grupoestudiante ge ON ge.IdEstudiante = e.Id
+          JOIN grupo g ON g.id = ge.IdGrupo
+          JOIN grupoproyecto gp ON gp.IdGrupo = g.Id
+          JOIN proyecto p ON p.id = gp.IdProyecto
+          JOIN metodologia m ON m.id = p.IdMetodologia
+          JOIN fase f ON f.IdMetodologia = m.Id
+          JOIN modulo mo ON mo.IdFase = f.Id
+          JOIN historiausuario hu ON hu.IdModulo = mo.Id
+          WHERE us.correo_usuario = '$id_user';";
+
+        $query = $this->db->connect()->query($consulta);
+        $arr = $query->fetchAll();
+
+      $this->view->modulo = $arr;
+
       $this->view->render('estudiante/historiasusuario/crearhistoria');
 
     }
@@ -219,6 +244,28 @@ class Estudiante extends Controller{
     function crearRecurso() {
       $cabecera = "";
       $cabecera = "Recurso";
+
+      require_once 'libs/database.php';
+      $this->db = new Database();
+      
+      $consulta = "SELECT ac.id, ac.Nombre 
+      FROM estudiante e 
+      JOIN usuario us ON us.id = e.idusuario
+      JOIN grupoestudiante ge ON ge.IdEstudiante = e.Id
+      JOIN grupo g ON g.id = ge.IdGrupo
+      JOIN grupoproyecto gp ON gp.IdGrupo = g.Id
+      JOIN proyecto p ON p.id = gp.IdProyecto
+      JOIN metodologia m ON m.id = p.IdMetodologia
+      JOIN fase f ON f.IdMetodologia = m.Id
+      JOIN modulo mo ON mo.IdFase = f.Id
+      JOIN historiausuario hu ON hu.IdModulo = mo.Id
+      JOIN actividad ac ON ac.IdHistoriaUsuario = hu.id
+      WHERE us.correo_usuario = 'camiliitoyeahyeah@udi.edu.co';";
+      
+      $query = $this->db->connect()->query($consulta);
+      $arr = $query->fetchAll();
+
+      $this->view->actividad = $arr;
       $this->view->cabecera = $cabecera;
       $this->view->render('estudiante/historiasusuario/recurso/index');
     }
