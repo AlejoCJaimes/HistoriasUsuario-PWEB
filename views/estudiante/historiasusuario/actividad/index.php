@@ -6,18 +6,18 @@
 
     <div class="form-group">
       <label>Nombre</label>
-      <input type="text" class="form-control">
+      <input type="text" class="form-control" REQUIRED>
     </div>
 
     <div class="form-group">
       <label>Descripción</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" REQUIRED></textarea>
     </div>
 
     <div class="form-group">
       <label>Historia de usuario</label> <br>
-      <select name="" id="" class="custom-select col-3">
-        <option selected disabled>Selecciona la historia de usuario</option>
+      <select name="" id="" class="custom-select col-3" REQUIRED>
+        <option selected disabled value="">Selecciona la historia de usuario</option>
         <?php
           foreach ($this->historiasUsuario as $row) {
         ?>
