@@ -170,6 +170,34 @@ class EstudianteModel extends Model {
     }
      //FIN CRUD FASE
 
+    // Inicio CRUD Historia de Usuario
+    function insertarHistoriaUsuario($datos) {
+      try{
+        //Consulta para insertar una nueva Historia de Usuario
+        $query_1 = $this->db->connect()->prepare("INSERT INTO `historiausuario`(`NumHistoriaUsuario`, `Prioridad`, `Nombre`, `Descripcion`, `IdModulo`, `IdEstado`) VALUES (:NumHistoriaUsuario,:Prioridad,:Nombre,:Descripcion,:IdModulo,:IdEstado);");
+        $query_1->execute(['NumHistoriaUsuario' => $datos['NumHistoriaUsuario'], 'Prioridad' => $datos['Prioridad'], 'Nombre' => $datos['Nombre'], 'Descripcion' => $datos['Descripcion'], 'IdModulo' => $datos['IdModulo'], 'IdEstado' => $datos['IdEstado']]);
+        return true;
+      }catch(PDOException $e){
+        return false;
+      }
+    }
+
+    // Fin CRUD Historia de Usuario
+
+    // Inicio CRUD Actividad
+    function insertarActividad($datos) {
+      try{
+        //Consulta para insertar una nueva Historia de Usuario
+        $query_1 = $this->db->connect()->prepare("INSERT INTO `actividad`(`Descripcion`, `IdHistoriaUsuario`, `Nombre`) VALUES (:Descripcion,:IdHistoriaUsuario,:Nombre);");
+        $query_1->execute(['Descripcion' => $datos['Descripcion'], 'IdHistoriaUsuario' => $datos['IdHistoriaUsuario'] ,'Nombre' => $datos['Nombre']]);
+        return true;
+      }catch(PDOException $e){
+        return false;
+      }
+    }
+
+    // Fin CRUD Historia de Usuario
+
      //INSTRUCCIONES CRUD FASE
     function insertarModulo($datos) {
       //bindig de datos
