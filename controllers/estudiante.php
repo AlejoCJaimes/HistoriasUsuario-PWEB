@@ -30,6 +30,7 @@ class Estudiante extends Controller{
       $this->view->cabecera = "";
       $this->view->metodologias = [];
       $this->view->fuentes = [];
+      $this->view->historiasUsuario = [];
         //echo "<p>Nuevo controlador Main</p>";
     }
 
@@ -157,6 +158,33 @@ class Estudiante extends Controller{
     function crearActividad() {
       $cabecera = "";
       $cabecera = "Actividad";
+      
+      require_once 'libs/database.php';
+      $this->db = new Database();
+      $id_user = $this->session->getCurrentUser();
+      $id_estudiante = "";
+      $query_id_estudiante = $this->db->connect()->query(" SELECT e.Id as 'Id' FROM estudiante AS e  JOIN usuario as u ON e.IdUsuario = u.Id WHERE u.correo_usuario= '$id_user'");
+      while($row = $query_id_estudiante->fetch()) {
+       $id_estudiante = $row['Id'];
+      }
+
+      $consulta = "SELECT hu.id, hu.Nombre 
+          FROM estudiante e 
+          JOIN usuario us ON us.id = e.idusuario
+          JOIN grupoestudiante ge ON ge.IdEstudiante = e.Id
+          JOIN grupo g ON g.id = ge.IdGrupo
+          JOIN grupoproyecto gp ON gp.IdGrupo = g.Id
+          JOIN proyecto p ON p.id = gp.IdProyecto
+          JOIN metodologia m ON m.id = p.IdMetodologia
+          JOIN fase f ON f.IdMetodologia = m.Id
+          JOIN modulo mo ON mo.IdFase = f.Id
+          JOIN historiausuario hu ON hu.IdModulo = mo.Id
+          WHERE us.correo_usuario = 'camiliitoyeahyeah@udi.edu.co';";
+
+        $query = $this->db->connect()->query($consulta);
+        $arr = $query->fetchAll();
+
+      $this->view->historiasUsuario = $arr;
       $this->view->cabecera = $cabecera;
       $this->view->render('estudiante/historiasusuario/actividad/index');
     }
