@@ -206,7 +206,7 @@ class Estudiante extends Controller{
           JOIN fase f ON f.IdMetodologia = m.Id
           JOIN modulo mo ON mo.IdFase = f.Id
           JOIN historiausuario hu ON hu.IdModulo = mo.Id
-          WHERE us.correo_usuario = 'camiliitoyeahyeah@udi.edu.co';";
+          WHERE us.correo_usuario = '$id_user';";
 
         $query = $this->db->connect()->query($consulta);
         $arr = $query->fetchAll();
