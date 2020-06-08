@@ -222,6 +222,7 @@ class Estudiante extends Controller{
       $this->view->cabecera = $cabecera;
       $this->view->render('estudiante/historiasusuario/recurso/index');
     }
+     ////////COMIENZO MODULO//////////
 
     function crearModulo() {
       $fases = [];
@@ -271,9 +272,19 @@ class Estudiante extends Controller{
       $cabecera = "";
       $cabecera = "Modulo";
       $this->view->cabecera = $cabecera;
-      $this->view->render('estudiante/historiasusuario/modulo/index');
+      $this->view->render('estudiante/historiasusuario/modulo/crearModulo');
     }
 
+
+    function addModulo() {
+      $nombre = $_POST['nombre'];
+      $descripcion = $_POST['descripcion'];
+      $fase = $_POST['idfase'];
+      
+    }
+    ////////FIN MODULO//////////
+
+    ////////COMIENZO FASE//////////
     function crearFase() {
 
       $metodologia = "";
@@ -298,15 +309,75 @@ class Estudiante extends Controller{
          $metodologia = $_row['metodologia'];
       }
 
+
      
       $cabecera = "";
       $cabecera = "Fase";
       $this->view->metodologia = $metodologia;
       $this->view->cabecera = $cabecera;
-      $this->view->render('estudiante/historiasusuario/fase/index');
+      $this->view->render('estudiante/historiasusuario/fase/crearFase');
     }
 
+    function addFase() {
+      $confirmacion = "";
+      $nombre = $_POST['nombre'];
+      $descripcion = $_POST['descripcion'];
+      $url = $_POST['url'];
+      $_metodologia = $_POST['metodologia'];
+      $estado = $_POST['idestado'];
+      $objetivo = $_POST['descripcion_objetivo'];
 
+      //DEVOLVER METODOLOGIA
+      $metodologia = "";
+      require_once 'libs/database.php';
+      $this->db = new Database();
+      $id_user = $this->session->getCurrentUser();
+      $id_estudiante = "";
+      $query_id_estudiante = $this->db->connect()->query(" SELECT e.Id as 'Id' FROM estudiante AS e  JOIN usuario as u ON e.IdUsuario = u.Id WHERE u.correo_usuario= '$id_user'");
+      while($row = $query_id_estudiante->fetch()) {
+       $id_estudiante = $row['Id'];
+      }
+      
+      
+      $query_metodologia_estudiante = $this->db->connect()->query("SELECT m.Nombre as 'metodologia' from metodologia AS m
+      JOIN proyecto as p ON p.IdMetodologia = m.Id
+      JOIN grupoproyecto AS gproyecto ON gproyecto.IdProyecto = p.Id
+      JOIN grupo as g ON g.Id = gproyecto.IdGrupo
+      JOIN grupoestudiante as gestudiante ON gestudiante.IdGrupo = g.Id
+      WHERE gestudiante.IdEstudiante = '$id_estudiante'");
+
+      while($_row = $query_metodologia_estudiante->fetch()) {
+         $metodologia = $_row['metodologia'];
+      }
+
+
+     
+     
+
+      if ($this->model->insertarFase(['nombre' => $nombre, 'descripcion'=> $descripcion, 'url' => $url, 'metodologia' => $_metodologia, 'idestado' => $estado, 'descripcion_objetivo' => $objetivo])) {
+        $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong> La fase '.$nombre.' ha sido agregada correctamente
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+
+          </div> ';
+      } else {
+        $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Lo sentimos!</strong> La fase no pudo crearse.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+
+          </div> ';
+
+      }
+      
+
+     
+      $this->view->metodologia = $metodologia;
+      $this->view->confirmacion = $confirmacion;
+      $this->view->render('estudiante/historiasusuario/fase/crearFase');
+    }
+     ////////COMIENZO FASE//////////
 
     }
 

@@ -119,5 +119,92 @@ class EstudianteModel extends Model {
 
     }
 
+    //INSTRUCCIONES CRUD FASE
+    function insertarFase($datos) {
+      //bindig de datos
+      $metodologia = $datos['metodologia'];
+      $nombre = $datos['nombre'];
+      //encotrar idmetodologia
+      $id_metodologia = 0;
+      $id_fase = 0;
+      $query_metodologia = $this->db->connect()->query("SELECT Id FROM metodologia WHERE Nombre = '$metodologia'");
+      while($row = $query_metodologia->fetch()) {
+          $id_metodologia = $row['Id'];
+      }
+      
+      
+      try {
+        //insertar fase
+
+        $insert_fase = $this->db->connect()->prepare("INSERT INTO `fase`(`IdMetodologia`, `IdEstado`, `Nombre`, `Descripcion`, `UrlFase`) 
+        VALUES ( :IdMetodologia, :IdEstado, :Nombre, :Descripcion, :UrlFase)");
+        $insert_fase->execute(['IdMetodologia' => $id_metodologia, 'IdEstado' => $datos['idestado'], 'Nombre' => $datos['nombre'], 'Descripcion' => $datos['descripcion'], 'UrlFase' => $datos['url']]);
+        
+        $query_id_fase = $this->db->connect()->query("SELECT Id FROM fase WHERE Nombre = '$nombre'");
+        while($_row = $query_id_fase->fetch()) {
+            $id_fase = $_row['Id'];
+        }
+
+        $insert_objetivo = $this->db->connect()->prepare("INSERT INTO `objetivo`(`Descripcion`, `IdFase`) VALUES ( :Descripcion, :IdFase) ");
+        $insert_objetivo->execute(['Descripcion' => $datos['descripcion_objetivo'], 'IdFase' => $id_fase]);
+
+        return true;
+
+      } catch (PDOException $e) {
+        return $e;
+      }
+    }
+    function updateFase($datos) {
+
+    }
+    function getbyIdFase($id) {
+
+    }
+
+    function loadFases() {
+
+    }
+
+    function deleteFase() {
+
+    }
+     //FIN CRUD FASE
+
+     //INSTRUCCIONES CRUD FASE
+    function insertarModulo($datos) {
+      //bindig de datos
+      $metodologia = $datos['metodologia'];
+      $nombre = $datos['nombre'];
+      //encotrar idmetodologia
+      $id_metodologia = 0;
+      $id_fase = 0;
+      
+      try {
+        //insertar objetivo
+        $insert_objetivo = $this->db->connect()->prepare("INSERT INTO `objetivo`(`Descripcion`, `IdFase`) VALUES ( :Descripcion, :IdFase) ");
+        $insert_objetivo->execute(['Descripcion' => $datos['descripcion_objetivo'], 'IdFase' => $id_fase]);
+
+        return true;
+
+      } catch (PDOException $e) {
+        return $e;
+      }
+    }
+    function updateModulo($datos) {
+
+    }
+    function getbyIdModulo($id) {
+
+    }
+
+    function loadModulo() {
+
+    }
+
+    function deleteModulo() {
+
+    }
+     //FIN CRUD FASE
+
 }
 ?>
