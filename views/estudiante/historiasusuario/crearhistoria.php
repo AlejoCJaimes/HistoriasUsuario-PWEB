@@ -1,7 +1,8 @@
 <?php require 'views/estudiante/header.php'
 ?>
 <!-- INICIO DEL CONTENIDO PRINCIPAL -->
-<form action="<?php echo constant('URL');?>estudiante" Method="POST">
+<h3><?php echo $this->confirmacion;?></h3>
+<form action="<?php echo constant('URL');?>estudiante/addHistoriaUsuario" Method="POST">
     <div class="container">
         <table class="table">
             <thead class="bg-success">
@@ -52,7 +53,7 @@
                                 <?php
                                     foreach ($this->modulo as $row) {
                                     ?>
-                                        <option value="<?php echo $row['Id']?>"> <?php echo $row['Nombre']?></option>
+                                        <option value="<?php echo $row['Id'];?>"> <?php echo $row['Nombre'];?></option>
                                     <?php
                                         }
                                     ?>

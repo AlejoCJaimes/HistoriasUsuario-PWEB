@@ -1,7 +1,8 @@
 <?php require 'views/estudiante/header.php'
 ?>
 <!-- INICIO DEL CONTENIDO PRINCIPAL -->
-<form action="<?php echo constant('URL');?>estudiante" Method="POST">
+<h3><?php echo $this->confirmacion;?></h3>
+<form action="<?php echo constant('URL');?>estudiante/addActividad" Method="POST">
   <div class="container">
 
     <div class="form-group">
