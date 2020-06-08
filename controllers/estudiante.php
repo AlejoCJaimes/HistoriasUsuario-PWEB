@@ -140,15 +140,42 @@ class Estudiante extends Controller{
 
     //Read Metodologia 
     function readMetodologia() {
+      
+      $metodologias = [];
+      $fuentes = [];
+      require_once 'models/Metodologia.php';
+      $correo_user = $this->session->getCurrentUser();
+      require_once 'libs/database.php';
+      $this->db = new Database();
+      $query_id_estudiante = $this->db->connect()->query("SELECT g.IdGrupo as 'IdGrupo' FROM grupoestudiante AS g  
+      JOIN estudiante as e ON e.Id = g.IdEstudiante
+      JOIN usuario as u ON e.IdUsuario = u.Id 
+      WHERE u.correo_usuario= '$correo_user'");
+      while($row = $query_id_estudiante->fetch()) {
+       $id_grupo = $row['IdGrupo'];
+      }
+
+      $query_metodologia_estudiante = $this->db->connect()->query("SELECT m.* FROM metodologia as m 
+      JOIN proyecto as p ON p.IdMetodologia = m.Id
+      JOIN grupoproyecto as gproyecto ON gproyecto.IdProyecto = p.Id
+      WHERE gproyecto.IdGrupo = '$id_grupo'");
+      $aux_id_meto = 0;
+      while($rowe = $query_metodologia_estudiante->fetch()) {
+          $item = new Metodologia();
+          $item->id = $rowe['Id'];
+          $item->nombre = $rowe['Nombre'];
+          $item->descripcion = $rowe['Descripcion'];
+
+          array_push($metodologias,$item);
+          $aux_id_meto = $rowe['Id'];
+      }
+
         $cabecera = "";
         $cabecera = "Metodología";
         $this->view->cabecera = $cabecera;
-       /* $metodologias = [];
-        $metodologias = $this->model->getByIdMetodologia($id);
-        $fuentes = [];
-        $fuentes = $this->model->getByIdFuentes($id);
         $this->view->metodologias = $metodologias;
-        $this->view->fuentes = $fuentes;*/
+        
+      
         $this->view->render('estudiante/readMetodologia');
     }
 
