@@ -29,7 +29,9 @@ class Estudiante extends Controller{
       $this->view->id_correo = "";
       $this->view->cabecera = "";
       $this->view->metodologias = [];
+      $this->view->metodologia = "";
       $this->view->fuentes = [];
+      $this->view->fases = [];
         //echo "<p>Nuevo controlador Main</p>";
     }
 
@@ -168,18 +170,89 @@ class Estudiante extends Controller{
       $this->view->render('estudiante/historiasusuario/recurso/index');
     }
 
+   
+
+    function crearFase() {
+
+      $metodologia = "";
+      require_once 'libs/database.php';
+      $this->db = new Database();
+      $id_user = $this->session->getCurrentUser();
+      $id_estudiante = "";
+      $query_id_estudiante = $this->db->connect()->query(" SELECT e.Id as 'Id' FROM estudiante AS e  JOIN usuario as u ON e.IdUsuario = u.Id WHERE u.correo_usuario= '$id_user'");
+      while($row = $query_id_estudiante->fetch()) {
+       $id_estudiante = $row['Id'];
+      }
+      
+      
+      $query_metodologia_estudiante = $this->db->connect()->query("SELECT m.Nombre as 'metodologia' from metodologia AS m
+      JOIN proyecto as p ON p.IdMetodologia = m.Id
+      JOIN grupoproyecto AS gproyecto ON gproyecto.IdProyecto = p.Id
+      JOIN grupo as g ON g.Id = gproyecto.IdGrupo
+      JOIN grupoestudiante as gestudiante ON gestudiante.IdGrupo = g.Id
+      WHERE gestudiante.IdEstudiante = '$id_estudiante'");
+
+      while($_row = $query_metodologia_estudiante->fetch()) {
+         $metodologia = $_row['metodologia'];
+      }
+
+     
+      $cabecera = "";
+      $cabecera = "Fase";
+      $this->view->metodologia = $metodologia;
+      $this->view->cabecera = $cabecera;
+      $this->view->render('estudiante/historiasusuario/fase/index');
+    }
+
     function crearModulo() {
+      $fases = [];
+      $correo_user = $this->session->getCurrentUser();
+      require_once 'libs/database.php';
+      require_once 'models/Fase.php';
+      $this->db = new Database();
+
+      //obtner grupo
+      $id_grupo = "";
+      $query_id_estudiante = $this->db->connect()->query("SELECT g.IdGrupo as 'IdGrupo' FROM grupoestudiante AS g  
+      JOIN estudiante as e ON e.Id = g.IdEstudiante
+      JOIN usuario as u ON e.IdUsuario = u.Id 
+      WHERE u.correo_usuario= '$correo_user'");
+      while($row = $query_id_estudiante->fetch()) {
+       $id_grupo = $row['IdGrupo'];
+      }
+
+
+
+      
+      $id_estudiante = "";
+      $query_fase_estudiante = $this->db->connect()->query("SELECT f.*  FROM
+      fase as f 
+      JOIN proyecto as p ON p.IdMetodologia = f.IdMetodologia
+      join grupoproyecto as gproyecto ON gproyecto.IdProyecto = p.Id
+      JOIN grupo as g ON g.Id = gproyecto.IdGrupo
+      JOIN grupoestudiante AS gestudiante ON gestudiante.IdGrupo = g.Id
+      JOIN estudiante AS e ON e.Id = gestudiante.IdEstudiante
+      JOIN usuario as u ON u.Id = e.IdUsuario
+      WHERE u.correo_usuario =  '$correo_user' AND gproyecto.IdGrupo = '$id_grupo'");
+
+      while($_row = $query_fase_estudiante->fetch()) {
+        $item = new Fase(); 
+        $item->Id = $_row['Id'];
+        $item->Nombre = $_row['Nombre'];
+        $item->Descripcion = $_row['Descripcion'];
+        $item->FechaCreacion = $_row['FechaCreacion'];
+        $item->FechaActualizacion = $_row['FechaActualizacion'];
+        $item->UrlFase = $_row['UrlFase'];
+        $item->IdEstado = $_row['IdEstado'];
+        $item->IdMetodologia = $_row['IdMetodologia'];
+        array_push($fases,$item);  
+      }
+      
+      $this->view->fases = $fases;
       $cabecera = "";
       $cabecera = "Modulo";
       $this->view->cabecera = $cabecera;
       $this->view->render('estudiante/historiasusuario/modulo/index');
-    }
-
-    function crearFase() {
-      $cabecera = "";
-      $cabecera = "Fase";
-      $this->view->cabecera = $cabecera;
-      $this->view->render('estudiante/historiasusuario/fase/index');
     }
 
 
