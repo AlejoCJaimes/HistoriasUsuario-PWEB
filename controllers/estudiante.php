@@ -151,6 +151,37 @@ class Estudiante extends Controller{
         $this->view->render('estudiante/readMetodologia');
     }
 
+    //HISTORIAS DE USUARIO 
+
+    //VISTAS DE INDEX
+    function crearActividad() {
+      $cabecera = "";
+      $cabecera = "Actividad";
+      $this->view->cabecera = $cabecera;
+      $this->view->render('estudiante/historiasusuario/actividad/index');
+    }
+
+    function crearRecurso() {
+      $cabecera = "";
+      $cabecera = "Recurso";
+      $this->view->cabecera = $cabecera;
+      $this->view->render('estudiante/historiasusuario/recurso/index');
+    }
+
+    function crearModulo() {
+      $cabecera = "";
+      $cabecera = "Modulo";
+      $this->view->cabecera = $cabecera;
+      $this->view->render('estudiante/historiasusuario/modulo/index');
+    }
+
+    function crearFase() {
+      $cabecera = "";
+      $cabecera = "Fase";
+      $this->view->cabecera = $cabecera;
+      $this->view->render('estudiante/historiasusuario/fase/index');
+    }
+
 
 
     }

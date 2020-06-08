@@ -46,6 +46,7 @@
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
+    
 
  <!-- BARRA LATERAL -->
  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo constant('URL');?>estudiante">
@@ -65,18 +66,21 @@
           <span>Inicio</span></a>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link" href="<?php echo constant('URL');?>estudiante/perfil">
-          <i class="fas fa-user"></i>
-          <span>Perfil</span></a>
-      </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo constant('URL');?>estudiante/crearhistoria">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
         <i class="fas fa-address-book"></i>
-
-          
-          <span>Historias de Usuario</span></a>
+        <span>Historias de Usuario</span></a>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="<?php echo constant('URL');?>estudiante/crearhistoria"> Crear Historia de Usuario</a>
+            <a class="collapse-item" href="<?php echo constant('URL');?>estudiante/crearFase"> Fase</a>
+            <a class="collapse-item" href="<?php echo constant('URL');?>estudiante/crearModulo"> Módulo</a>
+            <a class="collapse-item" href="<?php echo constant('URL');?>estudiante/crearActividad"> Actividad</a>
+            <a class="collapse-item" href="<?php echo constant('URL');?>estudiante/crearRecurso"> Recurso</a>
+          </div>
+        </div>
       </li>
 
 
@@ -86,20 +90,21 @@
           <span>Metodologia</span></a>
       </li>
 
-          <!-- Nav Item -Usuarios Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-cog"></i>
-          <span>Ajustes</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo constant('URL');?>estudiante/clave">Cambiar contraseña</a>
-          </div>
-        </div>
+        
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?php echo constant('URL');?>estudiante/perfil">
+          <i class="fas fa-user"></i>
+          <span>Perfil</span></a>
       </li>
-
-
+        <!-- Nav Item -Usuarios Collapse Menu -->
+        <li class="nav-item">
+        <a class="nav-link" href="<?php echo constant('URL');?>estudiante/clave">
+        <i class="fas fa-cog"></i>
+        <span>Cambiar Clave</span></a>
+      </li>
+      
+          
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
