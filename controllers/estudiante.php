@@ -28,6 +28,8 @@ class Estudiante extends Controller{
       $this->view->datos_perfil = [];
       $this->view->id_correo = "";
       $this->view->cabecera = "";
+      $this->view->metodologias = [];
+      $this->view->fuentes = [];
         //echo "<p>Nuevo controlador Main</p>";
     }
 
@@ -133,6 +135,20 @@ class Estudiante extends Controller{
       $this->view->confirmacion = $confirmacion;
       $this->clave();
 
+    }
+
+    //Read Metodologia 
+    function readMetodologia() {
+        $cabecera = "";
+        $cabecera = "Metodología";
+        $this->view->cabecera = $cabecera;
+       /* $metodologias = [];
+        $metodologias = $this->model->getByIdMetodologia($id);
+        $fuentes = [];
+        $fuentes = $this->model->getByIdFuentes($id);
+        $this->view->metodologias = $metodologias;
+        $this->view->fuentes = $fuentes;*/
+        $this->view->render('estudiante/readMetodologia');
     }
 
 
