@@ -289,8 +289,6 @@ class Estudiante extends Controller{
       }
 
 
-
-      
       $id_estudiante = "";
       $query_fase_estudiante = $this->db->connect()->query("SELECT f.*  FROM
       fase as f 
@@ -324,10 +322,29 @@ class Estudiante extends Controller{
 
 
     function addModulo() {
+      $confirmacion = "";
       $nombre = $_POST['nombre'];
       $descripcion = $_POST['descripcion'];
       $fase = $_POST['idfase'];
-      
+
+      if ($this->model->insertarModulo(['nombre' => $nombre,'descripcion'=> $descripcion, 'idfase' => $fase])) {
+        $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong> El módulo fue creado con éxito.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+
+          </div> ';
+      } else {
+        $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Lo sentimos!</strong>El módulo no pudo crearse.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+
+          </div> ';
+
+      }
+      $this->view->confirmacion = $confirmacion;
+      $this->crearModulo();
     }
     ////////FIN MODULO//////////
 

@@ -173,16 +173,15 @@ class EstudianteModel extends Model {
      //INSTRUCCIONES CRUD FASE
     function insertarModulo($datos) {
       //bindig de datos
-      $metodologia = $datos['metodologia'];
-      $nombre = $datos['nombre'];
       //encotrar idmetodologia
       $id_metodologia = 0;
       $id_fase = 0;
-      
+     
       try {
-        //insertar objetivo
-        $insert_objetivo = $this->db->connect()->prepare("INSERT INTO `objetivo`(`Descripcion`, `IdFase`) VALUES ( :Descripcion, :IdFase) ");
-        $insert_objetivo->execute(['Descripcion' => $datos['descripcion_objetivo'], 'IdFase' => $id_fase]);
+        //insertar MOdulo
+        $insert_objetivo = $this->db->connect()->prepare("INSERT INTO `modulo`(`Nombre`,`Descripcion`, `IdFase`) VALUES ( :Nombre, :Descripcion, :IdFase) ");
+        $insert_objetivo->execute(['Nombre' => $datos['nombre'],'Descripcion' => $datos['descripcion'], 'IdFase' => $datos['idfase']]);
+        
 
         return true;
 

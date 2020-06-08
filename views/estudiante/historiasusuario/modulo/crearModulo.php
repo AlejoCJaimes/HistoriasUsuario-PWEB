@@ -3,13 +3,14 @@
 
 <!-- INICIO DEL CONTENIDO PRINCIPAL -->
 <div class="container">
+<?php echo $this->confirmacion ?>
     <br>
     <h3><i class="far fa-bookmark"></i>&nbsp; Módulo</h3>
     <hr>
-    <form action="<?php echo constant('URL');?>estudiante/addFase" name="form" method="POST" id="form">
+    <form action="<?php echo constant('URL');?>estudiante/addModulo" name="form" method="POST" id="form">
         <div class="form-group">
             <label> Nombre</label>
-            <input type="text" id="nombre" REQUIRED style=" width: 400px; height: 30px;"
+            <input type="text" id="nombre"  name="nombre" REQUIRED style=" width: 400px; height: 30px;"
                 class="form-control" placeholder="Escribe el nombre">
 
         </div>
