@@ -38,6 +38,13 @@ class Estudiante extends Controller{
 
     }
 
+    function crearhistoria() {
+      $cabecera = "Crear Historia de Usuario";
+      $this->view->cabecera = $cabecera;
+      $this->view->render('estudiante/historiasusuario/crearhistoria');
+
+    }
+
     function perfil () {
       $cabecera = "";
       $cabecera = "Perfil";
