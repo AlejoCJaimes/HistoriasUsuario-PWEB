@@ -28,6 +28,7 @@ class Estudiante extends Controller{
       $this->view->datos_perfil = [];
       $this->view->id_correo = "";
       $this->view->cabecera = "";
+      $this->view->historiausuario = [];
       $this->view->actividad = [];
       $this->view->modulo = [];
       $this->view->metodologias = [];
@@ -287,7 +288,17 @@ class Estudiante extends Controller{
 
     function readHistoria($param = null) {
       
-      
+      if($param != null){
+        require_once 'libs/database.php';
+        $this->db = new Database();
+        $numero = $param[0];
+
+        $query_1 = $this->db->connect()->query("SELECT * FROM historiausuario hu JOIN estado e ON e.Id = hu.IdEstado JOIN modulo m ON m.Id = hu.IdModulo WHERE hu.Id = '$numero' LIMIT 1;");
+        $arr = $query_1->fetchAll();
+
+
+        $this->view->historiausuario = $arr;
+      }
 
       $this->view->render('estudiante/historiasusuario/readHistoria');
       
