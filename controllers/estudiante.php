@@ -333,7 +333,7 @@ class Estudiante extends Controller{
       require_once 'libs/database.php';
       $this->db = new Database();
       
-      $consulta = "SELECT ac.id, ac.Nombre 
+      $consulta = "SELECT ac.Id, ac.Nombre 
       FROM estudiante e 
       JOIN usuario us ON us.id = e.idusuario
       JOIN grupoestudiante ge ON ge.IdEstudiante = e.Id
@@ -554,7 +554,28 @@ class Estudiante extends Controller{
         $this->crearActividad();
       }
 
-      
+      function addRecurso() {
+        $Descripcion = $_POST['Descripcion'];
+        $Tipo = $_POST['Tipo'];
+        $Valor = $_POST['Valor'];
+        $idActividad = $_POST['idActividad'];
+        $id_user = $this->session->getCurrentUser();
+        if($this->model->insertarRecurso(['Descripcion' => $Descripcion, 'Tipo' => $Tipo,'Valor' => $Valor, 'idActividad' => $idActividad])){
+          $confirmacion = '<div class="alert alert-info text-center" role="alert" >Recurso creado correctamente.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        }else{
+          $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> el Recurso NO se creó.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        }
+        $this->view->confirmacion = $confirmacion;
+        $this->crearRecurso();
+      }
 
     }
 

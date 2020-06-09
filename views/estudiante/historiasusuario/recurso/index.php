@@ -6,7 +6,7 @@
 <div class="container">
     <h3><i class="fas fa-coins"></i>&nbsp; Recurso</h3>
     <hr>
-<form action="<?php echo constant('URL');?>estudiante" Method="POST">
+<form action="<?php echo constant('URL');?>estudiante/addRecurso" Method="POST">
   <div class="container">
 
     <div class="form-group">

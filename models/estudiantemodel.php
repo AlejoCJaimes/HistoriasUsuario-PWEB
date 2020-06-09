@@ -213,7 +213,20 @@ class EstudianteModel extends Model {
       }
     }
 
-    // Fin CRUD Historia de Usuario
+    // Fin CRUD Recurso
+
+    function insertarRecurso($datos) {
+      try{
+        //Consulta para insertar un nuevo Recurso
+        $query_1 = $this->db->connect()->prepare("INSERT INTO `recurso`(`Descripcion`, `Tipo`, `valor`, `idActividad`) VALUES (:Descripcion,:Tipo,:Valor,:IdActividad);");
+        $query_1->execute(['Descripcion' => $datos['Descripcion'], 'Tipo' => $datos['Tipo'], 'Valor' => $datos['Valor'], 'IdActividad' => $datos['idActividad']]);
+        return true;
+      }catch(PDOException $e){
+        return false;
+      }
+    }
+
+    // Fin CRUD Recurso
 
      //INSTRUCCIONES CRUD FASE
     function insertarModulo($datos) {
