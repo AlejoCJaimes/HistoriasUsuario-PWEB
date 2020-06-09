@@ -45,7 +45,7 @@
         ?>
         
        
-        <li class="list-group-item"> <a href="<?php echo $row_fuentes['link']?>"><?php echo $row_fuentes['link']; ?></a></li>
+        <li class="list-group-item"> <a href="<?php echo $row_fuentes['link']?>" target="_blank"><?php echo $row_fuentes['link']; ?></a></li>
        
      
             <?php }?>

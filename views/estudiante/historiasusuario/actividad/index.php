@@ -1,7 +1,11 @@
 <?php require 'views/estudiante/header.php'
 ?>
 <!-- INICIO DEL CONTENIDO PRINCIPAL -->
+<div class="container">
 <h3><?php echo $this->confirmacion;?></h3>
+<br>
+    <h3><i class="fas fa-chart-line"></i>&nbsp; Actividad</h3>
+    <hr>
 <form action="<?php echo constant('URL');?>estudiante/addActividad" Method="POST">
   <div class="container">
 
@@ -33,6 +37,7 @@
     <input type="submit" class="btn btn-primary" value="Guardar">
   </div>
 </form>
+</div>
 <!-- FIN  DEL CONTENIDO PRINCIPAL -->
 
 <?php require_once "views/estudiante/footer.php"?>

@@ -186,10 +186,27 @@ class EstudianteModel extends Model {
 
     // Inicio CRUD Actividad
     function insertarActividad($datos) {
+      $nombre_actividad = $datos['Nombre'];
+      $id_user = $datos['id_user'];
+      $id_actividad = 0;
+      $id_estudiante = 0;
+      
       try{
         //Consulta para insertar una nueva Historia de Usuario
         $query_1 = $this->db->connect()->prepare("INSERT INTO `actividad`(`Descripcion`, `IdHistoriaUsuario`, `Nombre`) VALUES (:Descripcion,:IdHistoriaUsuario,:Nombre);");
         $query_1->execute(['Descripcion' => $datos['Descripcion'], 'IdHistoriaUsuario' => $datos['IdHistoriaUsuario'] ,'Nombre' => $datos['Nombre']]);
+
+        
+        $query_id_actividad = $this->db->connect()->query("SELECT Id FROM actividad WHERE Nombre = '$nombre_actividad'");
+        while($row = $query_id_actividad->fetch()) {
+           $id_actividad = $row['Id'];
+        }
+        $query_estudiantes = $this->db->connect()->query("SELECT e.Id as 'IdEstudiante' FROM estudiante as e JOIN usuario as u ON e.IdUsuario = u.Id WHERE u.correo_usuario = '$id_user'");
+        while($rowe = $query_estudiantes->fetch()) {
+          $id_estudiante = $rowe['IdEstudiante'];
+        }
+        $query_2 = $this->db->connect()->prepare("INSERT INTO `responsable`(`IdActividad`, `IdEstudiante`) VALUES (:IdActividad, :IdEstudiante)");
+        $query_2->execute(['IdActividad' => $id_actividad, 'IdEstudiante' => $id_estudiante]);
         return true;
       }catch(PDOException $e){
         return false;

@@ -4,9 +4,77 @@
 <body  onLoad="toastr.success('¡Bienvenido! '+'<?php echo $this->mensaje;?>')">
 <div class="container">
   <h2> BIENVENIDO <?php echo $this->mensaje;?>  </h2>
-  <h2>Sea usted bienvenido a su panel.</h2>
-  <h2>Hasta el momento usted puede editar su perfil y cerrar sesión</h2>
+
+  <!--<ul class="list-group">
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Cras justo odio
+    <span class="badge badge-primary badge-pill">14</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Dapibus ac facilisis in
+    <span class="badge badge-primary badge-pill">2</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Morbi leo risus
+    <span class="badge badge-primary badge-pill">1</span>
+  </li>
+</ul>-->
+<!--<div class="row">
+<div class="col-sm">
+
+<div class="card text-white bg-primary mb-3 col-sm-5" style="max-width: 18rem;">
+  <div class="card-header bg-primary">Header</div>
+  <div class="card-body">
+    <h5 class="card-title">Primary card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
+    </p>
+  </div>
 </div>
+<div class="card text-white bg-primary mb-3 col-sm-5" style="max-width: 18rem;">
+  <div class="card-header bg-primary">Header</div>
+  <div class="card-body">
+    <h5 class="card-title">Primary card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
+    </p>
+  </div>
+</div>
+</div>
+</div> -->
+
+<div class="container center">
+  <div class="row">
+    <div class="col-sm">
+      <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Proyectos <span class="badge badge-light">4</span></h5>
+          <p class="card-text"><a href="" class="text-white"> Ver Proyectos</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Metodologías <span class="badge badge-light">4</span></h5>
+          <p class="card-text"><a href="" class="text-white"> Ver Metodologías</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Grupos <span class="badge badge-light">4</span></h5>
+          <p class="card-text"><a href="" class="text-white"> Ver Grupos</a></p>
+        </div>
+      </div>
+    </div>
+    
+
+  </div>
+</div>
+</div>
+
+<br>
+
 </body>
 
 <!-- FIN  DEL CONTENIDO PRINCIPAL -->

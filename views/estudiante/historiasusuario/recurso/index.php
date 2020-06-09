@@ -2,6 +2,10 @@
 ?>
 <!-- INICIO DEL CONTENIDO PRINCIPAL -->
 <h3><?php echo $this->confirmacion;?></h3>
+<br>
+<div class="container">
+    <h3><i class="fas fa-coins"></i>&nbsp; Recurso</h3>
+    <hr>
 <form action="<?php echo constant('URL');?>estudiante" Method="POST">
   <div class="container">
 
@@ -38,6 +42,7 @@
   </div>
 
 </form>
+</div>
 <!-- FIN  DEL CONTENIDO PRINCIPAL -->
 
 <?php require_once "views/estudiante/footer.php"?>

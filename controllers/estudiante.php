@@ -43,36 +43,6 @@ class Estudiante extends Controller{
 
     }
 
-    function crearhistoria() {
-      $cabecera = "Crear Historia de Usuario";
-      $this->view->cabecera = $cabecera;
-
-      require_once 'libs/database.php';
-      $this->db = new Database();
-
-      $id_user = $this->session->getCurrentUser();
-      $consulta = "SELECT mo.Id, mo.Nombre 
-          FROM estudiante e 
-          JOIN usuario us ON us.id = e.idusuario
-          JOIN grupoestudiante ge ON ge.IdEstudiante = e.Id
-          JOIN grupo g ON g.id = ge.IdGrupo
-          JOIN grupoproyecto gp ON gp.IdGrupo = g.Id
-          JOIN proyecto p ON p.id = gp.IdProyecto
-          JOIN metodologia m ON m.id = p.IdMetodologia
-          JOIN fase f ON f.IdMetodologia = m.Id
-          JOIN modulo mo ON mo.IdFase = f.Id
-          JOIN historiausuario hu ON hu.IdModulo = mo.Id
-          WHERE us.correo_usuario = '$id_user';";
-
-        $query = $this->db->connect()->query($consulta);
-        $arr = $query->fetchAll();
-
-      $this->view->modulo = $arr;
-
-      $this->view->render('estudiante/historiasusuario/crearhistoria');
-
-    }
-
     function perfil () {
       $cabecera = "";
       $cabecera = "Perfil";
@@ -205,8 +175,123 @@ class Estudiante extends Controller{
     }
 
     //HISTORIAS DE USUARIO 
+    //INICIO HISTORIA DE USUARIO
+    function crearhistoria() {
+      $cabecera = "Crear Historia de Usuario";
+      $this->view->cabecera = $cabecera;
 
-    //VISTAS DE INDEX
+      require_once 'libs/database.php';
+      $this->db = new Database();
+
+      $id_user = $this->session->getCurrentUser();
+      $consulta = "SELECT mo.Id, mo.Nombre 
+      FROM estudiante e 
+      JOIN usuario us ON us.id = e.idusuario
+      JOIN grupoestudiante ge ON ge.IdEstudiante = e.Id
+      JOIN grupo g ON g.id = ge.IdGrupo
+      JOIN grupoproyecto gp ON gp.IdGrupo = g.Id
+      JOIN proyecto p ON p.id = gp.IdProyecto
+      JOIN metodologia m ON m.id = p.IdMetodologia
+      JOIN fase f ON f.IdMetodologia = m.Id
+      JOIN modulo mo ON mo.IdFase = f.Id
+      WHERE us.correo_usuario = '$id_user'
+      GROUP BY mo.Id, mo.Nombre";
+
+        $query = $this->db->connect()->query($consulta);
+        $arr = $query->fetchAll();
+
+      $this->view->modulo = $arr;
+
+      $this->view->render('estudiante/historiasusuario/crearhistoria');
+
+    }
+    function addHistoriaUsuario() {
+      $NumHistoriaUsuario = $_POST['NumHistoriaUsuario'];
+      $Prioridad = $_POST['Prioridad'];
+      $Nombre = $_POST['Nombre'];
+      $Descripcion = $_POST['Descripcion'];
+      $IdModulo = $_POST['IdModulo'];
+      $IdEstado = $_POST['IdEstado'];
+
+      if($this->model->insertarHistoriaUsuario(['NumHistoriaUsuario' => $NumHistoriaUsuario,'Prioridad' => $Prioridad,'Nombre' => $Nombre,
+      'Descripcion' => $Descripcion,'IdModulo' => $IdModulo,'IdEstado' => $IdEstado])){
+        $confirmacion = '<div class="alert alert-info text-center" role="alert" >Historia de Usuario creada correctamente.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      }else{
+        $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> la Historia de Usuario NO se creó.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      }
+      $this->view->confirmacion = $confirmacion;
+      $this->crearhistoria();
+    }
+
+
+    function detalleHistoria() {
+      $cabecera = "";
+      $cabecera = "Detalle Historia";
+      /*Body*/
+      $fases = [];
+      $correo_user = $this->session->getCurrentUser();
+      require_once 'libs/database.php';
+      require_once 'models/Fase.php';
+      $this->db = new Database();
+
+      //obtner grupo
+      $id_grupo = "";
+      $query_id_estudiante = $this->db->connect()->query("SELECT g.IdGrupo as 'IdGrupo' FROM grupoestudiante AS g  
+      JOIN estudiante as e ON e.Id = g.IdEstudiante
+      JOIN usuario as u ON e.IdUsuario = u.Id 
+      WHERE u.correo_usuario= '$correo_user'");
+      while($row = $query_id_estudiante->fetch()) {
+       $id_grupo = $row['IdGrupo'];
+      }
+
+
+      $id_estudiante = "";
+      $query_fase_estudiante = $this->db->connect()->query("SELECT f.*  FROM
+      fase as f 
+      JOIN proyecto as p ON p.IdMetodologia = f.IdMetodologia
+      join grupoproyecto as gproyecto ON gproyecto.IdProyecto = p.Id
+      JOIN grupo as g ON g.Id = gproyecto.IdGrupo
+      JOIN grupoestudiante AS gestudiante ON gestudiante.IdGrupo = g.Id
+      JOIN estudiante AS e ON e.Id = gestudiante.IdEstudiante
+      JOIN usuario as u ON u.Id = e.IdUsuario
+      WHERE u.correo_usuario =  '$correo_user' AND gproyecto.IdGrupo = '$id_grupo'");
+
+      while($_row = $query_fase_estudiante->fetch()) {
+        $item = new Fase(); 
+        $item->Id = $_row['Id'];
+        $item->Nombre = $_row['Nombre'];
+        $item->Descripcion = $_row['Descripcion'];
+        $item->FechaCreacion = $_row['FechaCreacion'];
+        $item->FechaActualizacion = $_row['FechaActualizacion'];
+        $item->UrlFase = $_row['UrlFase'];
+        $item->IdEstado = $_row['IdEstado'];
+        $item->IdMetodologia = $_row['IdMetodologia'];
+        array_push($fases,$item);  
+      }
+      
+      $this->view->fases = $fases;
+
+
+      $this->view->cabecera = $cabecera;
+      $this->view->render('estudiante/historiasusuario/index');
+
+    }
+
+    function readHistoria($param = null) {
+
+      
+    }
+    //FIN DE HISTORIA DE USUARIO
+
+    //VISTAS DE INDEX INICIO DE ACTIVIDAD
     function crearActividad() {
       $cabecera = "";
       $cabecera = "Actividad";
@@ -446,38 +531,13 @@ class Estudiante extends Controller{
 
      // Métodos de insersión para Historia de usuario, actividad y recursos
 
-      function addHistoriaUsuario() {
-        $NumHistoriaUsuario = $_POST['NumHistoriaUsuario'];
-        $Prioridad = $_POST['Prioridad'];
-        $Nombre = $_POST['Nombre'];
-        $Descripcion = $_POST['Descripcion'];
-        $IdModulo = $_POST['IdModulo'];
-        $IdEstado = $_POST['IdEstado'];
-
-        if($this->model->insertarHistoriaUsuario(['NumHistoriaUsuario' => $NumHistoriaUsuario,'Prioridad' => $Prioridad,'Nombre' => $Nombre,
-        'Descripcion' => $Descripcion,'IdModulo' => $IdModulo,'IdEstado' => $IdEstado])){
-          $confirmacion = '<div class="alert alert-info text-center" role="alert" >Historia de Usuario creada correctamente.
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          </button>
-          </div> ';
-        }else{
-          $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> la Historia de Usuario NO se creó.
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          </button>
-          </div> ';
-        }
-        $this->view->confirmacion = $confirmacion;
-        $this->crearhistoria();
-      }
-
+     
       function addActividad() {
         $Nombre = $_POST['Nombre'];
         $Descripcion = $_POST['Descripcion'];
         $IdHistoriaUsuario = $_POST['IdHistoriaUsuario'];
-
-        if($this->model->insertarActividad(['Nombre' => $Nombre, 'Descripcion' => $Descripcion,'IdHistoriaUsuario' => $IdHistoriaUsuario])){
+        $id_user = $this->session->getCurrentUser();
+        if($this->model->insertarActividad(['Nombre' => $Nombre, 'Descripcion' => $Descripcion,'IdHistoriaUsuario' => $IdHistoriaUsuario, 'id_user' => $id_user])){
           $confirmacion = '<div class="alert alert-info text-center" role="alert" >Actividad creada correctamente.
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -493,6 +553,8 @@ class Estudiante extends Controller{
         $this->view->confirmacion = $confirmacion;
         $this->crearActividad();
       }
+
+      
 
     }
 
