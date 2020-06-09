@@ -87,7 +87,7 @@
         <br>
         <div class="container">
             <a href="<?php echo constant('URL');?>estudiante/detalleHistoria" class="button" type="button"> <i
-                    class="fas fa-eye"> </i> Historias de Usuario</a>
+                    class="fas fa-eye"> </i> Consultar Historias de Usuario</a>
         </div>
     </div>
 
