@@ -347,6 +347,7 @@ class Estudiante extends Controller{
       require_once 'libs/database.php';
       $this->db = new Database();
       
+      $id_user = $this->session->getCurrentUser();
       $consulta = "SELECT ac.Id, ac.Nombre 
       FROM estudiante e 
       JOIN usuario us ON us.id = e.idusuario
@@ -359,7 +360,7 @@ class Estudiante extends Controller{
       JOIN modulo mo ON mo.IdFase = f.Id
       JOIN historiausuario hu ON hu.IdModulo = mo.Id
       JOIN actividad ac ON ac.IdHistoriaUsuario = hu.id
-      WHERE us.correo_usuario = 'camiliitoyeahyeah@udi.edu.co';";
+      WHERE us.correo_usuario = '$id_user';";
       
       $query = $this->db->connect()->query($consulta);
       $arr = $query->fetchAll();
