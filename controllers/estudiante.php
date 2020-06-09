@@ -286,7 +286,10 @@ class Estudiante extends Controller{
     }
 
     function readHistoria($param = null) {
+      
+      
 
+      $this->view->render('estudiante/historiasusuario/readHistoria');
       
     }
     //FIN DE HISTORIA DE USUARIO
