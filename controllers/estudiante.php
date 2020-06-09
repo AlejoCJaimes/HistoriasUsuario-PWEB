@@ -292,7 +292,7 @@ class Estudiante extends Controller{
         require_once 'libs/database.php';
         $this->db = new Database();
         $numero = $param[0];
-
+        
         $query_1 = $this->db->connect()->query("SELECT * FROM historiausuario hu JOIN estado e ON e.Id = hu.IdEstado JOIN modulo m ON m.Id = hu.IdModulo WHERE hu.Id = '$numero' LIMIT 1;");
         $arr = $query_1->fetchAll();
 

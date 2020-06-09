@@ -16,19 +16,19 @@
         </thead>
         <tbody>
             <tr>
-                <td>Número: <input type="text" name="NumHistoriaUsuario" min="1" value="<?php echo $this->historiausuario[0]["NumHistoriaUsuario"]; ?>" class="form-control col-4" READONLY>
+                <td>Número: <input type="text" name="NumHistoriaUsuario" min="1" value="<?php echo $this->historiausuario[0][1]; ?>" class="form-control col-4" READONLY>
                 </td>
-                <td>Prioridad: <input type="text" name="Prioridad" value="<?php echo $this->historiausuario[0]["Prioridad"]; ?>" class="form-control" READONLY></td>
+                <td>Prioridad: <input type="text" name="Prioridad" value="<?php echo $this->historiausuario[0][2]; ?>" class="form-control" READONLY></td>
                 <td>
                     Estado:<input type="text" name="IdModulo" min="1" value="<?php echo $this->historiausuario[0][10]?>" class="form-control" READONLY>
                 </td>
             </tr>
             <tr>
-                <td colspan="3">Nombre: <input type="text" name="Nombre" value="<?php echo $this->historiausuario[0]["Nombre"]; ?>" class="form-control col-6" READONLY></td>
+                <td colspan="3">Nombre: <input type="text" name="Nombre" value="<?php echo $this->historiausuario[0][3]; ?>" class="form-control col-6" READONLY></td>
             </tr>
             <tr>
                 <td colspan="3">Descripción:<textarea class="form-control" name="Descripcion"
-                        id="exampleFormControlTextarea1" rows="4" READONLY><?php echo $this->historiausuario[0]["Descripcion"]; ?></textarea></td>
+                        id="exampleFormControlTextarea1" rows="4" READONLY><?php echo $this->historiausuario[0][4]; ?></textarea></td>
             </tr>
             <tr>
                 <td>
