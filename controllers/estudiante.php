@@ -335,6 +335,25 @@ class Estudiante extends Controller{
         $query = $this->db->connect()->query($consulta);
         $arr = $query->fetchAll();
 
+       
+        $_consulta = "SELECT mo.Id, mo.Nombre 
+        FROM estudiante e 
+        JOIN usuario us ON us.id = e.idusuario
+        JOIN grupoestudiante ge ON ge.IdEstudiante = e.Id
+        JOIN grupo g ON g.id = ge.IdGrupo
+        JOIN grupoproyecto gp ON gp.IdGrupo = g.Id
+        JOIN proyecto p ON p.id = gp.IdProyecto
+        JOIN metodologia m ON m.id = p.IdMetodologia
+        JOIN fase f ON f.IdMetodologia = m.Id
+        JOIN modulo mo ON mo.IdFase = f.Id
+        WHERE us.correo_usuario = '$id_user'
+        GROUP BY mo.Id, mo.Nombre";
+  
+          $_query = $this->db->connect()->query($_consulta);
+          $_arr = $_query->fetchAll();
+  
+        $this->view->modulo = $_arr;
+      
       $this->view->historiasUsuario = $arr;
       $this->view->cabecera = $cabecera;
       $this->view->render('estudiante/historiasusuario/actividad/index');

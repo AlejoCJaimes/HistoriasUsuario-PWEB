@@ -245,7 +245,7 @@ $(document).ready(function() {
                         $getStateDis = "disabled";
                  }
         ?>
-                    <a href="<?php echo constant('URL');?>docente/crearMetodologia" class="btn btn-primary <?php echo $getStateDis ?>" data-toggle="modal" data-target="#staticBackdrop"><i
+                    <a href="" class="btn btn-primary <?php echo $getStateDis ?>" data-toggle="modal" data-target="#staticBackdrop"><i
                     class="material-icons">&#xe872;</i> <span>Eliminar</span></a>
                 </div>
             </div>

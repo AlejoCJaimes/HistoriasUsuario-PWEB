@@ -19,7 +19,18 @@
                 <tr>
                     <td>Número: <input type="number" name="NumHistoriaUsuario" min="1" class="form-control col-4"
                             REQUIRED></td>
-                    <td>Prioridad: <input type="text" name="Prioridad" class="form-control" REQUIRED></td>
+                    <td>Prioridad: 
+                    
+                    <!--<input type="text" name="Prioridad" class="form-control" REQUIRED>-->
+                    <div class="form-group">
+                    <select name="Prioridad" id="prioridad"  class="custom-select" REQUIRED>
+                        <option value="" selected disabled  >Selecciona una prioridad </option>
+                        <option value="Alta">Alta</option>
+                        <option value="Media">Media</option>
+                        <option value="Baja">Baja</option>
+                    </select>
+                    </div>
+                    </td>
                     <td>
                         Estado: <select name="IdEstado" class="custom-select" REQUIRED>
                             <option selected disabled value="">Selecciona el estado</option>
@@ -29,7 +40,7 @@
                                 $this->db = new Database();
 
                                 //statement return dates
-                                $query = $this->db->connect()->query("SELECT Id,Nombre FROM estado;");
+                                $query = $this->db->connect()->query("SELECT Id,Nombre FROM estado WHERE Id IN ('4','5');");
 
                                 while($row = $query->fetch()) {
                                 ?>

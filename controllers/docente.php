@@ -33,11 +33,23 @@ class Docente extends Controller{
       $this->view->fuentes = [];
       $this->view->datos_grupo = [];
       $this->view->proyecto = [];
+      $this->view->num_proyecto = 0;
+      $this->view->num_grupo = 0;
+      $this->view->num_metodologia = 0;
         //echo "<p>Nuevo controlador Main</p>";
     }
 
     function render() {
         $cabecera = "Inicio";
+        $num_proyecto= $this->model->cargarProyectoIndex();
+        $this->view->num_proyecto = $num_proyecto;
+
+        $num_grupo= $this->model->cargarGrupoIndex();
+        $this->view->num_grupo = $num_grupo;
+
+        $num_metodologia= $this->model->cargarMetodologiaIndex();
+        $this->view->num_metodologia = $num_metodologia;
+
         $this->view->cabecera = $cabecera;
         $this->view->render('docente/index');
     }

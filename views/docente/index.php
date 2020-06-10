@@ -46,24 +46,24 @@
     <div class="col-sm">
       <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
         <div class="card-body">
-          <h5 class="card-title">Proyectos <span class="badge badge-light">4</span></h5>
-          <p class="card-text"><a href="" class="text-white"> Ver Proyectos</a></p>
+          <h5 class="card-title">Proyectos <span class="badge badge-light"><?php echo $this->num_proyecto;?></span></h5>
+          <p class="card-text"><a href="<?php echo constant('URL');?>docente/proyecto" class="text-white"> Ver Proyectos</a></p>
         </div>
       </div>
     </div>
     <div class="col-sm">
       <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
         <div class="card-body">
-          <h5 class="card-title">Metodologías <span class="badge badge-light">4</span></h5>
-          <p class="card-text"><a href="" class="text-white"> Ver Metodologías</a></p>
+          <h5 class="card-title">Metodologías <span class="badge badge-light"><?php echo $this->num_metodologia;?></span></h5>
+          <p class="card-text"><a href="<?php echo constant('URL');?>docente/metodologia" class="text-white"> Ver Metodologías</a></p>
         </div>
       </div>
     </div>
     <div class="col-sm">
       <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
         <div class="card-body">
-          <h5 class="card-title">Grupos <span class="badge badge-light">4</span></h5>
-          <p class="card-text"><a href="" class="text-white"> Ver Grupos</a></p>
+          <h5 class="card-title">Grupos <span class="badge badge-light"><?php echo $this->num_grupo;?></span></h5>
+          <p class="card-text"><a href="<?php echo constant('URL');?>docente/grupo" class="text-white"> Ver Grupos</a></p>
         </div>
       </div>
     </div>

@@ -2,10 +2,10 @@
 
 define('URL', 'http://localhost/HistoriasUsuario-PWEB/');
 
-define('HOST', 'Mayraccesorios.com');
+define('HOST', 'localhost');
 define('DB', 'proyecto');
-define('USER', 'superpruebas');
-define('PASSWORD', "3yv=s)i6DJN~");
+define('USER', 'pruebas');
+define('PASSWORD', "");
 define('CHARSET', 'utf8mb4');
 
 

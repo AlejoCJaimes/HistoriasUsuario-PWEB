@@ -524,6 +524,54 @@ class DocenteModel extends Model {
         }
       }
 
+      public function cargarProyectoIndex() {
+
+        $query = $this->db->connect()->query("SELECT COUNT(*) AS 'numero_proyecto' FROM proyecto ");
+        $item = 0;
+        try {
+          while ($row =$query->fetch()) {
+            $item = $row['numero_proyecto'];
+          }
+          
+            return $item;
+      
+        } catch (PDOException $e) {
+          return $e;
+        }
+      }
+
+      public function cargarGrupoIndex() {
+      
+        $query = $this->db->connect()->query("SELECT COUNT(*) AS 'numero_grupo' FROM grupo");
+        $item = 0;
+        try {
+          while ($row =$query->fetch()) {
+            $item = $row['numero_grupo'];
+          }
+          
+            return $item;
+      
+        } catch (PDOException $e) {
+          return $e;
+        }
+      }
+
+      public function cargarMetodologiaIndex() {
+        $query = $this->db->connect()->query("SELECT COUNT(*) AS 'numero_metodologia' FROM metodologia");
+        $item = 0;
+        try {
+          while ($row =$query->fetch()) {
+            $item = $row['numero_metodologia'];
+          }
+          
+            return $item;
+      
+        } catch (PDOException $e) {
+          return $e;
+        }
+      }
+
+
       public function getProyecto($id_proyecto) {
         require_once 'models/Proyecto.php';
 
