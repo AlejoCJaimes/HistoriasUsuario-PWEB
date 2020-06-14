@@ -29,6 +29,8 @@ class Estudiante extends Controller{
       $this->view->id_correo = "";
       $this->view->cabecera = "";
       $this->view->historiausuario = [];
+      $this->view->recursos = [];
+      $this->view->totalRecursos = "";
       $this->view->actividad = [];
       $this->view->modulo = [];
       $this->view->metodologias = [];
@@ -359,6 +361,59 @@ class Estudiante extends Controller{
       $this->view->render('estudiante/historiasusuario/actividad/index');
     }
 
+
+    // Inicio sección de recurso
+
+    function detalleRecurso(){
+      $cabecera = "Total Recursos";
+      $this->view->cabecera = $cabecera;
+      $id_user = $this->session->getCurrentUser();
+
+      require_once 'libs/database.php';
+      $this->db = new Database();
+      $id_grupo = 0;
+      $query_id_grupo = $this->db->connect()->query("SELECT ge.IdGrupo FROM usuario u JOIN estudiante e ON e.IdUsuario = u.Id JOIN grupoestudiante ge ON ge.IdEstudiante = e.Id where u.correo_usuario = '$id_user';");
+      while($row = $query_id_grupo->fetch()) {
+       $id_grupo = $row['IdGrupo'];
+      }
+
+      $consulta = "SELECT re.Tipo, re.valor
+      FROM grupo g      
+      JOIN grupoproyecto gp ON gp.IdGrupo = g.Id
+      JOIN proyecto p ON p.id = gp.IdProyecto
+      JOIN metodologia m ON m.id = p.IdMetodologia
+      JOIN fase f ON f.IdMetodologia = m.Id
+      JOIN modulo mo ON mo.IdFase = f.Id
+      JOIN historiausuario hu ON hu.IdModulo = mo.Id
+      JOIN actividad ac ON ac.IdHistoriaUsuario = hu.id
+      JOIN recurso re ON re.idActividad = ac.Id
+      WHERE g.Id = $id_grupo";
+
+      $query = $this->db->connect()->query($consulta);
+      $arr = $query->fetchAll();
+      $this->view->recurso = $arr;
+
+      $consulta = "SELECT SUM(re.valor) as Total
+      FROM grupo g      
+      JOIN grupoproyecto gp ON gp.IdGrupo = g.Id
+      JOIN proyecto p ON p.id = gp.IdProyecto
+      JOIN metodologia m ON m.id = p.IdMetodologia
+      JOIN fase f ON f.IdMetodologia = m.Id
+      JOIN modulo mo ON mo.IdFase = f.Id
+      JOIN historiausuario hu ON hu.IdModulo = mo.Id
+      JOIN actividad ac ON ac.IdHistoriaUsuario = hu.id
+      JOIN recurso re ON re.idActividad = ac.Id
+      WHERE g.Id = $id_grupo";
+      
+      $query = $this->db->connect()->query($consulta);
+      while($row = $query->fetch()) {
+        $total = $row['Total'];
+      }
+      $this->view->totalRecursos = $total;
+
+      $this->view->render('estudiante/historiasusuario/recurso/detalleRecurso');
+    }
+
     function crearRecurso() {
       $cabecera = "";
       $cabecera = "Recurso";
@@ -388,6 +443,9 @@ class Estudiante extends Controller{
       $this->view->cabecera = $cabecera;
       $this->view->render('estudiante/historiasusuario/recurso/index');
     }
+
+    // Fin sesión Recurso
+
      ////////COMIENZO MODULO//////////
 
     function crearModulo() {

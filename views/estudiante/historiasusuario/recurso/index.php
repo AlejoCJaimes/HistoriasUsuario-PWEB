@@ -43,6 +43,11 @@
 
 </form>
 </div>
+<hr>
+<div class="container">
+            <a href="<?php echo constant('URL');?>estudiante/detalleRecurso" class="button" type="button"> <i
+                    class="fas fa-eye"> </i> Ver el Total de Recursos de tu grupo</a>
+        </div>
 <!-- FIN  DEL CONTENIDO PRINCIPAL -->
 
 <?php require_once "views/estudiante/footer.php"?>
