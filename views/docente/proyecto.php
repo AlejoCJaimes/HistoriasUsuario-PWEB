@@ -207,7 +207,7 @@ $(document).ready(function(){
                         <div class="card-body " name='' href="#"><?php echo $proyecto->NombreProyecto?></div>
                         <!--Esto lleva a editar y ver la metodología-->
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-black stretched-link" href="<?php echo constant('URL'). 'docente/detalleProyecto/'.$proyecto->Id ;?>">Detalles</a>
+                            <a class="small text-black stretched-link" href="<?php echo constant('URL'). 'docente/detalleProyecto/'.$proyecto->Id ;?>">Editar</a>
                             <div class="small text-black"><i class="fas fa-angle-right"></i></div>
                             
                         </div>

@@ -178,8 +178,8 @@ $(document).ready(function(){
       <!-- End of Topbar -->
 
 <!--Method applicated for force initial pagination -->
-
-
+<body>
+<div><?php echo $this->confirmacion;?> </div>
    <!--CONTENIDO GRUPOS-->
    <div class="container">
         <div class="table-wrapper">
@@ -192,6 +192,21 @@ $(document).ready(function(){
 
                     <!--Esto lleva a crear un nuevo grupo-->
 			        <a href="<?php echo constant('URL');?>docente/crearGrupo" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Añadir</span></a>
+                    <?php 
+                    $i = 0;
+                    $getStateDis = "";
+                    foreach($this->grupos as $row){
+                    $i++;
+                 }
+                 
+                 if ($i > 0 ) {
+                        $getStateDis = "";
+                 } else {
+                        $getStateDis = "disabled";
+                 }
+                 ?>
+                 <a href="" class="btn btn-primary <?php echo $getStateDis ?>" data-toggle="modal" data-target="#staticBackdrop"><i
+                    class="material-icons">&#xe872;</i> <span>Eliminar</span></a>
 					</div>
                 </div>
             </div>
@@ -208,11 +223,12 @@ $(document).ready(function(){
                 array_push($arreglo,$grupos);
                 ?>
                 <div class="col-xl-3 col-md-6">
-                    <div class="card bg-success text-white mb-4">
+                    <div class="card bg-warning text-white mb-4">
                         <div class="card-body " name='' href="#"><?php echo $grupos->nombre?></div>
                         <!--Esto lleva a editar y ver la metodología-->
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-black stretched-link" href="<?php echo constant('URL'). 'docente/detalleGrupo/' . $grupos->id ;?>">Editar</a>
+                    
+                         <a class="small text-black stretched-link" href="<?php echo constant('URL'). 'docente/detalleGeneralGrupo/' . $grupos->id ;?>">Editar</a>
                             <div class="small text-black"><i class="fas fa-angle-right"></i></div>
                             
                         </div>
@@ -228,7 +244,63 @@ $(document).ready(function(){
   </div>
   
   <!-- End of Page Wrapper -->
+</body>
 
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Eliminar Grupo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <!-- <p style ="color: red">Tenga en cuenta quer si elimina la metodologia
+        se eliminará todo su contenido como fuentes y no podrá recuperarse. </p>-->
+        <div class="alert alert-warning" role="alert">
+        
+            <h6 class="alert-heading"><strong>Tenga en cuenta...</strong></h6>
+           
+            <hr>
+            <p>No podrá eliminar grupos que ya tengan un proyecto asignado </p>
+          
+            </div>
+      </div>
+      <div class="modal-body">
+      <table id="tablaDinamica">
+        <thead>
+                <tr>
+                <th scope="col" class="text-center">Grupos </th>
+                </tr>
+        </thead>    
+      <?php 
+           $arreglo = [];
+           require_once 'models/Grupo.php';
+           foreach($this->grupos as $row){
+               $grupos = new Grupo();
+               $grupos = $row;
+               array_push($arreglo,$grupos);
+        ?>
+            <tbody>
+            <tr>
+               <td><input type="text" readonly style="width: 330px;" required id="fuente" placeholder="Ingrese cita" class="form-control" value="<?php echo $grupos->nombre?>"></td>
+                <td><a id ="btn" href=" <?php echo constant('URL').'docente/eliminarGrupo/'. $grupos->id?>" type="button" class="btn btn-danger"><i class=" fas fa-trash"></i> </a></td>
+                <td><ion-icon name="trash-outline"></ion-icon></td> 
+            </tr>
+                </tdbody>
+        <?php }?>
+        
+      <table>  
+      </div>
+            
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
  
 
 

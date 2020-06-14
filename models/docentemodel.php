@@ -341,6 +341,100 @@ class DocenteModel extends Model {
         }
         
       }
+
+      //Agregar un nuevo grupo a la base de datos
+      public function insertarGrupo($datos){
+        try {
+          $nombre = $datos['nombre'];
+          $idGrupo = 0;
+          $query_1 = $this->db->connect()->prepare("INSERT INTO `grupo`(`nombre`) VALUES (:nombre)");
+          $query_1->execute(['nombre' => $datos['nombre']]);
+          
+          $query_2 = $this->db->connect()->query("SELECT Id FROM grupo WHERE nombre = '$nombre' Limit 1");
+          while($row = $query_2->fetch()){
+            $idGrupo = $row['Id'];            
+          }
+
+          for($i=0; $i < count($datos['estudiantes']); $i++){
+            $estudiante = $datos['estudiantes'][$i];
+            $query_4 = $this->db->connect()->query("SELECT Id FROM estudiante WHERE CedulaEstudiante = '$estudiante' Limit 1");
+            while($row = $query_4->fetch()){
+              $idEstudiante = $row['Id'];            
+            }
+
+            $query_3 = $this->db->connect()->prepare("INSERT INTO `grupoestudiante` (`IdGrupo`, `IdEstudiante`) VALUES (:idGrupo, :idEstudiante);");                        
+            $query_3->execute(['idGrupo' => $idGrupo, 'idEstudiante' => $idEstudiante]);
+          }
+
+          return true;
+        } catch (PDOException $ex) {
+          return false;
+        }
+      }
+
+
+      public function update_Grupo($datos) {
+        //castear datos
+        $id_grupo = $datos['id_grupo'];
+        //obtener fecha
+        $datetime = new DateTime(null, new DateTimeZone('America/Bogota'));
+  
+        try {
+          $update_grupo = $this->db->connect()->prepare("UPDATE `grupo` SET `nombre` =:nombre, `FechaActualizacion` =:fecha  WHERE `grupo`.`Id` = '$id_grupo'");
+          $update_grupo->execute(['nombre' => $datos['nombre'], 'fecha' => $datetime->format('Y-m-d H:i:s (e)')]);
+          return true;
+        } catch (PDOException $e) {
+          return $e;
+        }
+      }
+
+
+      public function update_estudiante_x_Grupo($datos) {
+        //castear datos
+        $id_estudiante = $datos['id_estudiante'];
+        $id_grupo = $datos['id_grupo'];
+
+        //statement SQL 
+
+        try {
+          $insert_grupo = $this->db->connect()->prepare("INSERT INTO `grupoestudiante` (`IdGrupo`, `IdEstudiante`) VALUES (:idGrupo, :idEstudiante);");                        
+          $insert_grupo->execute(['idGrupo' => $id_grupo, 'idEstudiante' => $id_estudiante]);
+          return true;
+        } catch (PDOException $e) {
+          return $e;
+        }
+      }
+
+      public function delete_estudiante_x_Grupo($datos) {
+        //castear datos
+        $id_estudiante = $datos['id_estudiante'];
+        $id_grupo = $datos['id_grupo'];
+
+        //statement SQL 
+
+        try {
+          $delete_grupo = $this->db->connect()->prepare("DELETE FROM `grupoestudiante` WHERE IdEstudiante =:idEstudiante");                        
+          $delete_grupo->execute(['idEstudiante' => $id_estudiante]);
+          return true;
+        } catch (PDOException $e) {
+          return $e;
+        }
+      }
+
+      public function delete_Grupo($datos) {
+        //castear datos
+        $id_grupo = $datos['id_grupo'];
+
+        //statement SQL 
+
+        try {
+          $delete_grupo = $this->db->connect()->prepare("DELETE FROM `grupo` WHERE Id =:idgrupo");                        
+          $delete_grupo->execute(['idgrupo' => $id_grupo]);
+          return true;
+        } catch (PDOException $e) {
+          return $e;
+        }
+      }
       ///////////////////////////
        // FIN SENTENCIAS SQL PARA GRUPOS
        //////////////////////////
@@ -381,36 +475,7 @@ class DocenteModel extends Model {
         }
       }
 
-      //Agregar un nuevo grupo a la base de datos
-      public function insertarGrupo($datos){
-        try {
-          $nombre = $datos['nombre'];
-          $idGrupo = 0;
-          $query_1 = $this->db->connect()->prepare("INSERT INTO `grupo`(`nombre`) VALUES (:nombre)");
-          $query_1->execute(['nombre' => $datos['nombre']]);
-          
-          $query_2 = $this->db->connect()->query("SELECT Id FROM grupo WHERE nombre = '$nombre' Limit 1");
-          while($row = $query_2->fetch()){
-            $idGrupo = $row['Id'];            
-          }
-
-          for($i=0; $i < count($datos['estudiantes']); $i++){
-            $estudiante = $datos['estudiantes'][$i];
-            $query_4 = $this->db->connect()->query("SELECT Id FROM estudiante WHERE CedulaEstudiante = '$estudiante' Limit 1");
-            while($row = $query_4->fetch()){
-              $idEstudiante = $row['Id'];            
-            }
-
-            $query_3 = $this->db->connect()->prepare("INSERT INTO `grupoestudiante` (`IdGrupo`, `IdEstudiante`) VALUES (:idGrupo, :idEstudiante);");                        
-            $query_3->execute(['idGrupo' => $idGrupo, 'idEstudiante' => $idEstudiante]);
-          }
-
-          return true;
-        } catch (PDOException $ex) {
-          return false;
-        }
-      }
-
+      
       public function loadGrupo() {
         require_once 'models/Grupo.php';
 
@@ -576,7 +641,7 @@ class DocenteModel extends Model {
         require_once 'models/Proyecto.php';
 
         $query = $this->db->connect()->query("SELECT Id, NombreProyecto, DATE_FORMAT(FechaCreacion,' %d/%m/%Y') as FechaCreacion, 
-        DATE_FORMAT(FechaFin,' %Y-%m-%d') as FechaFin, DATE_FORMAT(FechaActualizacion,' %d/%m/%Y') as FechaActualizacion,
+        DATE_FORMAT(FechaFin,' %Y-%m-%d') as FechaFin,  DATE_FORMAT(FechaActualizacion,'%Y-%M-%d') as 'FechaActualizacion',
         IdDocente, IdMetodologia, IdEstado
         FROM proyecto WHERE Id = '$id_proyecto'");
         $items = [];

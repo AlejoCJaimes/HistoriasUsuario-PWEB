@@ -32,6 +32,7 @@ class Docente extends Controller{
       $this->view->grupos = [];
       $this->view->fuentes = [];
       $this->view->datos_grupo = [];
+      $this->view->estados = [];
       $this->view->proyecto = [];
       $this->view->num_proyecto = 0;
       $this->view->num_grupo = 0;
@@ -141,40 +142,14 @@ class Docente extends Controller{
       $this->clave();
 
     }
-
-/* CONTROLADOR VISTA PROYECTO.PHP*/
-      function Proyecto(){
-        $cabecera = "";
-        $cabecera = "Proyecto";
-        $this->view->cabecera = $cabecera;
-        $proyecto = $this->model->loadProyectos();
-        $this->view->proyecto = $proyecto;
-        $this->view->render('docente/proyecto');
-      }
-
-      function crearProyecto(){
-        $cabecera = "";
-        $cabecera = "Proyecto";
-        $this->view->cabecera = $cabecera;
-        $this->view->render('docente/crearProyecto');
-      }
-
-      function detalleProyecto($param = null){
-        $id_proyecto = $param[0];
-        $cabecera = "";
-        $cabecera = "Proyecto";
-        $proyecto = [];
-        $proyecto = $this->model->getProyecto($id_proyecto);
-        $this->view->proyecto = $proyecto;
-        $this->view->cabecera = $cabecera;
-        $this->view->render('docente/detallesProyecto');
-      }
-
-        ///////////////////////////
+     ///////////////
+    //METODOLOGIA//
+    //////////////
+ ///////////////////////////
        // MÉTODOS PARA METODOLOGIA
        //////////////////////////
 
-      function Metodologia(){
+       function Metodologia(){
         
         $cabecera = "";
         $cabecera = "Metodología";
@@ -371,6 +346,92 @@ class Docente extends Controller{
         $this->Metodologia();
       }
 
+      //FIN DE MÉTODOLOGIA//
+      /////////////////////
+
+       ///////////////////////////
+       // MÉTODOS PARA PROYECTOS
+       //////////////////////////
+      function Proyecto(){
+        $cabecera = "";
+        $cabecera = "Proyecto";
+        $this->view->cabecera = $cabecera;
+        $proyecto = $this->model->loadProyectos();
+        $this->view->proyecto = $proyecto;
+        $this->view->render('docente/proyecto');
+      }
+
+      function crearProyecto(){
+        //libs
+        require_once 'libs/database.php';
+        require_once 'models/Grupo.php';
+        $this->db = new Database();
+        
+        //variables auxiliares
+
+        $grupos_proyectos = [];
+        $_grupos = [];
+
+        //statement return dates
+       //Cálculo de listas para seleccionar en la consulta solo los
+       //grupos que están disponibles.
+
+        $_query = $this->db->connect()->query("SELECT IdGrupo FROM grupoproyecto");
+        while($row_gp = $_query->fetch()) {
+            $item = $row_gp['IdGrupo'];
+            array_push($grupos_proyectos,$item);
+        }
+        //print_r($grupos_proyectos);
+        
+          //print($grupos_proyectos[$i]);
+          $query = $this->db->connect()->query("SELECT Id FROM grupo");
+          while($row = $query->fetch()) { 
+              $item = $row['Id'];
+              array_push($_grupos,$item);
+          }
+        
+        $res = array_diff_assoc($_grupos, $grupos_proyectos);
+        //print_r($res);
+        /*for ($i=2; $i<count($res); $i++) { 
+          print($i)." ";
+        }*/
+        $items = [];
+        foreach ($res as $variable) {
+          $query_grupos = $this->db->connect()->query("SELECT Id, nombre FROM grupo WHERE Id = '$variable' ");      
+            while ($row =$query_grupos->fetch()) {
+              $item = new Grupo();
+              $item->id = $row['Id'];
+              $item->nombre = $row['nombre'];
+              array_push($items,$item);
+            }
+        }
+
+        $grupos = [];
+        $this->view->grupos = $items;
+
+        $query_estados = $this->db->connect()->query("SELECT Id, Nombre FROM estado;");
+        $estados = $query_estados->fetchAll();
+        $this->view->estados = $estados;
+        $cabecera = "";
+        $cabecera = "Proyecto";
+        //$this->view->grupos = $grupos;
+        $this->view->cabecera = $cabecera;
+        $this->view->render('docente/crearProyecto');
+      }
+
+      function detalleProyecto($param = null){
+        $id_proyecto = $param[0];
+        $cabecera = "";
+        $cabecera = "Proyecto";
+        $proyecto = [];
+        $proyecto = $this->model->getProyecto($id_proyecto);
+        $this->view->proyecto = $proyecto;
+        $this->view->cabecera = $cabecera;
+        $this->view->render('docente/detallesProyecto');
+      }
+
+       
+
       function agregarProyecto(){
         $nombreProyecto = $_POST['nombreProyecto'];
         $fechaFin = $_POST['fechaFin'];
@@ -395,13 +456,61 @@ class Docente extends Controller{
         $this->crearProyecto();
       }
 
+      function actualizarProyecto() {
+        $nombre = $_POST['nombre'];
+        $fecha = $_POST['fecha'];
+        $idEstado = $_POST['idEstado'];
+      }
+       ///////////////////////////
+       //FIN MÉTODOS PARA PROYECTOS
+       //////////////////////////
+
+
       ///////////////////////////
        // MÉTODOS PARA GRUPOS
        //////////////////////////
 
+      function Grupo(){
+        $cabecera = "";
+        $ggrupos = [];
+        $grupos = $this->model->loadGrupo();
+        $this->view->grupos = $grupos;
+        $cabecera = "Grupo";
+        $this->view->cabecera = $cabecera;
+        $this->view->render('docente/grupo');
+      }
+
+      function crearGrupo(){
+        
+        //libs
+        require_once 'libs/Database.php';
+        $this->db = new Database();
+
+        //variables
+        $cabecera = "";
+        $cabecera = "Grupo";
+        $confirmacion = "";
+        $programas = [];
+
+        //Cargar programas
+        $query_programa = $this->db->connect()->query("SELECT * FROM programa ORDER BY Nombre");
+        $programas = $query_programa->fetchAll();
+        
+
+
+
+        $grupos = [];
+        $grupos = $this->model->loadEstudiantes();
+        //var_dump($grupos);
+        $this->view->grupos = $grupos;
+        $this->view->programas = $programas;
+        $this->view->cabecera = $cabecera;
+        $this->view->render('docente/crearGrupo');
+      }
+
       function agregarGrupo(){
         $nombre = $_POST['Nombre'];
-        $estudiantes = $_POST['estudiantes_seleccionados'];
+        $estudiantes = isset($_POST['estudiantes_seleccionados']);
         //print_r($estudiantes);
         
         if(isset($_POST['estudiantes_seleccionados'])){
@@ -431,41 +540,153 @@ class Docente extends Controller{
         $this->crearGrupo(); 
       }
 
-/* CONTROLADOR VISTA grupo.PHP*/
-      function Grupo(){
-        $cabecera = "";
-        $ggrupos = [];
-        $grupos = $this->model->loadGrupo();
-        $this->view->grupos = $grupos;
-        $cabecera = "Grupo";
-        $this->view->cabecera = $cabecera;
-        $this->view->render('docente/grupo');
+      function detalleGeneralGrupo($param = null){
+        $id = $param [0];
+        $this->detalleGrupo($id);
+      
       }
 
-      function crearGrupo(){
+
+      function detalleGrupo($id){
+        //recepcion de parametros
+        $id_grupo = $id;
+        
+        //llamado de libreria
+        require_once 'libs/Database.php';
+        $this->db = new Database();
+
+        //variables
+        $programas = [];
         $cabecera = "";
         $cabecera = "Grupo";
-        $confirmacion = "";
         $grupos = [];
-        $grupos = $this->model->loadEstudiantes();
-        //var_dump($grupos);
-        $this->view->grupos = $grupos;
-        $this->view->cabecera = $cabecera;
-        $this->view->render('docente/crearGrupo');
-      }
-
-      function detalleGrupo($param = null){
-        $id_grupo = $param[0];
         $datos_grupo = [];
+       
+        //llamado de métodos.
+        
         $datos_grupo = $this->model->getGrupo($id_grupo);
-        $this->view->datos_grupo = $datos_grupo; 
-        $cabecera = "";
-        $cabecera = "Grupo";
-        $grupos = [];
         $grupos = $this->model->loadEstudiantesGrupo($id_grupo);
+
+        //Consulta programas
+        $query_programa = $this->db->connect()->query("SELECT * FROM programa ORDER BY Nombre");
+        $programas = $query_programa->fetchAll();
+        
+        //Devolucion de datos
+        $this->view->datos_grupo = $datos_grupo; 
         $this->view->grupos = $grupos;
+        $this->view->programas = $programas;
         $this->view->cabecera = $cabecera;
         $this->view->render('docente/detallesGrupo');
+      }
+
+      function actualizar_grupo () {
+        //Recepción de variables
+        $id_grupo = $_POST['id_grupo'];
+        $nombre = $_POST['nombre'];
+
+        if($this->model->update_Grupo(['nombre' => $nombre, 'id_grupo' => $id_grupo])){
+          $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong> grupo actualizado correctamente.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        }else{
+          $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> El grupo no se pudo actualizar.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        } 
+      
+        $this->view->confirmacion = $confirmacion;
+        $this->detalleGrupo($id_grupo);
+      }
+
+      function actualizar_grupo_estudiante ($param = null) {
+        $id_estudiante = $param[0];
+        $id_grupo = $param[1];
+          if($this->model->update_estudiante_x_Grupo(['id_estudiante' => $id_estudiante, 'id_grupo' => $id_grupo])){
+            $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong> Estudiante añadido correctamente.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> ';
+          }else{
+            $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> El estudiante no se pudo añadir.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> ';
+          } 
+        
+          $this->view->confirmacion = $confirmacion;
+          $this->detalleGrupo($id_grupo);
+      }
+
+      function eliminar_grupo_estudiante($param = null) {
+        $id_estudiante = $param[0];
+        $id_grupo = $param[1];
+          if($this->model->delete_estudiante_x_Grupo(['id_estudiante' => $id_estudiante, 'id_grupo' => $id_grupo])){
+            $confirmacion = '<div class="alert alert-info" role="alert" ><strong>¡Éxito!</strong> Estudiante eliminado correctamente.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> ';
+          }else{
+            $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> El estudiante no se pudo eliminar.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> ';
+          } 
+        
+          $this->view->confirmacion = $confirmacion;
+          $this->detalleGrupo($id_grupo);
+      }
+
+
+      function eliminarGrupo($param = null) {
+        $id_grupo = $param[0];
+
+        //comprobar si el grupo ya pertenece a un proyecto
+
+         //llamado de libreria
+         require_once 'libs/Database.php';
+         $this->db = new Database();
+
+         //variable auxiliar
+        $i = 0;
+
+        //consulta
+        $query_grupo = $this->db->connect()->query("SELECT IdGrupo FROM grupoproyecto WHERE IdGrupo = '$id_grupo'");
+        while ($row = $query_grupo->fetch()) {
+          $i++;
+        }
+
+        if ($i>0) {
+          $confirmacion = '<div class="alert alert-warning" role="alert" > <strong> ¡Lo sentimos! </strong> El grupo no se pudo eliminar, porque ya está asignado a un proyecto.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        }else {
+          if($this->model->delete_Grupo(['id_grupo' => $id_grupo])){
+            $confirmacion = '<div class="alert alert-info" role="alert" ><strong>¡Éxito!</strong> Grupo eliminado correctamente.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> ';
+          }else{
+            $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> El grupo no pudo eliminarse.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> ';
+          } 
+        }
+        $this->view->confirmacion = $confirmacion;
+        $this->Grupo();
+
       }
 
      
