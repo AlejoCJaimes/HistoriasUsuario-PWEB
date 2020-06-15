@@ -245,7 +245,7 @@ $(document).ready(function(){
   
   <!-- End of Page Wrapper -->
 </body>
-
+<?php require_once 'views/docente/footer.php'?>
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -310,6 +310,6 @@ $(document).ready(function(){
  <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
-  <?php require_once 'views/docente/footer.php'?>
+
 
 
