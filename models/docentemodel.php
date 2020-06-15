@@ -435,9 +435,14 @@ class DocenteModel extends Model {
           return $e;
         }
       }
-      ///////////////////////////
+      ///////////////////////////////////
        // FIN SENTENCIAS SQL PARA GRUPOS
-       //////////////////////////
+       /////////////////////////////////
+
+
+       ////////////////////////////////
+       //SENTENCIAS SQL PARA PROYECTOS
+       ///////////////////////////////
       
        //Agregar un nuevo proyecto a la base de datos
       public function insertarProyecto($datos){
@@ -639,13 +644,19 @@ class DocenteModel extends Model {
 
       public function getProyecto($id_proyecto) {
         require_once 'models/Proyecto.php';
-
-        $query = $this->db->connect()->query("SELECT Id, NombreProyecto, DATE_FORMAT(FechaCreacion,' %d/%m/%Y') as FechaCreacion, 
-        DATE_FORMAT(FechaFin,' %Y-%m-%d') as FechaFin,  DATE_FORMAT(FechaActualizacion,'%Y-%M-%d') as 'FechaActualizacion',
-        IdDocente, IdMetodologia, IdEstado
-        FROM proyecto WHERE Id = '$id_proyecto'");
+        $query = $this->db->connect()->query("SELECT p.Id as 'Id', p.NombreProyecto as 'NombreProyecto', DATE_FORMAT(p.FechaCreacion,'%Y-%M-%d') as 'FechaCreacion', 
+        DATE_FORMAT(p.FechaActualizacion,'%Y-%M-%d') as 'FechaActualizacion',  DATE_FORMAT(p.FechaFin,'%Y-%m-%d') as 'FechaFin',
+        p.IdDocente as 'IdDocente', p.IdMetodologia as 'IdMetodologia', p.IdEstado as 'IdEstado', CONCAT(d.NombreDocente,' ',d.ApellidoDocente) as 'NombreDocente',
+        m.Nombre as 'Metodologia', e.Nombre AS 'Estado', (SELECT g.nombre 
+        FROM grupo as g JOIN grupoproyecto as gp ON g.Id = gp.IdGrupo 
+        WHERE gp.IdProyecto = '$id_proyecto') as 'Grupo'
+        FROM proyecto as p
+        JOIN docente as d ON d.Id = p.IdDocente
+        JOIN metodologia as m ON m.Id = p.IdMetodologia
+        JOIN estado as e ON e.Id = p.IdEstado
+        WHERE p.Id = '$id_proyecto'
+        GROUP BY p.id,p.NombreProyecto,p.FechaCreacion,p.FechaActualizacion,p.IdMetodologia,p.IdEstado, p.IdDocente");
         $items = [];
-
         try {
           while ($row =$query->fetch()) {
             $item = new Proyecto();
@@ -657,6 +668,10 @@ class DocenteModel extends Model {
             $item->IdDocente = $row['IdDocente'];
             $item->IdMetodologia = $row['IdMetodologia'];
             $item->IdEstado = $row['IdEstado'];
+            $item->nombre_docente = $row['NombreDocente'];
+            $item->nombre_metodologia = $row['Metodologia'];
+            $item->nombre_estado = $row['Estado'];
+            $item->nombre_grupo = $row['Grupo'];
             array_push($items,$item);
           }
           
@@ -666,8 +681,47 @@ class DocenteModel extends Model {
           return $e;
         }
       }
-      /*
+
+      public function update_Proyecto($datos) {
+        $id_proyecto = $datos['id_proyecto'];
       
-      */
+        $datetime = new DateTime(null, new DateTimeZone('America/Bogota'));
+  
+        try {
+          $update_grupo = $this->db->connect()->prepare("UPDATE `proyecto` SET `NombreProyecto` =:nombre, `FechaActualizacion` =:fechaActualizacion, `FechaFin` =:fechafin, `IdEstado` =:id_estado   WHERE `proyecto`.`Id` = '$id_proyecto'");
+          $update_grupo->execute(['nombre' => $datos['NombreProyecto'], 'fechaActualizacion' => $datetime->format('Y-m-d H:i:s (e)'), 'fechafin' => $datos['fecha_fin'], 'id_estado' => $datos['idEstado']]);
+          return true;
+        } catch (PDOException $e) {
+          return $e;
+        }
+
+      }
+
+      public function inactive_proyecto($id_proyecto) {
+          $id_proyecto = $id_proyecto['id_proyecto'];
+        $datetime = new DateTime(null, new DateTimeZone('America/Bogota'));
+        try {
+          $update_proyecto = $this->db->connect()->prepare("UPDATE `proyecto` SET `FechaActualizacion` =:fechaActualizacion,`IdEstado` =:id_estado   WHERE `proyecto`.`Id` = '$id_proyecto'");
+          $update_proyecto->execute(['fechaActualizacion' => $datetime->format('Y-m-d H:i:s (e)'), 'id_estado' => '7']);
+          return true;
+        } catch (PDOException $e) {
+          return $e;
+        }
+      }
+
+      public function deleteProyecto($id_proyecto) {
+        $id_proyecto = $id_proyecto['id_proyecto'];
+        try {
+          $delete_proyecto = $this->db->connect()->prepare("DELETE  FROM `proyecto` WHERE `proyecto`.`Id` =:id_proyecto");
+          $delete_proyecto->execute(['id_proyecto' => $id_proyecto]);
+          return true;
+        } catch (PDOException $e) {
+          return $e;
+        }
+      }
+      
+      ////////////////////////////////
+       //FIN SENTENCIAS SQL PARA PROYECTOS
+       ///////////////////////////////
 }
 ?>
