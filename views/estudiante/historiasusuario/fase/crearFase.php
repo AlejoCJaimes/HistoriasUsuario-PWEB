@@ -6,7 +6,7 @@
 <?php echo $this->confirmacion ?>
 <br>
 
-  <h3><i class="far fa-bookmark"></i>&nbsp; Fase</h3>
+  <h3><i class="fas fa-bezier-curve"></i>&nbsp; Fase</h3>
   <hr>
   <form action="<?php echo constant('URL');?>estudiante/addFase" name="form" method="POST" id="form">
   <div class="form-group">
