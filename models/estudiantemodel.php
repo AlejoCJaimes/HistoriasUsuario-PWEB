@@ -213,12 +213,24 @@ class EstudianteModel extends Model {
       }
     }
 
-    // Fin CRUD Recurso
+    // Inicio CRUD Recurso
 
     function insertarRecurso($datos) {
       try{
         //Consulta para insertar un nuevo Recurso
         $query_1 = $this->db->connect()->prepare("INSERT INTO `recurso`(`Descripcion`, `Tipo`, `valor`, `idActividad`) VALUES (:Descripcion,:Tipo,:Valor,:IdActividad);");
+        $query_1->execute(['Descripcion' => $datos['Descripcion'], 'Tipo' => $datos['Tipo'], 'Valor' => $datos['Valor'], 'IdActividad' => $datos['idActividad']]);
+        return true;
+      }catch(PDOException $e){
+        return false;
+      }
+    }
+
+    function updateRecurso($datos) {
+      try{
+        $id = $datos['idRecurso'];
+        //Consulta para editar un Recurso
+        $query_1 = $this->db->connect()->prepare("UPDATE `recurso` SET `Descripcion`=:Descripcion,`Tipo`=:Tipo,`valor`=:Valor,`idActividad`=:IdActividad WHERE Id = '$id';");
         $query_1->execute(['Descripcion' => $datos['Descripcion'], 'Tipo' => $datos['Tipo'], 'Valor' => $datos['Valor'], 'IdActividad' => $datos['idActividad']]);
         return true;
       }catch(PDOException $e){

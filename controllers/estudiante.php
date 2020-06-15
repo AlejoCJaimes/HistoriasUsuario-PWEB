@@ -377,7 +377,7 @@ class Estudiante extends Controller{
        $id_grupo = $row['IdGrupo'];
       }
 
-      $consulta = "SELECT re.Tipo, re.valor
+      $consulta = "SELECT re.Id, re.Tipo, re.valor
       FROM grupo g      
       JOIN grupoproyecto gp ON gp.IdGrupo = g.Id
       JOIN proyecto p ON p.id = gp.IdProyecto
@@ -442,6 +442,78 @@ class Estudiante extends Controller{
       $this->view->actividad = $arr;
       $this->view->cabecera = $cabecera;
       $this->view->render('estudiante/historiasusuario/recurso/index');
+    }
+
+    function editarRecursoView($id){
+      $cabecera = "Editar Recurso";
+      require_once 'libs/database.php';
+      $this->db = new Database();
+
+      if($id != ""){
+        $idRecurso = $id[0];
+        $consulta = "SELECT * FROM recurso WHERE Id = '$idRecurso';";
+        $query = $this->db->connect()->query($consulta);
+        $arr = $query->fetchAll();
+        $this->view->recurso = $arr[0];
+        
+        $idActividad = $this->view->recurso["idActividad"];
+        $consulta2 = "SELECT * FROM actividad WHERE Id = '$idActividad';";
+        $query2 = $this->db->connect()->query($consulta2);
+        $arr2 = $query2->fetchAll();
+        $this->view->recurso["NombreActividad"] = $arr2[0]["Nombre"];
+        $this->view->recurso["IdActividad"] = $arr2[0]["Id"];
+        
+        $id_user = $this->session->getCurrentUser();
+        $consulta3 = "SELECT ac.Id, ac.Nombre 
+        FROM estudiante e 
+        JOIN usuario us ON us.id = e.idusuario
+        JOIN grupoestudiante ge ON ge.IdEstudiante = e.Id
+        JOIN grupo g ON g.id = ge.IdGrupo
+        JOIN grupoproyecto gp ON gp.IdGrupo = g.Id
+        JOIN proyecto p ON p.id = gp.IdProyecto
+        JOIN metodologia m ON m.id = p.IdMetodologia
+        JOIN fase f ON f.IdMetodologia = m.Id
+        JOIN modulo mo ON mo.IdFase = f.Id
+        JOIN historiausuario hu ON hu.IdModulo = mo.Id
+        JOIN actividad ac ON ac.IdHistoriaUsuario = hu.id
+        WHERE us.correo_usuario = '$id_user' && ac.Id != '$idActividad';";
+        
+        $query3 = $this->db->connect()->query($consulta3);
+        $arr3 = $query3->fetchAll();
+
+        $this->view->actividad = $arr3;
+      }      
+      
+      $this->view->cabecera = $cabecera;
+      $this->view->render('estudiante/historiasusuario/recurso/editarRecurso');
+
+    }
+
+    function editarRecurso(){
+      $idRecurso = $_POST["idRecurso"];
+      $Tipo = $_POST["Tipo"];
+      $Descripcion = $_POST["Descripcion"];
+      $Valor = $_POST["Valor"];
+      $idActividad = $_POST["idActividad"];
+
+      if ($this->model->updateRecurso(['idRecurso' => $idRecurso, 'Tipo' => $Tipo, 'Descripcion' => $Descripcion, 'Valor' => $Valor,'idActividad' => $idActividad])) {
+        $confirmacion = '<div class="alert alert-info" role="alert" >Recurso actualizado correctamente.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      } else {
+        $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> el recurso no pudo ser actualizado.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+
+      }
+
+      $this->view->confirmacion = $confirmacion;
+      $this->detalleRecurso();
+
     }
 
     // Fin sesión Recurso
