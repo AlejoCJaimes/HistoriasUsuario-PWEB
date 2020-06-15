@@ -4,7 +4,7 @@
 <!-- INICIO DEL CONTENIDO PRINCIPAL -->
 
 <div class="container">
-  <h2>Editar Perfil</h2>
+<h2><i class="fas fa-user"></i> Editar Perfil </h2>
        <article>
          <?php
          require_once 'models/Users.php';
