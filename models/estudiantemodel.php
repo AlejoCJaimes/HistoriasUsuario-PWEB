@@ -345,6 +345,17 @@ class EstudianteModel extends Model {
       }
     }
 
+    function deleteRecurso($id) {
+      try{
+        //Consulta para eliminar un Recurso
+        $idRecurso = $id[0];
+        $query_1 = $this->db->connect()->query("DELETE FROM `recurso` WHERE Id = '$idRecurso';");
+        return true;
+      }catch(PDOException $e){
+        return false;
+      }
+    }
+
     // Fin CRUD Recurso
 
      //INSTRUCCIONES CRUD FASE

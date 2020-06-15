@@ -610,6 +610,31 @@ class Estudiante extends Controller{
 
     }
 
+    function eliminarRecurso($id){
+      if($id != ""){
+        if ($this->model->deleteRecurso($id)) {
+          $confirmacion = '<div class="alert alert-info" role="alert" >Recurso eliminado correctamente.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        } else {
+          $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> el recurso no pudo ser eliminado.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+  
+        }
+  
+        $this->view->confirmacion = $confirmacion;
+        $this->detalleRecurso();
+
+      }
+
+    }
+
+
     // Fin sesión Recurso
 
      ////////COMIENZO MODULO//////////
