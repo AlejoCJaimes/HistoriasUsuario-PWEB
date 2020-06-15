@@ -45,17 +45,37 @@ private $correo;
         $this->view->respuesta = "";
         $this->view->confirmacion = "";
 
+        //variables auxiliares para los módulos de estados y programas.
+        $this->view->estados = [];
+        $this->view->programas = [];
+
+        //variables de conteo para popoup en index
+        $this->view->num_usuarios = 0;
+        $this->view->num_programas = 0;
+        $this->view->num_estados = 0;
+
 
 
         //echo "<p>Nuevo controlador Main</p>";
     }
 
     function render() {
-        $cabecera = "Inicio";
-        $this->view->cabecera = $cabecera;
-        $this->view->render('administrador/index');
+      //cabecera
+      $cabecera = "Inicio";
+      
+      //consultas
+      $num_usuarios= $this->model->cargarUsuariosIndex();
+      $this->view->num_usuarios = $num_usuarios;
 
+      $num_programas= $this->model->cargarProgramaIndex();
+      $this->view->num_programas = $num_programas;
 
+      $num_estados= $this->model->cargarEstadosIndex();
+      $this->view->num_estados = $num_estados;
+
+      
+      $this->view->cabecera = $cabecera;
+      $this->view->render('administrador/index');
     }
 
 
@@ -525,7 +545,240 @@ private $correo;
 
 
     }
+    ////////////////////////////////
+    //INICIO ACCIONES PARA PROGRAMA
+    ///////////////////////////////
+    function Programa() {
+     
+      //Instancia de la base de datos
+      $this->db = new Database();
+      //variables auxiliares y cabecera
+      $cabecera = "";
+      $cabecera = "Programa";
+      $programas = [];
+      
+      //Cargar los programas ya existentes en la base de datos
+      $query_programas = $this->db->connect()->query("SELECT * from programa ORDER BY Nombre");
+      $programas = $query_programas->fetchAll();
 
+      //retorno de vistas y variables
+
+      $this->view->programas = $programas;
+      $this->view->cabecera = $cabecera;
+      $this->view->render("administrador/programas/index");
+    }
+
+    function addPrograma() {
+
+      //confirmacion
+      $confirmacion = "";
+
+      //recepcion por método POST
+      $codigo = $_POST['codigo'];
+      $programa= $_POST['programa'];
+
+      if ($this->model->insertPrograma(['codigo' => $codigo, 'programa' => $programa])) {
+        // code...
+        $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong>Programa creado con éxito.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      } else {
+        $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> El programa no se pudo crear.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      }
+
+      $this->view->confirmacion = $confirmacion;
+      $this->Programa();
+
+
+    }
+
+    function editPrograma() {
+
+       //recepcion por método POST
+       $codigo = $_POST['codigo'];
+       $programa= $_POST['programa'];
+
+       //confirmacion
+       $confirmacion = "";
+
+       //recepcion por método POST
+       $programa= $_POST['programa'];
+ 
+       if ($this->model->updatePrograma(['codigo' => $codigo, 'programa' => $programa])) {
+         // code...
+         $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong>Programa actualizado con éxito.
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+         </div> ';
+       } else {
+         $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> El programa no se pudo actualizar.
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+         </div> ';
+       }
+ 
+       $this->view->confirmacion = $confirmacion;
+       $this->Programa();
+
+    }
+
+    function eliminar_programa($param= null) {
+
+      $codigo = $param[0];
+       //confirmacion
+       $confirmacion = "";
+
+       //recepcion por método POST
+ 
+       if ($this->model->deletePrograma(['codigo' => $codigo])) {
+         // code...
+         $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong>Programa eliminado con éxito.
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+         </div> ';
+       } else {
+         $confirmacion = '<div class="alert alert-info" role="alert" > <strong> ¡Lo sentimos! </strong> El programa no se pudo eliminar.
+         porque este se encuentra en uso.
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+         </div> ';
+       }
+ 
+       $this->view->confirmacion = $confirmacion;
+       $this->Programa();
+
+    }
+
+     ////////////////////////////////
+    //FIN ACCIONES PARA PROGRAMA
+    ///////////////////////////////
+
+
+    ////////////////////////////////
+    //INICIO ACCIONES PARA ESTADO
+    ///////////////////////////////
+    function Estado() {
+     
+      //Instancia de la base de datos
+      $this->db = new Database();
+      //variables auxiliares y cabecera
+      $cabecera = "";
+      $cabecera = "Estado";
+      $estados = [];
+      
+      //Cargar los estados ya existentes en la base de datos
+      $query_estados = $this->db->connect()->query("SELECT * from estado ORDER BY Id");
+      $estados = $query_estados->fetchAll();
+
+      //retorno de vistas y variables
+
+      $this->view->estados = $estados;
+      $this->view->cabecera = $cabecera;
+      $this->view->render("administrador/estados/index");
+    }
+
+    function addEstado() {
+
+      //confirmacion
+      $confirmacion = "";
+
+      //recepcion por método POST
+      $estado= $_POST['estado'];
+
+      if ($this->model->insertEstado(['estado' => $estado])) {
+        // code...
+        $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong>Estado creado con éxito.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      } else {
+        $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> El Estado no se pudo crear.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      }
+
+      $this->view->confirmacion = $confirmacion;
+      $this->Estado();
+
+
+    }
+
+    function editEstado() {
+
+       //recepcion por método POST
+       $id = $_POST['Id'];
+       $estado= $_POST['estado'];
+       //confirmacion
+       $confirmacion = "";
+
+       //recepcion por método POST
+ 
+       if ($this->model->updateEstado(['Id' => $id, 'estado' => $estado])) {
+         // code...
+         $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong>Estado actualizado con éxito.
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+         </div> ';
+       } else {
+         $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> El estado no se pudo actualizar.
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+         </div> ';
+       }
+ 
+       $this->view->confirmacion = $confirmacion;
+       $this->Estado();
+
+    }
+
+    function eliminar_estado($param= null) {
+
+      $id = $param[0];
+       //confirmacion
+       $confirmacion = "";
+
+       //recepcion por método POST
+ 
+       if ($this->model->deleteEstado(['Id' => $id])) {
+         // code...
+         $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong>Estado eliminado con éxito.
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+         </div> ';
+       } else {
+         $confirmacion = '<div class="alert alert-info" role="alert" > <strong> ¡Lo sentimos! </strong> El Estado no se pudo eliminar.
+         porque este se encuentra en uso.
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+         </div> ';
+       }
+ 
+       $this->view->confirmacion = $confirmacion;
+       $this->Estado();
+
+    }
+
+
+    ////////////////////////////////
+    //FIN ACCIONES PARA ESTADO
+    ///////////////////////////////
 
 
 }
