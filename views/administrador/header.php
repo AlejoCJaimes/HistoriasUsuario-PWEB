@@ -20,6 +20,7 @@
 
     <!-- Custom styles for this template-->
     <link href="<?php echo constant('URL');?>resources/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="<?php echo constant('URL');?>resources/css/toastr.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="<?php echo constant('URL');?>resources/img/logo.png">
 </head>
 <!--Estilos para el logout modal
@@ -82,7 +83,20 @@ sección del header en administrador linea 150-156 hace referencia a esto.-->
                     <span>Usuarios</span></a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo constant('URL');?>administrador/programa">
+                <i class="fas fa-university"></i>
+                    <span>Programas Universitarios</span></a>
+            </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo constant('URL');?>administrador/estado">
+                <i class="fab fa-font-awesome-alt"></i>
+                    <span>Estados</span></a>
+            </li>
+
+
+         
 
             <!-- Nav Item - Usuarios -->
             <!--<li class="nav-item">
