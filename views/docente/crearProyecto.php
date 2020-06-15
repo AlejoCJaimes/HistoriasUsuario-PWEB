@@ -96,6 +96,13 @@
                 <div class="form-group text-center">
                     <input type="submit" id="envio" value="Crear" class="btn btn-primary ">
                 </div>
+
+                <br>
+                <br>
+                <div class="form-group ">
+                                <a href="<?php echo constant('URL');?>docente/proyecto" class="button"
+                                        type="button">Volver</a>
+                        </div>
                 </div>
         </form>
     </div>

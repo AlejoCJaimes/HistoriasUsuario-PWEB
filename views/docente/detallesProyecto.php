@@ -9,6 +9,7 @@
 
 <body>
         <div class="container">
+        <div><?php echo $this->confirmacion;?> </div>
                 <h2><i class=" fas fa-info-circle"></i> Detalles del proyecto </h2>
                 <br>
                 <br>
@@ -20,19 +21,19 @@
                 }
                 ?>
                 <form action="<?php echo constant('URL');?>docente/actualizar_proyecto" method="POST" id="form">
-
+                       
                         <div class="form-group">
 
                                 <label>Nombre</label>
                                 <input type="text" id="nombre" name="NombreProyecto" class="form-control"
                                         placeholder="Escribe el nombre del proyecto"
                                         value="<?php echo $proyecto->NombreProyecto ?> " style="width: 400px">
-
+                                        <input type="hidden" id="hidden" name="id_proyecto" value="<?php echo $proyecto->Id?>">
                         </div>
                         <div class="form-group">
                                 <label>Fecha límite</label>
 
-                                <div class="input-group" style=" width: 200px;">
+                                <div class="input-group" style=" width: 250px;">
                                         <input type="text" class="form-control" style=" width: 50px;" id="fecha"
                                                 name="fecha_fin" min="2020-05-10" max="2020-06-30"
                                                 value="<?php echo $proyecto->FechaFin?>">
@@ -41,80 +42,60 @@
                                         </div>
                                 </div>
                         </div>
-                                <!--DropDrownList de metodología READONLY-->
-                                <div class="form-group" readonly>
-                                        <label>Metodologia</label readonly>
-                                        <select name="idMetodologia" READONLY id="metodologia" class="form-control" style="width: 400px">
-                                                <?php
-                                        require_once 'libs/database.php';
-                                        $this->db = new Database();
-                                        //statement return dates
-                                        $query = $this->db->connect()->query("SELECT id, nombre FROM metodologia  WHERE id = '$proyecto->IdMetodologia';");
-                                        while($row = $query->fetch()) {
-                                ?>
-                                                <option value="<?php echo $row['id']?>"><?php echo $row['nombre']?>
-                                                </option>
-                                                <?php
-
-                                        }
-                                ?>
-                                        </select>
-                                </div>
-
-                                <div class="form-group">
-                                        <label>Grupo</label>
-                                        <select name="idGrupo" id="grupo" REQUIRED READONLY class="form-control" style="width: 400px">
-                                                <?php
-                                        require_once 'libs/database.php';
-                                        $this->db = new Database();
-                                        //statement return dates
-                                        $query = $this->db->connect()->query("SELECT g.id, g.nombre FROM grupo as g JOIN grupoproyecto as gp ON g.Id = gp.IdGrupo WHERE gp.IdProyecto = '$proyecto->Id';");
-                                        while($row = $query->fetch()) {
-                                ?>
-                                                <option value="<?php echo $row['id']?>"><?php echo $row['nombre']?>
-                                                </option>
-                                                <?php
-
-                                        }
-                                ?>
-                                        </select>
-                                </div>
-
-
-                                <!--DropDrownList de estado-->
-                                <div class="form-group">
-                                        <label>Estado</label>
-                                        <select name="idEstado" REQUIRED id="estado" class="form-control" style="width: 400px">
-                                                <?php
-                                        
-                                        require_once 'libs/database.php';
-                                        $this->db = new Database();
-                                        //statement return dates
-                                        
-                                        $query = $this->db->connect()->query("SELECT id, nombre FROM estado");
-
-                                        while($row = $query->fetch()) {
-                                ?>
-                                                    
-                                                <option value="<?php echo $row['id']?>"><?php echo $row['nombre']?>
-                                                </option>
-                                                <?php
-
-                                        }
-                                ?>
-                                        </select>
-                                </div>
-                                <br>
-                                <br>
+                        <!--DropDrownList de metodología READONLY-->
                         <div class="form-group">
-                         <input type="submit" value="Guardar Cambios" role="button" class="btn btn-primary">
+                                <label>Metodologia</label>
+                                <input type="text" id="nombre" READONLY name="NombreMetodologia" class="form-control"
+                                        placeholder="Escribe el nombre del proyecto"
+                                        value="<?php echo $proyecto->nombre_metodologia ?> " style="width: 400px">
+                        </div>
+
+                        <div class="form-group">
+                                <label>Grupo</label>
+                                <input type="text" id="nombre" name="NombreGrupo" READONLY class="form-control"
+                                        placeholder="Escribe el nombre del proyecto"
+                                        value="<?php echo $proyecto->nombre_grupo ?> " style="width: 400px">
+                        </div>
+
+                        <div class="form-group" readonly>
+                                <label>Elaborado por </label readonly>
+                                <input type="text" id="nombre" name="nombreDocente" READONLY class="form-control"
+                                        placeholder="Escribe el nombre del proyecto"
+                                        value="<?php echo $proyecto->nombre_docente ?> " style="width: 400px">
+                        </div>
+
+
+                        <!--DropDrownList de estado-->
+                        <div class="form-group">
+                                <label>Estado</label>
+                                <select name="idEstado" REQUIRED id="estado" class="form-control" style="width: 400px">
+                                        <option value="<?php echo $proyecto->IdEstado?>">
+                                                <?php echo $proyecto->nombre_estado ?></option>
+                                        <?php
+                                                
+                                        foreach($this->estados as $row) {
+                                                $estados = $row;
+                                        
+                                        ?>
+                                        <option value="<?php echo $estados[0]?>"><?php echo $estados[1]?>
+                                        </option>
+                                        <?php
+
+                                        }
+                                ?>
+                                </select>
                         </div>
                         <br>
-                                <br>
-                                <div class="form-group ">
-                                        <a href="<?php echo constant('URL');?>docente/proyecto" class="button"
-                                                type="button">Volver</a>
-                                </div>
+                        <br>
+                        <div class="form-group">
+                                <input type="submit" value="Guardar Cambios" role="button" class="btn btn-primary">
+                        </div>
+                        <br>
+                        <br>
+                        <div class="form-group ">
+                                <a href="<?php echo constant('URL');?>docente/proyecto" class="button"
+                                        type="button">Volver</a>
+                        </div>
                 </form>
         </div>
 </body>

@@ -181,7 +181,10 @@ $(document).ready(function(){
 
 
         <!--CONTENIDO PROYECTOS-->
+<body>
+
     <div class="container">
+    <div><?php echo $this->confirmacion;?> </div>
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
@@ -190,6 +193,21 @@ $(document).ready(function(){
 					</div>
             		<div class="col-sm-7">
 			        <a href="<?php echo constant('URL');?>docente/crearProyecto" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Añadir Proyecto</span></a>
+                    <?php 
+                    $i = 0;
+                    $getStateDis = "";
+                    foreach($this->proyecto as $row){
+                    $i++;
+                 }
+                 
+                 if ($i > 0 ) {
+                        $getStateDis = "";
+                 } else {
+                        $getStateDis = "disabled";
+                 }
+        ?>
+                    <a href="" class="btn btn-primary <?php echo $getStateDis ?>" data-toggle="modal" data-target="#staticBackdrop"><i
+                    class="material-icons">&#xe872;</i> <span>Eliminar</span></a>
 					</div>
                 </div>
             </div>
@@ -207,7 +225,7 @@ $(document).ready(function(){
                         <div class="card-body " name='' href="#"><?php echo $proyecto->NombreProyecto?></div>
                         <!--Esto lleva a editar y ver la metodología-->
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-black stretched-link" href="<?php echo constant('URL'). 'docente/detalleProyecto/'.$proyecto->Id ;?>">Editar</a>
+                            <a class="small text-black stretched-link" href="<?php echo constant('URL'). 'docente/detalleGeneralProyecto/'.$proyecto->Id ;?>">Editar</a>
                             <div class="small text-black"><i class="fas fa-angle-right"></i></div>
                             
                         </div>
@@ -225,11 +243,71 @@ $(document).ready(function(){
   </div>
   <!-- End of Page Wrapper -->
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
+ 
+</body>
+<?php require 'views/docente/footer.php'?>
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Eliminar Proyecto</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <!-- <p style ="color: red">Tenga en cuenta quer si elimina la metodologia
+        se eliminará todo su contenido como fuentes y no podrá recuperarse. </p>-->
+        <div class="alert alert-warning" role="alert">
+        
+            <h6 class="alert-heading"><strong>Tenga en cuenta...</strong></h6>
+           
+            <hr>
+            <p>No podrá eliminar los proyectos en los que algún estudiante
+            ya haya elaborado una historia de usuario, en su defecto se colocará
+            como inactivo</p>
+          
+            </div>
+      </div>
+      <div class="modal-body">
+      <table id="tablaDinamica">
+        <thead>
+                <tr>
+                <th scope="col" class="text-center">Grupos </th>
+                </tr>
+        </thead>    
+      <?php 
+        
+           require_once 'models/Proyecto.php';
+           foreach($this->proyecto as $row){
+               $proyecto = new Proyecto();
+               $proyecto = $row;
+              
+        ?>
+            <tbody>
+            <tr>
+               <td><input type="text" readonly style="width: 330px;" required id="fuente" placeholder="Ingrese cita" class="form-control" value="<?php echo $proyecto->NombreProyecto?>"></td>
+                <td><a id ="btn" href=" <?php echo constant('URL').'docente/eliminarProyecto/'. $proyecto->Id?>" type="button" class="btn btn-danger"><i class=" fas fa-trash"></i> </a></td>
+                <td><ion-icon name="trash-outline"></ion-icon></td> 
+            </tr>
+                </tdbody>
+        <?php }?>
+        
+      <table>  
+      </div>
+            
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <!-- Scroll to Top Button-->
+ <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
 
 
-
-<?php require 'views/docente/footer.php'?>
