@@ -79,6 +79,10 @@
         </tr>
     </table>
 </div>
+<div class="container">
+&nbsp; &nbsp; &nbsp; &nbsp;<a href="<?php echo constant('URL');?>estudiante/crearRecurso" class="button" type="button"> <i
+                    class="fas fa-arrow-circle-left"> </i> Volver</a>
+        </div>
 
 <!-- FIN  DEL CONTENIDO PRINCIPAL -->
 
