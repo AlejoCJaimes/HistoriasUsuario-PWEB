@@ -5,7 +5,7 @@
 <div class="container">
 <?php echo $this->confirmacion ?>
     <br>
-    <h3><i class="far fa-bookmark"></i>&nbsp; Módulo</h3>
+    <h3><i class="far fa-object-group"></i>&nbsp; Módulo</h3>
     <hr>
     <form action="<?php echo constant('URL');?>estudiante/addModulo" name="form" method="POST" id="form">
         <div class="form-group">
