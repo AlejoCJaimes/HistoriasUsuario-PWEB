@@ -8,6 +8,64 @@ class AdministradorModel extends Model {
         parent::__construct();
     }
 
+     ////////////////////////
+    ///CHARGE INDEX THINGS
+    ///////////////////////
+    public function cargarUsuariosIndex() {
+
+      $query = $this->db->connect()->query("SELECT COUNT(*) AS 'numero_usuarios' FROM usuario ");
+      $item = 0;
+      try {
+        while ($row =$query->fetch()) {
+          $item = $row['numero_usuarios'];
+        }
+        
+          return $item;
+    
+      } catch (PDOException $e) {
+        return $e;
+      }
+    }
+
+    public function cargarProgramaIndex() {
+
+      $query = $this->db->connect()->query("SELECT COUNT(*) AS 'numero_programa' FROM programa ");
+      $item = 0;
+      try {
+        while ($row =$query->fetch()) {
+          $item = $row['numero_programa'];
+        }
+        
+          return $item;
+    
+      } catch (PDOException $e) {
+        return $e;
+      }
+    }
+
+    public function cargarEstadosIndex() {
+
+      $query = $this->db->connect()->query("SELECT COUNT(*) AS 'numero_estados' FROM estado ");
+      $item = 0;
+      try {
+        while ($row =$query->fetch()) {
+          $item = $row['numero_estados'];
+        }
+        
+          return $item;
+    
+      } catch (PDOException $e) {
+        return $e;
+      }
+    }
+
+    ////////////////////////
+    ///END INDEX THINGS
+    ///////////////////////
+
+
+
+
     public function insert($datos) {
 
         /*request 1st-Insert*/
@@ -479,6 +537,160 @@ class AdministradorModel extends Model {
 
 
     }
+
+    //////////////////////////
+    ///START STATEMENT FOR PROGRAMA
+    /////////////////////////
+
+    public function insertPrograma($datos) {
+
+      //casteo de variables
+
+      $codigo = $datos['codigo'];
+      $programa = $datos['programa'];
+
+      try {
+        $insert_programa = $this->db->connect()->prepare("INSERT INTO `programa` (codigo,Nombre) VALUES(:codigo, :Nombre)");
+        $insert_programa->execute(['codigo' => $codigo, 'Nombre' => $programa]);
+        return true;
+    } catch(PDOException $e){
+      return false;
+    }
+
+    
+    }
+
+    public function updatePrograma($datos) {
+
+      $codigo = $datos['codigo'];
+      $programa = $datos['programa'];
+
+      try {
+        $insert_programa = $this->db->connect()->prepare("UPDATE `programa` SET Nombre=:nombre WHERE codigo = '$codigo'");
+        $insert_programa->execute(['nombre' => $programa]);
+        return true;
+      } catch(PDOException $e){
+        return false;
+      }
+
+    }
+
+    public function deletePrograma($datos) {
+
+      $codigo = $datos['codigo'];
+      //verificar si ese codigo está en uso
+      $encontrado = 0;
+      $query_estudiantes = $this->db->connect()->query("SELECT CodigoPrograma FROM Estudiante");
+      while ($row = $query_estudiantes->fetch()) {
+        if ($row[0] == $codigo)
+          $encontrado++;
+      }
+
+      try {
+        if ($encontrado > 0) {
+         return false;
+        } else {
+          $insert_programa = $this->db->connect()->prepare("DELETE FROM programa WHERE codigo = :codigo");
+          $insert_programa->execute(['codigo' => $codigo]);
+        }
+        return true;
+      } catch(PDOException $e){
+        return false;
+      }
+
+    }
+
+    //////////////////////////
+    ///END STATEMENT FOR PROGRAMA
+    /////////////////////////
+    
+
+    //////////////////////////
+    ///START STATEMENT FOR ESTADO
+    /////////////////////////
+ public function insertEstado($datos) {
+
+      //casteo de variables
+      $estado = $datos['estado'];
+
+      try {
+        $insert_programa = $this->db->connect()->prepare("INSERT INTO `estado` (Nombre) VALUES(:Nombre)");
+        $insert_programa->execute(['Nombre' => $estado]);
+        return true;
+    } catch(PDOException $e){
+      return false;
+    }
+
+    
+    }
+
+    public function updateEstado($datos) {
+
+      $id = $datos['Id'];
+      $estado = $datos['estado'];
+
+      try {
+        $insert_programa = $this->db->connect()->prepare("UPDATE `estado` SET Nombre=:nombre WHERE Id = '$id'");
+        $insert_programa->execute(['nombre' => $estado]);
+        return true;
+      } catch(PDOException $e){
+        return false;
+      }
+
+    }
+
+    public function deleteEstado($datos) {
+
+      $id = $datos['Id'];
+      //verificar si ese estado está en uso en Proyecto,Historia de Usuario, Fase
+      $encontrado = 0;
+
+      //query proyecto
+      $query_proyecto = $this->db->connect()->query("SELECT IdEstado FROM proyecto");
+      while ($row = $query_proyecto->fetch()) {
+        if ($row[0] == $id)
+          $encontrado++;
+      }
+
+      //query proyecto
+      $query_historia = $this->db->connect()->query("SELECT IdEstado FROM historiaUsuario");
+      while ($row = $query_historia->fetch()) {
+        if ($row[0] == $id)
+          $encontrado++;
+      }
+
+      //query proyecto
+      $query_fase = $this->db->connect()->query("SELECT IdEstado FROM fase");
+      while ($row = $query_fase->fetch()) {
+        if ($row[0] == $id)
+          $encontrado++;
+      }
+
+      try {
+        if ($encontrado > 0) {
+         return false;
+        } else {
+          $insert_programa = $this->db->connect()->prepare("DELETE FROM estado WHERE Id = :Id");
+          $insert_programa->execute(['Id' => $id]);
+        }
+        return true;
+      } catch(PDOException $e){
+        return false;
+      }
+
+    }
+
+
+
+    //////////////////////////
+    ///END STATEMENT FOR ESTADO
+    /////////////////////////
+
+   
+
+
+
+
 
 }
 
