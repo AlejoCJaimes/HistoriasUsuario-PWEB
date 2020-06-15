@@ -25,12 +25,48 @@
             <tr>
                 <td><?php echo $row['Tipo']?></td>
                 <td><?php echo $row['valor']?></td>
-                <td><a href="<?php echo constant('URL') . 'estudiante/editarRecursoView/'.$row['Id']?>"
-                            class="settings" title="Editar" data-toggle="tooltip"><i
-                                class="material-icons">&#xE8B8;</i></a>
+                <!-- Abrir vista para editar con Modal -->
+                <td>
+                    <a href="<?php echo constant('URL') . 'estudiante/editarRecursoView/'.$row['Id']?>" class="settings"
+                        title="Editar" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                    <!-- Abrir Modal para eliminar -->
+                    <a href="#" style="color: #B20710;" class="delete" title="Eliminar" data-toggle="modal"
+                        data-target="#eliminarModal"><i class="material-icons">&#xE5C9;</i></a>
+                    <!-- Inicio modal -->
+                    <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog"
+                        aria-labelledby="eliminarModal" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="eliminarModal"><strong>Eliminación de recurso</strong>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="alert alert-primary" role="alert">
 
-                                <a href="#" style="color: #B20710;" class="delete" title="Eliminar" data-toggle="modal" data-target="<?php echo $var_pos_inicial_1?>"><i
-                    class="material-icons">&#xE5C9;</i></a></td>
+                                        <h6 class="alert-heading"><strong>Tenga en cuenta...</strong></h6>
+
+                                        <hr>
+                                        <p>Después de eliminar el recurso, no podrá ser recuperado. ¿Está seguro que
+                                            desea eliminar?</p>
+
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">Cancelar</button>
+                                    <a href="<?php echo constant('URL') . 'estudiante/detalleRecurso'?>"
+                                        style="color: white;" class="btn btn-danger" role="button">Aceptar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fin modal -->
+                </td>
             </tr>
             <?php
 
