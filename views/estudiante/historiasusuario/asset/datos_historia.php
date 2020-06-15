@@ -40,8 +40,8 @@ $id_modulo=$_POST['historia'];
     $var_pos_inicial_2 = '_'.$row_studiantes[2];
 	 //$cadena=$cadena.'<option value='.$row[0].'>'.utf8_encode($row[3]).'</option>';
     /* resultados en paralelo*/
-    $tabla = $tabla.'<tbody> <tr> <td>'.$row_studiantes[1].'</td>'.'<td>'.$row_studiantes[2].'</td>'.'<td>'.utf8_encode($row_studiantes[3]).'</td>'.'<td>'.$row_studiantes[4].'</td>'.'<td>'.utf8_encode($row_studiantes[5]).'</td>'.'
-    <td>'.$row_studiantes[6].'</td>'.'<td>'.'<a href="'.'http://localhost/HistoriasUsuario-PWEB/'.'estudiante/readHistoria/'.$row_studiantes[0].'"class="button" type="button"> &nbsp; &nbsp; <i class="fas fa-eye" style="color: #17A673"> </i> </a>' .'</td>';
+    $tabla = $tabla.'<tbody> <tr> <td>'.utf8_encode($row_studiantes[1]).'</td>'.'<td>'.utf8_encode($row_studiantes[2]).'</td>'.'<td>'.utf8_encode($row_studiantes[3]).'</td>'.'<td>'.utf8_encode($row_studiantes[4]).'</td>'.'<td>'.utf8_encode($row_studiantes[5]).'</td>'.'
+    <td>'.utf8_encode($row_studiantes[6]).'</td>'.'<td>'.'<a href="'.'http://localhost/HistoriasUsuario-PWEB/'.'estudiante/readHistoria/'.utf8_encode($row_studiantes[0]).'"class="button" type="button"> &nbsp; &nbsp; <i class="fas fa-eye" style="color: #17A673"> </i> </a>' .'</td>';
     
     /*echo $modal= "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal'>
     Launch demo modal
