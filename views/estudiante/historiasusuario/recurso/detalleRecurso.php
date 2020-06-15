@@ -21,6 +21,8 @@
         <tbody>
             <?php
             foreach ($this->recurso as $row) {
+
+                $op = $row["Id"];
             ?>
             <tr>
                 <td><?php echo $row['Tipo']?></td>
@@ -31,9 +33,9 @@
                         title="Editar" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
                     <!-- Abrir Modal para eliminar -->
                     <a href="#" style="color: #B20710;" class="delete" title="Eliminar" data-toggle="modal"
-                        data-target="#eliminarModal"><i class="material-icons">&#xE5C9;</i></a>
+                        data-target="#_<?php echo $op?>"><i class="material-icons">&#xE5C9;</i></a>
                     <!-- Inicio modal -->
-                    <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="_<?php echo $op?>" tabindex="-1" role="dialog"
                         aria-labelledby="eliminarModal" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -50,8 +52,7 @@
                                         <h6 class="alert-heading"><strong>Tenga en cuenta...</strong></h6>
 
                                         <hr>
-                                        <p>Después de eliminar el recurso, no podrá ser recuperado. ¿Está seguro que
-                                            desea eliminar?</p>
+                                        <p>¿Está seguro que desea eliminar el recurso <strong><?php echo $row['Tipo']?></strong></p>
 
                                     </div>
 
