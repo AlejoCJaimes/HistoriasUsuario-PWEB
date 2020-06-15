@@ -38,14 +38,15 @@
         ?>
       </select>
     </div>
+    <br>
     <input type="submit" class="btn btn-primary" value="Guardar">
   </div>
 
 </form>
 </div>
-<hr>
+<br>
 <div class="container">
-            <a href="<?php echo constant('URL');?>estudiante/detalleRecurso" class="button" type="button"> <i
+&nbsp; &nbsp; &nbsp; &nbsp;<a href="<?php echo constant('URL');?>estudiante/detalleRecurso" class="button" type="button"> <i
                     class="fas fa-eye"> </i> Ver el Total de Recursos de tu grupo</a>
         </div>
 <!-- FIN  DEL CONTENIDO PRINCIPAL -->

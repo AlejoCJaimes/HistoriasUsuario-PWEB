@@ -32,11 +32,16 @@
             </table>
            
         </div>
-        
-        <div class="form-group text-center">
+        <br>
+        <div class="form-group">
             <input type="submit" id="envio" value="Crear" class="btn btn-primary ">
         </div>
-
+        <br>
+    <br>
+    <div class="form-group ">
+                                <a href="<?php echo constant('URL');?>docente/metodologia" class="button"
+                                        type="button">Volver</a>
+                        </div>
     </form>
 
     <!-- Script para agregar dinámicamente nuevos inputs -->

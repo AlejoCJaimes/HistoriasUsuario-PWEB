@@ -64,6 +64,13 @@
         </div>
         <input type="hidden" name="id" style=" width: 0px; height: 0px ; color: white" value="<?php echo $metodologias->id?> " readonly> 
         <input type="hidden" name="longitud" style=" width: 0px; height: 0px ; color: white" value="<?php echo $longitud?> " readonly>
+    
+    <br>
+    <br>
+    <div class="form-group ">
+                                <a href="<?php echo constant('URL');?>docente/metodologia" class="button"
+                                        type="button">Volver</a>
+                        </div>
     </form>
     
 </div>
