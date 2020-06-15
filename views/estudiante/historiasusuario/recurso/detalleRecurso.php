@@ -59,7 +59,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-dismiss="modal">Cancelar</button>
-                                    <a href="<?php echo constant('URL') . 'estudiante/detalleRecurso'?>"
+                                    <a href="<?php echo constant('URL') . 'estudiante/eliminarRecurso/'.$row['Id']?>"
                                         style="color: white;" class="btn btn-danger" role="button">Aceptar</a>
                                 </div>
                             </div>
