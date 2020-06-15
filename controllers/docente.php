@@ -390,7 +390,8 @@ class Docente extends Controller{
               array_push($_grupos,$item);
           }
         
-        $res = array_diff_assoc($_grupos, $grupos_proyectos);
+        $res = array_diff($_grupos, $grupos_proyectos);
+        //var_dump($res);
         //print_r($res);
         /*for ($i=2; $i<count($res); $i++) { 
           print($i)." ";
@@ -419,15 +420,70 @@ class Docente extends Controller{
         $this->view->render('docente/crearProyecto');
       }
 
-      function detalleProyecto($param = null){
+      function detalleGeneralProyecto($param = null){
         $id_proyecto = $param[0];
+        $this->detalleProyecto($id_proyecto);
+      }
+
+      function detalleProyecto($id_proyecto) {
+        //header
         $cabecera = "";
         $cabecera = "Proyecto";
+        
+        //variables auxiliares
         $proyecto = [];
+        $estados = [];
+        $id_estado_proyecto = 0;
+        //libs
+
+        require_once 'libs/database.php';
+
+        //instancemet new object
+        $this->db = new Database();
+
+        //query statement
+        $query_estado_proyecto = $this->db->connect()->query("SELECT IdEstado FROM proyecto WHERE Id = '$id_proyecto'");
+        while($row = $query_estado_proyecto->fetch()) {
+           $id_estado_proyecto = $row['IdEstado'];
+        }
+
+        $query_estados = $this->db->connect()->query("SELECT * FROM estado WHERE Id != '$id_estado_proyecto'");
+        $estados = $query_estados->fetchAll();
         $proyecto = $this->model->getProyecto($id_proyecto);
+        
+        //return views
         $this->view->proyecto = $proyecto;
         $this->view->cabecera = $cabecera;
+        $this->view->estados = $estados;
         $this->view->render('docente/detallesProyecto');
+      }
+
+      function actualizar_proyecto() {
+        //recepcion POST
+        $nombre = $_POST['NombreProyecto'];
+        $fecha_fin = $_POST['fecha_fin'];
+        $idEstado = $_POST['idEstado'];
+        $id_proyecto = $_POST['id_proyecto'];
+        //logic
+        
+        if($this->model->update_Proyecto(['NombreProyecto' => $nombre, 'id_proyecto' => $id_proyecto, 'fecha_fin' => $fecha_fin, 'idEstado' => $idEstado ])){
+          $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong> proyecto actualizado correctamente.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        }else{
+          $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> El proyecto no se pudo actualizar.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        } 
+        
+        
+        //return view
+        $this->view->confirmacion = $confirmacion;
+        $this->detalleProyecto($id_proyecto);
       }
 
        
@@ -456,14 +512,75 @@ class Docente extends Controller{
         $this->crearProyecto();
       }
 
-      function actualizarProyecto() {
-        $nombre = $_POST['nombre'];
-        $fecha = $_POST['fecha'];
-        $idEstado = $_POST['idEstado'];
+      function eliminarProyecto($param = null) {
+        $id_proyecto = $param[0];
+
+        //libs
+        require_once 'libs/database.php';
+
+        //objetc
+        $this->db = new Database();
+
+        //variables auxiliares
+        $num_historias = 0;
+
+        /*En la siguiente consulta se pretende
+        saber si hay historias de usuario ya en los proyectos
+        para tomar la decisión si se eliminan o no*/
+
+        $query_historia_proyecto = $this->db->connect()->query("SELECT COUNT(*) AS 'Historia Usuario'
+        FROM historiausuario as h
+        JOIN modulo as m ON h.IdModulo = m.Id
+        JOIN fase as f ON f.Id = m.IdFase
+        JOIN metodologia as me ON me.Id = f.IdMetodologia
+        JOIN proyecto as p ON p.IdMetodologia = me.Id
+        WHERE p.Id = '$id_proyecto'");
+
+        while ($row = $query_historia_proyecto->fetch()) {
+            $num_historias = $row[0];
+        }
+
+        if ($num_historias > 0) {
+          if ($this->model->inactive_proyecto(['id_proyecto' => $id_proyecto])) {
+            $confirmacion = '<div class="alert alert-dark" role="alert" > <strong><i class="fas fa-eye-slash"></i> ¡El proyecto no se puede eliminar!</strong>
+            Se ha colocado en estado inactivo <a href="'.constant("URL").'/docente/detalleGeneralProyecto/'.$id_proyecto.'">Revisar</a>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>';  
+          } else {
+            $confirmacion = '<div class="alert alert-danger" role="alert" > <strong><i class="fas fa-eye-slash"></i> ¡Eror interno, el proyecto no se pudo deshabilitar!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>';
+          }
+          
+        } else {
+
+          if($this->model->deleteProyecto(['id_proyecto' => $id_proyecto])){
+            $confirmacion = '<div class="alert alert-info" role="alert" ><strong>¡Éxito!</strong> proyecto eliminado correctamente.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> ';
+          }else{
+            $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> el Proyecto no pudo eliminarse.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div> ';
+          }
+        }
+        $this->view->confirmacion = $confirmacion;
+        $this->Proyecto();
       }
+
+    
        ///////////////////////////
        //FIN MÉTODOS PARA PROYECTOS
        //////////////////////////
+
 
 
       ///////////////////////////
