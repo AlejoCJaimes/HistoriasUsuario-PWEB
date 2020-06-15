@@ -8,6 +8,26 @@ class EstudianteModel extends Model {
         parent::__construct();
     }
 
+    public function VerificarPerfil($correo) {
+      
+      try {
+        $i = 0;
+        
+        //verificar si el usuario tiene un grupo asignado"
+        $query_1 = $this->db->connect()->query("SELECT g.Id from grupo as g
+        join grupoestudiante as ge ON ge.IdGrupo = g.Id
+        JOIN estudiante AS e ON e.Id = ge.IdEstudiante
+        JOIN usuario as u ON u.Id = e.IdUsuario
+        WHERE u.correo_usuario = '$correo' ");
+
+        while($row_1 = $query_1->fetch()){
+           $i++;
+        }
+        return $i;
+      } catch (PDOException $e) {
+          return $e;
+      }
+    }
     public function loadData($correo) {
 
       try {

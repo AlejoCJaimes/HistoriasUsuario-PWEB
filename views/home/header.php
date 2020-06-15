@@ -86,9 +86,10 @@
         <h1>BIENVENIDO AL SISTEMA DE HISTORIAS DE USUARIO</h1>
         <h2> Aquí podrás <span class="rotating">llevar el control de tus estudiantes, tener un órden, gestionar tus historias</span></h2>
         <div class="actions">
-          <a href="<?php echo constant('URL');?>account" class="btn-get-started">Inicia Sesión</a>
+         
           <a href="<?php echo constant('URL');?>usuario/register_docente" class="btn-services">Regístrate -> Docente</a>
           <a href="<?php echo constant('URL');?>usuario/register_student" class="btn-services">Regístrate -> Estudiante</a>
+          <a href="<?php echo constant('URL');?>account" class="btn-get-started">Inicia Sesión</a>
         </div>
       </div>
     </div>
