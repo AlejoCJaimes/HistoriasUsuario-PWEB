@@ -527,7 +527,7 @@ class AdministradorModel extends Model {
 
         $clave = $datos['clave_usuario'];
 
-        try {
+      try {
             $query = $this->db->connect()->prepare("UPDATE `usuario` SET clave_usuario=:clave_usuario WHERE correo_usuario = '$correo';");
             $query->execute(['clave_usuario' => $clave]);
             return true;
@@ -536,7 +536,7 @@ class AdministradorModel extends Model {
         }
 
 
-    }
+      }
 
     //////////////////////////
     ///START STATEMENT FOR PROGRAMA

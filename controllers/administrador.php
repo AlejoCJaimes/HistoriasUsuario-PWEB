@@ -455,30 +455,42 @@ private $correo;
 
         </div> ';
       } else {
-        $clave = encriptar($clave);
-        if ($this->model->updateClave(['clave_usuario' => $clave, 'correo_usuario' => $id_correo ])) {
-          $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Correcto!</strong> Su contraseña ha sido actualizada correctamente.
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          </button>
-
-          </div> ';
-        } else {
-          $confirmacion = '<div class="alert alert-danger" role="alert" ><strong>¡Lo sentimos!</strong> Ha ocurrido un error inesperado.
+        if ($clave!=""){
+          $clave = encriptar($clave);
+          if ($this->model->updateClave(['clave_usuario' => $clave, 'correo_usuario' => $id_correo ])) {
+            $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Correcto!</strong> Su contraseña ha sido actualizada correctamente.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+  
+            </div> ';
+          } else {
+            $confirmacion = '<div class="alert alert-danger" role="alert" ><strong>¡Lo sentimos!</strong> Ha ocurrido un error inesperado.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+  
+            </div> ';
+          }
+        }
+        else {
+          $confirmacion = '<div class="alert alert-info" role="alert" ><strong>¡Hey!</strong> No se han hecho cambios, escribe una nueva contraseña.
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
           </button>
 
           </div> ';
         }
+        
+      
 
       }
 
 
-      $this->view->confirmacion = $confirmacion;
+     $this->view->confirmacion = $confirmacion;
       $this->clave();
 
-    }
+     }
 
     function EditarAdmin() {
 
