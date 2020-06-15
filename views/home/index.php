@@ -2,7 +2,7 @@
   <header>
   <?php require 'views/home/header.php'?>
    <!-- Icono -->
-   <link rel="icon" href="<?php echo constant('URL');?>resources/img/logo.png">
+  
 </header>
 
 <!--==========================

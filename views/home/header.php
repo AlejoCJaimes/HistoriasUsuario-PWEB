@@ -67,7 +67,7 @@
 
   <!-- Main Stylesheet File -->
   <link href="<?php echo constant('URL');?>EstiloHome/css/style.css" rel="stylesheet">
-   
+  <link rel="icon" href="<?php echo constant('URL');?>resources/img/logo.png">
 </head>
 
 <body>
