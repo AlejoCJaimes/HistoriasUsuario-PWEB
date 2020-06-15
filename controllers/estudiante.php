@@ -36,12 +36,16 @@ class Estudiante extends Controller{
       $this->view->metodologias = [];
       $this->view->fuentes = [];
       $this->view->historiasUsuario = [];
+      $this->view->validacion = 0;
         //echo "<p>Nuevo controlador Main</p>";
     }
 
     function render() {
       $cabecera = "Inicio";
+      $correo = $this->session->getCurrentUser();
+      $validacion = $this->model->VerificarPerfil($correo);
       $this->view->cabecera = $cabecera;
+      $this->view->validacion = $validacion;
       $this->view->render('estudiante/index');
 
     }
