@@ -306,6 +306,10 @@ class Estudiante extends Controller{
       
     }
     //FIN DE HISTORIA DE USUARIO
+        
+        ///////////////////////////
+        // INICIO MÉTODOS PARA ACTVIDAD
+      //////////////////////////
 
     //VISTAS DE INDEX INICIO DE ACTIVIDAD
     function crearActividad() {
@@ -360,6 +364,82 @@ class Estudiante extends Controller{
       $this->view->cabecera = $cabecera;
       $this->view->render('estudiante/historiasusuario/actividad/index');
     }
+
+
+    function detalleGeneralActividad() {
+      
+      //cabecera
+      $cabecera = "Actividades Creadas";
+
+      //llamar las actividades
+      $id_usuario = $this->session->getCurrentUser();
+      $actividad = $this->model->getActividades($id_usuario);
+      //var_dump($id_usuario);
+      //retornar vistas
+      $this->view->actividad = $actividad;
+      $this->view->cabecera = $cabecera;
+      $this->view->render('estudiante/historiasusuario/actividad/detalleActividad');
+    }
+
+    function editActividad() {
+
+      //Recepción de variables
+      $id_actividad = $_POST['Id'];
+      $nombre = $_POST['Nombre'];
+      $descripcion = $_POST['Descripcion'];
+      
+      $confirmacion = "";
+
+
+      if ($this->model->updateActividad(['Id' => $id_actividad, 'Nombre' => $nombre, 'Descripcion' => $descripcion])) {
+        // code...
+        $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong> Actividad actualizado con éxito.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      } else {
+        $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> La actividad no se pudo actualizar.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      }
+
+      $this->view->confirmacion = $confirmacion;
+      $this->detalleGeneralActividad();
+    }
+
+    function eliminarActividad() {
+
+      //Recepción de variables
+      $id_actividad = $_POST['Id'];
+      
+      $confirmacion = "";
+
+
+      if ($this->model->deleteActividad(['Id' => $id_actividad])) {
+        // code...
+        $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong> Actividad eliminada con éxito.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      } else {
+        $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> La actividad no se pudo eliminar.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      }
+
+      $this->view->confirmacion = $confirmacion;
+      $this->detalleGeneralActividad();
+    }
+
+     ///////////////////////////
+      // FIN MÉTODOS PARA ACTVIDAD
+      //////////////////////////
 
 
     // Inicio sección de recurso

@@ -183,8 +183,9 @@ class EstudianteModel extends Model {
     }
 
     // Fin CRUD Historia de Usuario
-
-    // Inicio CRUD Actividad
+      ///////////////////////
+     /// Inicio CRUD Actividad
+    ////////////////////////
     function insertarActividad($datos) {
       $nombre_actividad = $datos['Nombre'];
       $id_user = $datos['id_user'];
@@ -213,6 +214,92 @@ class EstudianteModel extends Model {
       }
     }
 
+    function getActividades($id_usuario) {
+      
+      //libs actividad
+      require_once 'models/Actividad.php';
+
+      $items = [];
+      $id_grupo = 0;
+      try {
+
+        //obtener idGrupo
+        $query_id_grupo = $this->db->connect()->query("SELECT g.Id as 'Id' from grupo as g
+        join grupoestudiante as ge ON ge.IdGrupo = g.Id
+        JOIN estudiante AS e ON e.Id = ge.IdEstudiante
+        JOIN usuario as u ON u.Id = e.IdUsuario
+        WHERE u.correo_usuario = '$id_usuario'");
+
+        while ($row = $query_id_grupo->fetch()) {
+          $id_grupo = $row['Id'];
+        }
+        //obtener actividades por grupo
+        $query_actividad = $this->db->connect()->query("SELECT a.Id as 'Id', a.Descripcion as 'Descripcion', DATE_FORMAT(a.FechaCreacion,' %d-%M-%Y %h:%i %p') as 'FechaCreacion',  a.IdHistoriaUsuario as 'IdHistoriaUsuario', a.Nombre as 'Nombre', r.IdActividad as 'IdActividad', r.IdEstudiante as 'IdEstudiante', CONCAT(e.NombreEstudiante,' ',e.ApellidoEstudiante) as 'nombre_estudiante', h.Nombre as 'Historia'
+        FROM actividad as a
+        JOIN responsable as r ON a.Id = r.IdActividad
+        JOIN estudiante as e ON e.Id = r.IdEstudiante
+        JOIN historiausuario as h ON h.Id = a.IdHistoriaUsuario
+        JOIN modulo as mo ON mo.Id = h.IdModulo
+        JOIN fase as f ON f.Id = mo.IdFase
+        JOIN metodologia as me ON me.Id = f.IdMetodologia
+        JOIN proyecto as p ON p.IdMetodologia = me.Id
+        JOIN grupoproyecto as gp ON gp.IdProyecto = p.Id
+        WHERE gp.IdGrupo = '$id_grupo' ");
+
+        while ($row_actividad = $query_actividad->fetch()) {
+          $item = new Actividad();
+          $item->Id = $row_actividad['Id'];
+          $item->Descripcion = $row_actividad['Descripcion'];
+          $item->FechaCreacion = $row_actividad['FechaCreacion'];
+          $item->IdHistoriaUsuario = $row_actividad['IdHistoriaUsuario'];
+          $item->Nombre =  $row_actividad['Nombre'];
+          $item->IdActividad = $row_actividad['IdActividad'];
+          $item->IdEstudiante = $row_actividad['IdEstudiante'];
+          $item->nombre_estudiante = $row_actividad['nombre_estudiante'];
+          $item->HistoriaUsuario = $row_actividad['Historia'];
+          array_push($items,$item);
+        }
+        return $items;
+        
+      } catch (PDOException $e) {
+        return $e;
+      }
+    }
+
+    function updateActividad($datos) {
+      $id_actividad = $datos['Id'];
+
+      try{
+       
+        //Consulta para editar una Actividad
+        $query_actividad = $this->db->connect()->prepare("UPDATE `actividad` SET `Descripcion`=:Descripcion,`Nombre`=:Nombre WHERE Id = '$id_actividad';");
+        $query_actividad->execute(['Descripcion' => $datos['Descripcion'], 'Nombre' => $datos['Nombre']]);
+        return true;
+      }catch(PDOException $e){
+        return false;
+      }
+      
+    }
+
+    function deleteActividad($datos) {
+      $id_actividad = $datos['Id'];
+
+      try{
+       
+        //Consulta para eliminar una Actividad
+        $query_actividad = $this->db->connect()->prepare("DELETE  FROM `actividad` WHERE `actividad`.`Id` =:id_actividad");
+        $query_actividad->execute(['id_actividad' => $id_actividad]);
+        return true;
+      }catch(PDOException $e){
+        return false;
+      }
+      
+    }
+
+    
+     //////////////////////
+     /// Fin CRUD Actividad
+    //////////////////////
     // Inicio CRUD Recurso
 
     function insertarRecurso($datos) {

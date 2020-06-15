@@ -11,12 +11,12 @@
 
     <div class="form-group">
       <label>Nombre</label>
-      <input type="text" name="Nombre" class="form-control" REQUIRED>
+      <input type="text" name="Nombre" class="form-control" style="width: 500px" REQUIRED>
     </div>
 
     <div class="form-group">
       <label>Descripción</label>
-      <textarea class="form-control" name="Descripcion" id="exampleFormControlTextarea1" rows="4" REQUIRED></textarea>
+      <textarea class="form-control" name="Descripcion" id="exampleFormControlTextarea1" rows="4" style="width: 500px" REQUIRED></textarea>
     </div>
 
     <div class="form-group">
@@ -32,10 +32,18 @@
             }
         ?>
       </select>
+      
     </div>
-
+  <br>
+  <br>
     <input type="submit" class="btn btn-primary" value="Guardar">
   </div>
+<br>
+<br>
+  <div class="container">
+            <a href="<?php echo constant('URL');?>estudiante/detalleGeneralActividad" class="button" type="button"> <i
+                    class="fas fa-eye"> </i> Consultar Actividades</a>
+        </div>
 </form>
 </div>
 <!-- FIN  DEL CONTENIDO PRINCIPAL -->
