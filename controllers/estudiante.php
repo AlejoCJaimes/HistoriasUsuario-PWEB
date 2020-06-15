@@ -57,6 +57,9 @@ class Estudiante extends Controller{
       $id_correo = $this->session->getCurrentUser();
       $datos_perfil = $this->model->loadPerfil($id_correo);
       $this->view->datos_perfil = $datos_perfil;
+      $correo = $this->session->getCurrentUser();
+      $validacion = $this->model->VerificarPerfil($correo);
+      $this->view->validacion = $validacion;
       $this->view->render('estudiante/perfil');
     }
 
@@ -95,6 +98,9 @@ class Estudiante extends Controller{
       $cabecera = "";
       $cabecera = "Ajustes";
       $this->view->cabecera = $cabecera;
+      $correo = $this->session->getCurrentUser();
+      $validacion = $this->model->VerificarPerfil($correo);
+      $this->view->validacion = $validacion;
      $this->view->render('estudiante/changeClave');
 
     }
@@ -187,7 +193,9 @@ class Estudiante extends Controller{
         $this->view->cabecera = $cabecera;
         $this->view->metodologias = $metodologias;
         
-      
+        $correo = $this->session->getCurrentUser();
+        $validacion = $this->model->VerificarPerfil($correo);
+        $this->view->validacion = $validacion;
         $this->view->render('estudiante/readMetodologia');
     }
 
@@ -218,7 +226,9 @@ class Estudiante extends Controller{
         $arr = $query->fetchAll();
 
       $this->view->modulo = $arr;
-
+      $correo = $this->session->getCurrentUser();
+      $validacion = $this->model->VerificarPerfil($correo);
+      $this->view->validacion = $validacion;
       $this->view->render('estudiante/historiasusuario/crearhistoria');
 
     }
@@ -298,6 +308,9 @@ class Estudiante extends Controller{
 
 
       $this->view->cabecera = $cabecera;
+      $correo = $this->session->getCurrentUser();
+      $validacion = $this->model->VerificarPerfil($correo);
+      $this->view->validacion = $validacion;
       $this->view->render('estudiante/historiasusuario/index');
 
     }
@@ -315,7 +328,9 @@ class Estudiante extends Controller{
 
         $this->view->historiausuario = $arr;
       }
-
+      $correo = $this->session->getCurrentUser();
+      $validacion = $this->model->VerificarPerfil($correo);
+      $this->view->validacion = $validacion;
       $this->view->render('estudiante/historiasusuario/readHistoria');
       
     }
@@ -376,6 +391,9 @@ class Estudiante extends Controller{
       
       $this->view->historiasUsuario = $arr;
       $this->view->cabecera = $cabecera;
+      $correo = $this->session->getCurrentUser();
+      $validacion = $this->model->VerificarPerfil($correo);
+      $this->view->validacion = $validacion;
       $this->view->render('estudiante/historiasusuario/actividad/index');
     }
 
@@ -392,6 +410,9 @@ class Estudiante extends Controller{
       //retornar vistas
       $this->view->actividad = $actividad;
       $this->view->cabecera = $cabecera;
+      $correo = $this->session->getCurrentUser();
+      $validacion = $this->model->VerificarPerfil($correo);
+      $this->view->validacion = $validacion;
       $this->view->render('estudiante/historiasusuario/actividad/detalleActividad');
     }
 
@@ -504,7 +525,9 @@ class Estudiante extends Controller{
         $total = $row['Total'];
       }
       $this->view->totalRecursos = $total;
-
+      $correo = $this->session->getCurrentUser();
+      $validacion = $this->model->VerificarPerfil($correo);
+      $this->view->validacion = $validacion;
       $this->view->render('estudiante/historiasusuario/recurso/detalleRecurso');
     }
 
@@ -535,6 +558,9 @@ class Estudiante extends Controller{
 
       $this->view->actividad = $arr;
       $this->view->cabecera = $cabecera;
+      $correo = $this->session->getCurrentUser();
+      $validacion = $this->model->VerificarPerfil($correo);
+      $this->view->validacion = $validacion;
       $this->view->render('estudiante/historiasusuario/recurso/index');
     }
 
@@ -579,6 +605,9 @@ class Estudiante extends Controller{
       }      
       
       $this->view->cabecera = $cabecera;
+      $correo = $this->session->getCurrentUser();
+      $validacion = $this->model->VerificarPerfil($correo);
+      $this->view->validacion = $validacion;
       $this->view->render('estudiante/historiasusuario/recurso/editarRecurso');
 
     }
@@ -685,6 +714,9 @@ class Estudiante extends Controller{
       $cabecera = "";
       $cabecera = "Modulo";
       $this->view->cabecera = $cabecera;
+      $correo = $this->session->getCurrentUser();
+      $validacion = $this->model->VerificarPerfil($correo);
+      $this->view->validacion = $validacion;
       $this->view->render('estudiante/historiasusuario/modulo/crearModulo');
     }
 
@@ -747,6 +779,9 @@ class Estudiante extends Controller{
       $cabecera = "Fase";
       $this->view->metodologia = $metodologia;
       $this->view->cabecera = $cabecera;
+      $correo = $this->session->getCurrentUser();
+      $validacion = $this->model->VerificarPerfil($correo);
+      $this->view->validacion = $validacion;
       $this->view->render('estudiante/historiasusuario/fase/crearFase');
     }
 
@@ -807,6 +842,9 @@ class Estudiante extends Controller{
      
       $this->view->metodologia = $metodologia;
       $this->view->confirmacion = $confirmacion;
+      $correo = $this->session->getCurrentUser();
+      $validacion = $this->model->VerificarPerfil($correo);
+      $this->view->validacion = $validacion;
       $this->view->render('estudiante/historiasusuario/fase/crearFase');
     }
      ////////COMIENZO FASE//////////
