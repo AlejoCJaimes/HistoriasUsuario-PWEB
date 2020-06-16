@@ -67,9 +67,17 @@
      <div class="form-group ">
             <input type="submit" id="envio" value="Crear" class="btn btn-primary ">
         </div>
+
+        <br>
+       
   </form>
+ 
   
 </div>
+<div class="container">
+            <a href="<?php echo constant('URL');?>estudiante/detalleGeneralFase" class="button" type="button"> <i
+            class="fas fa-eye"> </i> Consultar Fases</a>
+        </div>
 <!-- FIN  DEL CONTENIDO PRINCIPAL -->
 
 <?php require_once "views/estudiante/footer.php"?>

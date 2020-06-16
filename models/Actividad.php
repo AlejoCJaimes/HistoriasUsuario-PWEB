@@ -20,6 +20,7 @@ public $nombre_estudiante;
 //datos de la historia de usuario;
 public $HistoriaUsuario;
 
+
 }
 
 

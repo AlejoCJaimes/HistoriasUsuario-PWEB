@@ -175,18 +175,37 @@ class EstudianteModel extends Model {
       }
     }
     function updateFase($datos) {
+        $id_fase = $datos['IdFase'];
+        $id_objetivo = $datos['IdObjetivo'];
+      try{
+       
+        //Consulta para editar una Fase
+        $datetime = new DateTime(null, new DateTimeZone('America/Bogota'));
 
+        $query_actividad = $this->db->connect()->prepare("UPDATE `fase` SET `Descripcion`=:Descripcion,`Nombre`=:Nombre, `IdEstado`=:IdEstado, `FechaActualizacion`=:FechaActualizacion  WHERE Id = '$id_fase';");
+        $query_actividad->execute(['Descripcion' => $datos['descripcion'], 'Nombre' => $datos['nombre'], 'IdEstado' => $datos['id_estado'] , 'FechaActualizacion' => $datetime->format('Y-m-d H:i:s (e)')]);
+        
+        //Consulta para editar un Objetivo
+        $query_objetivo = $this->db->connect()->prepare("UPDATE `objetivo` SET `Descripcion`=:Descripcion WHERE Id = '$id_objetivo';");
+        $query_objetivo->execute(['Descripcion' => $datos['objetivo']]);
+
+        
+        return true;
+      }catch(PDOException $e){
+        return false;
+      }
     }
-    function getbyIdFase($id) {
-
-    }
-
-    function loadFases() {
-
-    }
-
-    function deleteFase() {
-
+    
+    function deleteFase($datos) {
+      $id_fase = $datos['Id'];
+        try {
+          $delete_fase = $this->db->connect()->prepare("DELETE  FROM `fase` WHERE `fase`.`Id` =:id_fase");
+          $delete_fase->execute(['id_fase' => $id_fase]);
+          return true;
+        } catch (PDOException $e) {
+          return $e;
+        }
+      
     }
      //FIN CRUD FASE
 
@@ -339,17 +358,6 @@ class EstudianteModel extends Model {
         //Consulta para editar un Recurso
         $query_1 = $this->db->connect()->prepare("UPDATE `recurso` SET `Descripcion`=:Descripcion,`Tipo`=:Tipo,`valor`=:Valor,`idActividad`=:IdActividad WHERE Id = '$id';");
         $query_1->execute(['Descripcion' => $datos['Descripcion'], 'Tipo' => $datos['Tipo'], 'Valor' => $datos['Valor'], 'IdActividad' => $datos['idActividad']]);
-        return true;
-      }catch(PDOException $e){
-        return false;
-      }
-    }
-
-    function deleteRecurso($id) {
-      try{
-        //Consulta para eliminar un Recurso
-        $idRecurso = $id[0];
-        $query_1 = $this->db->connect()->query("DELETE FROM `recurso` WHERE Id = '$idRecurso';");
         return true;
       }catch(PDOException $e){
         return false;

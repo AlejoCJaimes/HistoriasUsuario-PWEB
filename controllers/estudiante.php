@@ -749,6 +749,10 @@ class Estudiante extends Controller{
     ////////FIN MODULO//////////
 
     ////////COMIENZO FASE//////////
+     
+    ///////////////////////////
+    // INICIO MÉTODOS PARA FASE
+    //////////////////////////
     function crearFase() {
 
       $metodologia = "";
@@ -846,9 +850,136 @@ class Estudiante extends Controller{
       $validacion = $this->model->VerificarPerfil($correo);
       $this->view->validacion = $validacion;
       $this->view->render('estudiante/historiasusuario/fase/crearFase');
-    }
-     ////////COMIENZO FASE//////////
+    }     
 
+
+    function detalleGeneralFase() {
+      $cabecera = "Detalles";
+      $fases = [];
+      $estados = [];
+      $id_estado_aux;
+      $correo_user = $this->session->getCurrentUser();
+      require_once 'libs/database.php';
+      require_once 'models/Fase.php';
+      $this->db = new Database();
+
+      //obtner grupo
+      $id_grupo = "";
+      $query_id_estudiante = $this->db->connect()->query("SELECT g.IdGrupo as 'IdGrupo' FROM grupoestudiante AS g  
+      JOIN estudiante as e ON e.Id = g.IdEstudiante
+      JOIN usuario as u ON e.IdUsuario = u.Id 
+      WHERE u.correo_usuario= '$correo_user'");
+      while($row = $query_id_estudiante->fetch()) {
+       $id_grupo = $row['IdGrupo'];
+      }
+
+
+      $id_estudiante = "";
+      $query_fase_estudiante = $this->db->connect()->query("SELECT f.*,DATE_FORMAT(f.FechaCreacion,' %d-%M-%Y %h:%i %p') as '_FechaCreacion',
+      DATE_FORMAT(f.FechaActualizacion,' %d-%M-%Y %h:%i %p') as '_FechaActualizacion', o.Descripcion as 'Objetivo', o.Id as 'IdObjetivo',
+      es.Nombre as 'Estado'
+      FROM
+      fase as f 
+      JOIN objetivo as o ON o.IdFase = f.Id
+      JOIN estado as es ON es.Id = f.IdEstado
+      JOIN proyecto as p ON p.IdMetodologia = f.IdMetodologia
+      join grupoproyecto as gproyecto ON gproyecto.IdProyecto = p.Id
+      JOIN grupo as g ON g.Id = gproyecto.IdGrupo
+      JOIN grupoestudiante AS gestudiante ON gestudiante.IdGrupo = g.Id
+      JOIN estudiante AS e ON e.Id = gestudiante.IdEstudiante
+      JOIN usuario as u ON u.Id = e.IdUsuario
+      WHERE u.correo_usuario =  '$correo_user' AND gproyecto.IdGrupo = '$id_grupo'");
+
+      while($_row = $query_fase_estudiante->fetch()) {
+        $item = new Fase(); 
+        $item->Id = $_row['Id'];
+        $item->Nombre = $_row['Nombre'];
+        $item->Descripcion = $_row['Descripcion'];
+        $item->FechaCreacion = $_row['_FechaCreacion'];
+        $item->FechaActualizacion = $_row['_FechaActualizacion'];
+        $item->UrlFase = $_row['UrlFase'];
+        $item->IdEstado = $_row['IdEstado'];
+        $id_estado_aux = $_row['IdEstado'];
+        $item->IdMetodologia = $_row['IdMetodologia'];
+        $item->nombre_objetivo = $_row['Objetivo'];
+        $item->id_objetivo = $_row['IdObjetivo'];
+        $item->nombre_estado = $_row['Estado'];
+        array_push($fases,$item);  
+      }
+      
+      $query_estados = $this->db->connect()->query("SELECT `Id`, `Nombre` FROM `estado` WHERE Id IN (1,4,5)");
+      $estados = $query_estados->fetchAll();
+      $this->view->estados = $estados;
+      $this->view->fases = $fases;
+      $correo = $this->session->getCurrentUser();
+      $validacion = $this->model->VerificarPerfil($correo);
+      $this->view->validacion = $validacion;
+      $this->view->cabecera = $cabecera;
+      $this->view->render('estudiante/historiasusuario/fase/detalleFase');
+    
+    }
+
+    function editFase() {
+
+      //Recepción de variables
+      $id_fase = $_POST['IdFase'];
+      $id_objetivo = $_POST['IdObjetivo'];
+      $id_estado = $_POST['id_estado'];
+      $nombre = $_POST['nombre'];
+      $descripcion = $_POST['descripcion'];
+      $objetivo = $_POST['objetivo'];
+      
+      $confirmacion = "";
+
+
+      if ($this->model->updateFase(['IdFase' => $id_fase, 'nombre' => $nombre, 'descripcion' => $descripcion, 'objetivo' => $objetivo, 'id_estado' => $id_estado, 'IdObjetivo' => $id_objetivo])) {
+        // code...
+        $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong> Fase actualizado con éxito.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      } else {
+        $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> La fase no se pudo actualizar.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      }
+
+      $this->view->confirmacion = $confirmacion;
+      $this->detalleGeneralFase();
+    }
+
+    function eliminarFase() {
+
+      //Recepción de variables
+      $id_fase = $_POST['Id'];
+      
+      $confirmacion = "";
+
+
+      if ($this->model->deleteFase(['Id' => $id_fase])) {
+        // code...
+        $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong> Fase eliminada con éxito.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      } else {
+        $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> La fase no se pudo eliminar.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      }
+
+      $this->view->confirmacion = $confirmacion;
+      $this->detalleGeneralFase();
+    }
+    ///////////////////////////
+    // FIN MÉTODOS PARA FASES
+    //////////////////////////
 
      // Métodos de insersión para Historia de usuario, actividad y recursos
 
