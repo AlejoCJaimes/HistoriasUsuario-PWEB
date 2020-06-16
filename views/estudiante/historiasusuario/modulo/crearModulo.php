@@ -47,6 +47,13 @@
         <div class="form-group ">
             <input type="submit" id="envio" value="Crear" class="btn btn-primary ">
         </div>
+
+        <br>
+<br>
+
+            <a href="<?php echo constant('URL');?>estudiante/detalleGeneralModulo" class="button" type="button"> <i
+                    class="fas fa-eye"> </i> Consultar Módulos</a>
+    
     </form>
 
 </div>

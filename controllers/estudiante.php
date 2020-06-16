@@ -666,7 +666,9 @@ class Estudiante extends Controller{
 
     // Fin sesión Recurso
 
-     ////////COMIENZO MODULO//////////
+    ///////////////////////////
+    // INICIO MÉTODOS PARA MÓDULOS
+    //////////////////////////
 
     function crearModulo() {
       $fases = [];
@@ -746,7 +748,102 @@ class Estudiante extends Controller{
       $this->view->confirmacion = $confirmacion;
       $this->crearModulo();
     }
-    ////////FIN MODULO//////////
+
+    function detalleGeneralModulo() {
+      $correo = $this->session->getCurrentUser();
+      $cabecera = "";
+      $cabecera = "Detalles Módulo";
+
+      require_once 'libs/database.php';
+      $this->db = new Database();
+
+      ////CARGAR FASES///////////
+      //obtner grupo
+     
+      //CARGAR MODULOS///
+
+      $modulos = [];
+
+      $query_modulos = $this->db->connect()->query("SELECT m.Id ,DATE_FORMAT(m.FechaCreacion,' %d-%M-%Y %h:%i %p') as '_FechaCreacion',
+      DATE_FORMAT(m.FechaActualizacion,' %d-%M-%Y %h:%i %p') as '_FechaActualizacion',
+      m.Nombre, m.IdFase, m.Descripcion,f.Nombre, f.Descripcion
+      FROM modulo as m 
+      JOIN fase as f ON m.IdFase = f.Id
+      JOIN metodologia as me ON me.Id = f.IdMetodologia
+      JOIN proyecto as p ON p.IdMetodologia = me.Id
+      JOIN grupoproyecto as gpr ON gpr.IdProyecto = p.Id
+      JOIN grupoestudiante as gp on gp.IdGrupo = gpr.IdGrupo
+      JOIN estudiante AS e ON e.Id = gp.IdEstudiante
+      JOIN usuario as u ON u.Id = e.IdUsuario
+      WHERE u.correo_usuario = '$correo'");
+
+      $modulos = $query_modulos->fetchAll();
+
+     
+      $validacion = $this->model->VerificarPerfil($correo);
+      $this->view->validacion = $validacion;
+      $this->view->cabecera = $cabecera;
+      $this->view->modulos = $modulos;
+      $this->view->render('estudiante/historiasusuario/modulo/detalleModulo');
+    }
+
+
+    function editModulo() {
+
+      $id_modulo = $_POST['Id'];
+      $nombre = $_POST['nombre'];
+      $descripcion = $_POST['descripcion'];
+
+      $confirmacion = "";
+
+
+      if ($this->model->updateModulo(['Id' => $id_modulo, 'nombre' => $nombre, 'descripcion' => $descripcion])) {
+        // code...
+        $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong> Módulo actualizado con éxito.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      } else {
+        $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> El módulo no se pudo actualizar.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      }
+
+      $this->view->confirmacion = $confirmacion;
+      $this->detalleGeneralModulo();
+    }
+
+    function eliminarModulo() {
+
+      $id_modulo = $_POST['Id'];
+
+      $confirmacion = "";
+
+
+      if ($this->model->deleteModulo(['Id' => $id_modulo])) {
+        // code...
+        $confirmacion = '<div class="alert alert-success" role="alert" ><strong>¡Éxito!</strong> Módulo eliminado correctamente.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      } else {
+        $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> El módulo no se pudo eliminar.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div> ';
+      }
+
+      $this->view->confirmacion = $confirmacion;
+      $this->detalleGeneralModulo();
+    }
+    ///////////////////////////
+    // FIN MÉTODOS PARA MÓDULOS
+    //////////////////////////
 
     ////////COMIENZO FASE//////////
      

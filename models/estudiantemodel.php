@@ -386,19 +386,33 @@ class EstudianteModel extends Model {
       }
     }
     function updateModulo($datos) {
+      $id_modulo = $datos['Id'];
+      
+    try{
+     
+      //Consulta para editar una Fase
+      $datetime = new DateTime(null, new DateTimeZone('America/Bogota'));
 
+      $query_modulo = $this->db->connect()->prepare("UPDATE `modulo` SET `Descripcion`=:Descripcion,`Nombre`=:Nombre, `FechaActualizacion`=:FechaActualizacion  WHERE Id = '$id_modulo';");
+      $query_modulo->execute(['Descripcion' => $datos['descripcion'], 'Nombre' => $datos['nombre'] , 'FechaActualizacion' => $datetime->format('Y-m-d H:i:s (e)')]);
+      
+      return true;
+    }catch(PDOException $e){
+      return false;
     }
-    function getbyIdModulo($id) {
-
-    }
-
-    function loadModulo() {
-
-    }
-
-    function deleteModulo() {
-
-    }
+  }
+  
+  function deleteModulo($datos) {
+    $id_modulo = $datos['Id'];
+      try {
+        $delete_modulo = $this->db->connect()->prepare("DELETE  FROM `modulo` WHERE `modulo`.`Id` =:id_modulo");
+        $delete_modulo->execute(['id_modulo' => $id_modulo]);
+        return true;
+      } catch (PDOException $e) {
+        return $e;
+      }
+    
+  }
      //FIN CRUD FASE
 
 }
