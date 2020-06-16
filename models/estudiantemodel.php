@@ -221,6 +221,30 @@ class EstudianteModel extends Model {
       }
     }
 
+    function updateHistoriaUsuario($datos){
+      try{
+        //Consulta para editar una Historia de Usuario
+        $id = $datos['idHistoria'];
+        $query_1 = $this->db->connect()->prepare("UPDATE `historiausuario` SET `NumHistoriaUsuario`=:NumHistoriaUsuario,`Prioridad`=:Prioridad,`Nombre`=:Nombre,`Descripcion`=:Descripcion,`IdModulo`=:IdModulo,`IdEstado`=:IdEstado WHERE Id = '$id';");
+        $query_1->execute(['NumHistoriaUsuario' => $datos['NumHistoriaUsuario'], 'Prioridad' => $datos['Prioridad'], 'Nombre' => $datos['Nombre'], 'Descripcion' => $datos['Descripcion'], 'IdModulo' => $datos['IdModulo'], 'IdEstado' => $datos['IdEstado']]);
+        return true;
+      }catch(PDOException $e){
+        return false;
+      }
+    }
+
+    function deleteHistoria($id) {
+      try{
+       //Consulta para eliminar un Recurso
+        $idHistoria = $id[0];
+        $query_1 = $this->db->connect()->query("DELETE FROM `historiausuario` WHERE Id = '$idHistoria';");
+        return true;
+      }catch(PDOException $e){
+        return false;
+      }
+    }
+
+
     // Fin CRUD Historia de Usuario
       ///////////////////////
      /// Inicio CRUD Actividad

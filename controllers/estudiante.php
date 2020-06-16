@@ -29,6 +29,7 @@ class Estudiante extends Controller{
       $this->view->id_correo = "";
       $this->view->cabecera = "";
       $this->view->historiausuario = [];
+      $this->view->estado = [];
       $this->view->recursos = [];
       $this->view->totalRecursos = "";
       $this->view->actividad = [];
@@ -322,11 +323,38 @@ class Estudiante extends Controller{
         $this->db = new Database();
         $numero = $param[0];
         
+        //Consulta para la historia del estudiante
         $query_1 = $this->db->connect()->query("SELECT * FROM historiausuario hu JOIN estado e ON e.Id = hu.IdEstado JOIN modulo m ON m.Id = hu.IdModulo WHERE hu.Id = '$numero' LIMIT 1;");
         $arr = $query_1->fetchAll();
-
-
+        
         $this->view->historiausuario = $arr;
+
+        //Consulta para obtener los estados
+        $query_2 = $this->db->connect()->query("SELECT * FROM estado;");
+        $arr2 = $query_2->fetchAll();
+
+        $this->view->estado = $arr2;
+
+        //Consulta para obtener los módulos
+        $id_user = $this->session->getCurrentUser();
+        $consulta = "SELECT mo.Id, mo.Nombre 
+        FROM estudiante e 
+        JOIN usuario us ON us.id = e.idusuario
+        JOIN grupoestudiante ge ON ge.IdEstudiante = e.Id
+        JOIN grupo g ON g.id = ge.IdGrupo
+        JOIN grupoproyecto gp ON gp.IdGrupo = g.Id
+        JOIN proyecto p ON p.id = gp.IdProyecto
+        JOIN metodologia m ON m.id = p.IdMetodologia
+        JOIN fase f ON f.IdMetodologia = m.Id
+        JOIN modulo mo ON mo.IdFase = f.Id
+        WHERE us.correo_usuario = '$id_user'
+        GROUP BY mo.Id, mo.Nombre";
+
+        $query_3 = $this->db->connect()->query($consulta);
+        $arr3 = $query_3->fetchAll();
+
+        $this->view->modulo = $arr3; 
+
       }
       $correo = $this->session->getCurrentUser();
       $validacion = $this->model->VerificarPerfil($correo);
@@ -334,6 +362,65 @@ class Estudiante extends Controller{
       $this->view->render('estudiante/historiasusuario/readHistoria');
       
     }
+
+    function editarHistoriaUsuario($id){
+
+      if($id != ""){
+        $idHistoria = $id[0];
+        $NumHistoriaUsuario = $_POST['NumHistoriaUsuario'];
+        $Prioridad = $_POST['Prioridad'];
+        $IdEstado = $_POST['IdEstado'];
+        $Nombre = $_POST['Nombre'];
+        $Descripcion = $_POST['Descripcion'];
+        $IdModulo = $_POST['IdModulo'];
+
+        if ($this->model->updateHistoriaUsuario(['idHistoria' => $idHistoria,'NumHistoriaUsuario' => $NumHistoriaUsuario,'Prioridad' => $Prioridad,'IdEstado' => $IdEstado,'Nombre' => $Nombre,'Descripcion' => $Descripcion,'IdModulo' => $IdModulo])) {
+          $confirmacion = '<div class="alert alert-info" role="alert" >Historia de usuario actualizada correctamente.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        } else {
+          $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> la Historia de Usuario no pudo ser actualizada.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+
+        }
+
+        $this->view->confirmacion = $confirmacion;
+
+      }
+      
+      $this->detalleHistoria();
+
+    }
+
+    function eliminarHistoriaUsuario($id){
+      if($id != ""){
+        if ($this->model->deleteHistoria($id)) {
+          $confirmacion = '<div class="alert alert-info" role="alert" >Historia de usuario eliminada correctamente.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+        } else {
+          $confirmacion = '<div class="alert alert-danger" role="alert" > <strong> ¡Lo sentimos! </strong> la Historia de Usuario no pudo ser eliminada.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          </div> ';
+  
+        }
+  
+        $this->view->confirmacion = $confirmacion;
+        $this->detalleHistoria();
+
+      }
+
+    }
+
     //FIN DE HISTORIA DE USUARIO
         
         ///////////////////////////
