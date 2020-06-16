@@ -10,8 +10,12 @@
 <br>
 <br>
 <div class="container">
+<h3><i class="fas fa-coins"></i>&nbsp; Total Recursos</h3>
+    <hr>
+    <br>
+    <br>
     <table class="table">
-        <thead class="thead-dark">
+        <thead class="thead bg bg-success text-white">
             <tr>
                 <th scope="col">Tipo</th>
                 <th scope="col">Valor</th>
@@ -30,10 +34,10 @@
                 <!-- Abrir vista para editar con Modal -->
                 <td>
                     <a href="<?php echo constant('URL') . 'estudiante/editarRecursoView/'.$row['Id']?>" class="settings"
-                        title="Editar" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                    style="color: #EBAB10;"  title="Editar" data-toggle="tooltip"> <i class="fas fa-edit"></i></a>
                     <!-- Abrir Modal para eliminar -->
                     <a href="#" style="color: #B20710;" class="delete" title="Eliminar" data-toggle="modal"
-                        data-target="#_<?php echo $op?>"><i class="material-icons">&#xE5C9;</i></a>
+                    style="color: #B20710;" data-target="#_<?php echo $op?>"><i class="fas fa-trash"></i></a>
                     <!-- Inicio modal -->
                     <div class="modal fade" id="_<?php echo $op?>" tabindex="-1" role="dialog"
                         aria-labelledby="eliminarModal" aria-hidden="true">
@@ -74,7 +78,7 @@
                 }
             ?>
         </tbody>
-        <tr class="table-active">
+        <tr class="table text-white" style="background: #18AC77">
             <th scope="col">Total: </th>
             <th scope="col"><?php echo $this->totalRecursos?></th>
         </tr>
