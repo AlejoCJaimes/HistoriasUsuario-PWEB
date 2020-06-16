@@ -30,7 +30,7 @@
             ?>
             <tr>
                 <td><?php echo $row['Tipo']?></td>
-                <td><?php echo $row['valor']?></td>
+                <td>$ <?php echo $row['valor']?></td>
                 <!-- Abrir vista para editar con Modal -->
                 <td>
                     <a href="<?php echo constant('URL') . 'estudiante/editarRecursoView/'.$row['Id']?>" class="settings"
@@ -80,7 +80,7 @@
         </tbody>
         <tr class="table text-white" style="background: #18AC77">
             <th scope="col">Total: </th>
-            <th scope="col"><?php echo $this->totalRecursos?></th>
+            <th scope="col">$ <?php echo $this->totalRecursos?></th>
         </tr>
     </table>
 </div>
