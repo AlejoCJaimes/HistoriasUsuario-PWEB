@@ -38,11 +38,37 @@ class Estudiante extends Controller{
       $this->view->fuentes = [];
       $this->view->historiasUsuario = [];
       $this->view->validacion = 0;
+
+      //count index
+      $this->view->num_historias = 0;
+      $this->view->num_fase = 0;
+      $this->view->num_modulo = 0;
+      $this->view->num_actividad = 0;
+      $this->view->num_recurso = 0;
+      
         //echo "<p>Nuevo controlador Main</p>";
     }
 
     function render() {
+      $id_user = $this->session->getCurrentUser();
       $cabecera = "Inicio";
+
+      $num_historias= $this->model->cargarHistoriaIndex($id_user);
+      $this->view->num_historias = $num_historias;
+
+      $num_fase= $this->model->cargarFaseIndex($id_user);
+      $this->view->num_fase = $num_fase;
+
+      $num_modulo= $this->model->cargarModuloIndex($id_user);
+      $this->view->num_modulo = $num_modulo;
+
+      $num_actividad= $this->model->cargarActividadIndex($id_user);
+      $this->view->num_actividad = $num_actividad;
+
+      $num_recurso= $this->model->cargarRecursoIndex($id_user);
+      $this->view->num_recurso = $num_recurso;
+
+
       $correo = $this->session->getCurrentUser();
       $validacion = $this->model->VerificarPerfil($correo);
       $this->view->cabecera = $cabecera;

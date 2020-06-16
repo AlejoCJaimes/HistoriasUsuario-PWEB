@@ -28,6 +28,151 @@ class EstudianteModel extends Model {
           return $e;
       }
     }
+
+    public function cargarHistoriaIndex($id_user) {
+
+      $query = $this->db->connect()->query("SELECT COUNT(hu.Id) as 'HistoriasUsuario' 
+      FROM estudiante e 
+      JOIN usuario us ON us.id = e.idusuario
+      JOIN grupoestudiante ge ON ge.IdEstudiante = e.Id
+      JOIN grupo g ON g.id = ge.IdGrupo
+      JOIN grupoproyecto gp ON gp.IdGrupo = g.Id
+      JOIN proyecto p ON p.id = gp.IdProyecto
+      JOIN metodologia m ON m.id = p.IdMetodologia
+      JOIN fase f ON f.IdMetodologia = m.Id
+      JOIN modulo mo ON mo.IdFase = f.Id
+      JOIN historiausuario hu ON hu.IdModulo = mo.Id
+      WHERE us.correo_usuario = '$id_user';");
+      $item = 0;
+      try {
+        while ($row =$query->fetch()) {
+          $item = $row['HistoriasUsuario'];
+        }
+        
+          return $item;
+    
+      } catch (PDOException $e) {
+        return $e;
+      }
+    }
+
+    public function cargarFaseIndex($id_user) {
+
+      $query = $this->db->connect()->query("SELECT COUNT(f.Id) as 'Fases'
+      FROM fase as f 
+      JOIN proyecto as p ON p.IdMetodologia = f.IdMetodologia
+      join grupoproyecto as gproyecto ON gproyecto.IdProyecto = p.Id
+      JOIN grupo as g ON g.Id = gproyecto.IdGrupo
+      JOIN grupoestudiante AS gestudiante ON gestudiante.IdGrupo = g.Id
+      JOIN estudiante AS e ON e.Id = gestudiante.IdEstudiante
+      JOIN usuario as u ON u.Id = e.IdUsuario
+      WHERE u.correo_usuario =  '$id_user';");
+      $item = 0;
+      try {
+        while ($row =$query->fetch()) {
+          $item = $row['Fases'];
+        }
+        
+          return $item;
+    
+      } catch (PDOException $e) {
+        return $e;
+      }
+    }
+
+    public function cargarModuloIndex($id_user) {
+
+      $query = $this->db->connect()->query("SELECT COUNT(mo.Id) as 'Modulos'
+      FROM estudiante e 
+      JOIN usuario us ON us.id = e.idusuario
+      JOIN grupoestudiante ge ON ge.IdEstudiante = e.Id
+      JOIN grupo g ON g.id = ge.IdGrupo
+      JOIN grupoproyecto gp ON gp.IdGrupo = g.Id
+      JOIN proyecto p ON p.id = gp.IdProyecto
+      JOIN metodologia m ON m.id = p.IdMetodologia
+      JOIN fase f ON f.IdMetodologia = m.Id
+      JOIN modulo mo ON mo.IdFase = f.Id
+      WHERE us.correo_usuario = '$id_user';");
+      $item = 0;
+      try {
+        while ($row =$query->fetch()) {
+          $item = $row['Modulos'];
+        }
+        
+          return $item;
+    
+      } catch (PDOException $e) {
+        return $e;
+      }
+    }
+
+    public function cargarActividadIndex($id_user) {
+
+      $query = $this->db->connect()->query("SELECT COUNT(ac.Id) as 'Actividades'
+      FROM estudiante e 
+      JOIN usuario us ON us.id = e.idusuario
+      JOIN grupoestudiante ge ON ge.IdEstudiante = e.Id
+      JOIN grupo g ON g.id = ge.IdGrupo
+      JOIN grupoproyecto gp ON gp.IdGrupo = g.Id
+      JOIN proyecto p ON p.id = gp.IdProyecto
+      JOIN metodologia m ON m.id = p.IdMetodologia
+      JOIN fase f ON f.IdMetodologia = m.Id
+      JOIN modulo mo ON mo.IdFase = f.Id
+      JOIN historiausuario hu ON hu.IdModulo = mo.Id
+      JOIN actividad ac ON ac.IdHistoriaUsuario = hu.id
+      WHERE us.correo_usuario = '$id_user';");
+      $item = 0;
+      try {
+        while ($row =$query->fetch()) {
+          $item = $row['Actividades'];
+        }
+        
+          return $item;
+    
+      } catch (PDOException $e) {
+        return $e;
+      }
+    }
+
+    public function cargarRecursoIndex($id_user) {
+
+      //AUXILIAR
+      $id_grupo = 0;
+      $query_grupo = $this->db->connect()->query("SELECT ge.IdGrupo 
+      FROM usuario u JOIN estudiante e ON e.IdUsuario = u.Id 
+      JOIN grupoestudiante ge ON ge.IdEstudiante = e.Id WHERE u.correo_usuario = '$id_user';");
+      
+      while ($_row = $query_grupo->fetch()) {
+        $id_grupo = $_row[0];
+      }
+
+      $query = $this->db->connect()->query("SELECT COUNT(re.Id) as 'Recursos'
+      FROM grupo g      
+      JOIN grupoproyecto gp ON gp.IdGrupo = g.Id
+      JOIN proyecto p ON p.id = gp.IdProyecto
+      JOIN metodologia m ON m.id = p.IdMetodologia
+      JOIN fase f ON f.IdMetodologia = m.Id
+      JOIN modulo mo ON mo.IdFase = f.Id
+      JOIN historiausuario hu ON hu.IdModulo = mo.Id
+      JOIN actividad ac ON ac.IdHistoriaUsuario = hu.id
+      JOIN recurso re ON re.idActividad = ac.Id
+      WHERE g.Id = '$id_grupo';");
+      $item = 0;
+      try {
+        while ($row =$query->fetch()) {
+          $item = $row['Recursos'];
+        }
+        
+          return $item;
+    
+      } catch (PDOException $e) {
+        return $e;
+      }
+    }
+
+    
+
+
     public function loadData($correo) {
 
       try {
@@ -382,6 +527,17 @@ class EstudianteModel extends Model {
         //Consulta para editar un Recurso
         $query_1 = $this->db->connect()->prepare("UPDATE `recurso` SET `Descripcion`=:Descripcion,`Tipo`=:Tipo,`valor`=:Valor,`idActividad`=:IdActividad WHERE Id = '$id';");
         $query_1->execute(['Descripcion' => $datos['Descripcion'], 'Tipo' => $datos['Tipo'], 'Valor' => $datos['Valor'], 'IdActividad' => $datos['idActividad']]);
+        return true;
+      }catch(PDOException $e){
+        return false;
+      }
+    }
+
+    function deleteRecurso($id) {
+      try{
+        //Consulta para eliminar un Recurso
+        $idRecurso = $id[0];
+        $query_1 = $this->db->connect()->query("DELETE FROM `recurso` WHERE Id = '$idRecurso';");
         return true;
       }catch(PDOException $e){
         return false;

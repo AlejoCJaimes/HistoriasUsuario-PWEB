@@ -82,7 +82,7 @@ $layot_sin_grupo = $this->validacion;
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo constant('URL');?>estudiante/crearhistoria"> Crear Historia de Usuario</a>
+            <a class="collapse-item" href="<?php echo constant('URL');?>estudiante/crearhistoria">Historia de Usuario</a>
             <a class="collapse-item" href="<?php echo constant('URL');?>estudiante/crearFase"> Fase</a>
             <a class="collapse-item" href="<?php echo constant('URL');?>estudiante/crearModulo"> Módulo</a>
             <a class="collapse-item" href="<?php echo constant('URL');?>estudiante/crearActividad"> Actividad</a>

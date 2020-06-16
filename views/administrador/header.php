@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Administrador</title>
+    <title><?php echo $this->cabecera;?></title>
 
     <!-- Custom fonts for this template-->
     <link href="<?php echo constant('URL');?>resources/layout_partial/fontawesome-free/css/all.min.css" rel="stylesheet"

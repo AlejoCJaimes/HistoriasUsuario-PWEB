@@ -10,8 +10,10 @@
         <table class="table">
             <thead class="bg-primary">
                 <tr>
-                    <th scope="col"></th>
+            
+                    <th scope="col" ></th>
                     <th scope="col" class=" text-white">HISTORIA DE USUARIO</th>
+                    
                     <th scope="col"></th>
                     <th scope="col"></th>
                 </tr>
@@ -132,6 +134,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                     <!-- Fin modal -->
 
